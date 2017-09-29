@@ -1,0 +1,22 @@
+import FormatIO.*;
+
+
+public class Ex2 
+{
+	public static void main(String[] arg)
+	{
+		
+	Console con = new Console();
+	con.println("Hello");
+	String firstName = "";
+	String lastName = "";
+	String fullName = "";
+	
+	con.print("Please enter your first name: ");
+	String firstName = con.readLine();
+	
+	
+	String message2 = "Hello" + firstName + "Welcome to Glasgow.";
+	
+	}
+}

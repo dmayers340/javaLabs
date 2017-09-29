@@ -1,0 +1,25 @@
+import FormatIO.*;
+
+public class Lab2Ex1;
+{
+	public static void main(String[] arg);
+	{
+		/* Define Var */
+		Console con = new Console();
+
+		String firstName = con.readWord();
+		String lastName = con.readWord();
+		String fullName = con.readWord();
+
+		con.println("Please enter your first name: ");
+		System.err.println(firstName);
+
+		con.println("Please enter your last name: ");
+		System.err.println(lastName);
+
+		con.println("Thank you " + firstName + " " + lastName);
+
+		System.out.println("Welcome to Glasgow " + fullName);
+	}	
+
+}
