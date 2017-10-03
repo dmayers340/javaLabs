@@ -2,17 +2,30 @@ import FormatIO.*;
 import java.util.*;
 import java.lang.*;
 
-public class RandomNumberTwo 
+public class RandomNumberGeneratorThree 
 {
 	public static void main(String[] arg)
 	{
 		Console con = new Console();
 		Random rand = new Random();
+		boolean playAgain = true;
 
 		con.println("Welcome to Number Picker");
 		con.println("You will need to pick a number between 0 and 9");
 
-		userGuess(con, rand);
+		while (playAgain)
+		{
+			userGuess(con, rand);
+			
+			con.println("If you would like to play again please type yes. Otherwise, type no.");
+			String userPlayAgain = con.readLine();
+			if (userPlayAgain.toLowerCase().equals("no"))
+			{
+				con.println("Thank you for playing Number Picker. Goodbye");
+				playAgain = false;
+			}
+
+		}
 	}
 	
 	private static void userGuess(Console con, Random rand)
