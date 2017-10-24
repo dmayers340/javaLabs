@@ -3,12 +3,14 @@ import FormatIO.*;
 public class Person 
 {
 	//Person constructor
-	public String Person(String name)
-	{
-	Console con = new Console();
+	private String firstName;
+	private String lastName;
+	private MyDate dob; 
 	
-	name = firstName + lastName;
-	System.out.println(name);
-	return name;
+	public Person(String fname, String sname)
+	{
+		firstName = fname;
+		lastName = sname;
+	
 	}
 }
