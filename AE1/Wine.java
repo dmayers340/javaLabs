@@ -1,3 +1,9 @@
+/*
+ * Model Class
+ * represented info about type of wine involved in transaction
+ * Instance var: wineName, double price of bottle, int quantity needed
+ * 
+ */
 //retruned by method in GUI
 public class Wine 
 {
@@ -5,6 +11,7 @@ public class Wine
 	private double winePrice;
 	private int numberOfBottles;
 	
+	//constructor to initalize instance variables
 	public Wine(String nameOfWine, double priceOfWine, int bottleNumber)
 	{
 		wineName = nameOfWine; 
@@ -12,6 +19,7 @@ public class Wine
 		numberOfBottles = bottleNumber;
 		
 	}
+	//methods to return values of instance vars
 	public String getWineName()
 	{
 		return wineName;

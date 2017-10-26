@@ -1,3 +1,9 @@
+/*
+ * User Interface, handle events=View/Controller Class
+ * 1. Layout components
+ * 2. Listen for events
+ * Process Sales and Returns
+ */
 import java.awt.*;
 
 import java.awt.event.*;
@@ -10,7 +16,7 @@ public class LWMGUI extends JFrame implements ActionListener
 	private JPanel top, middle, bottom;
 	private JTextField text, nameText, amountText, priceText;
 	private JLabel label, nameLabel, priceLabel, amountLabel, fillerLabel, currentBalanceLabel;
-	private JButton okButton, cancelButton;
+	private JButton saleButton, returnButton;
 	
 	public LWMGUI()
 	{
@@ -47,6 +53,7 @@ public class LWMGUI extends JFrame implements ActionListener
 	amountLabel = new JLabel("Please enter the quantity (i.e. 3)");
 	middle.add(amountLabel);
 	amountText = new JTextField(10);
+	//int amountNumber = Integer.parseInt(amountText);
 	middle.add(amountText);
 	
 	priceLabel = new JLabel("Please enter the price of your item £");
@@ -54,7 +61,7 @@ public class LWMGUI extends JFrame implements ActionListener
 	priceText = new JTextField(10);
 	middle.add(priceText);
 	
-	fillerLabel = new JLabel("Please create a transaction");
+	fillerLabel = new JLabel("Please Press a Button Below to Create the Transaction");
 	middle.add(fillerLabel);
 	
 	//currentBalanceLabel = new JLabel("Current Balance" + currentBalance);
@@ -65,13 +72,13 @@ public class LWMGUI extends JFrame implements ActionListener
 	bottom = new JPanel();
 	bottom.setBackground(Color.blue); 
 	
-	okButton = new JButton("Sale");
-	okButton.addActionListener(this);
-	bottom.add(okButton);
+	saleButton = new JButton("Sale");
+	saleButton.addActionListener(this);
+	bottom.add(saleButton);
 	
-	cancelButton = new JButton("Return");
-	cancelButton.addActionListener(this);
-	bottom.add(cancelButton);
+	returnButton = new JButton("Return");
+	returnButton.addActionListener(this);
+	bottom.add(returnButton);
 	
 	add(bottom, BorderLayout.SOUTH);
 	bottom.setVisible(true);
@@ -79,13 +86,13 @@ public class LWMGUI extends JFrame implements ActionListener
 	
 	public void actionPerformed(ActionEvent decideWhichAction)
 	{
-		if (decideWhichAction.getSource()==okButton)
+		if (decideWhichAction.getSource()==saleButton)
 		{
 			printNameText();
-			printAmountText();
-			printPriceText();
+			//printAmountText();
+			//printPriceText();
 		}
-		else if (decideWhichAction.getSource()==cancelButton)
+		else if (decideWhichAction.getSource()==returnButton)
 			//exitProgram()
 			//printText();
 			System.out.println("aswerio");
@@ -99,7 +106,7 @@ public class LWMGUI extends JFrame implements ActionListener
 	private void printNameText() 
 	{
 		String s = nameText.getText();
-		fillerLabel.setText("You entered: \""+s+"\"");//we want to say "but whatever in textfield here", so need to use \ to get the "
+		fillerLabel.setText("You would like " + s);//we want to say "but whatever in textfield here", so need to use \ to get the "
 		nameText.setText("");//clears whatever is in text field
 		
 	}
