@@ -1,5 +1,6 @@
 /*
  * User Interface, handle events=View/Controller Class
+ * -Veiw in constructor-controller: actionPerformed
  * 1. Layout components
  * 2. Listen for events
  * Process Sales and Returns
@@ -10,116 +11,187 @@ import java.awt.event.*;
 import javax.swing.*;
 
 
-//Wine() will figure out what happens when things are entered into textField
+//Need to pass events to Wine() which will figure out what happens when things are entered into textField
 public class LWMGUI extends JFrame implements ActionListener
 {
+	//instance vars
 	private JPanel top, middle, bottom;
-	private JTextField text, nameText, amountText, priceText;
-	private JLabel label, nameLabel, priceLabel, amountLabel, fillerLabel, currentBalanceLabel;
+	private JTextField totalAmountText, currentBalanceText, purchasedText, nameText, amountText, priceText;
+	private JLabel totalAmountLabel, typePurchasedLabel, label, nameLabel, priceLabel, amountLabel, fillerLabel, currentBalanceLabel;
 	private JButton saleButton, returnButton;
 	
-	public LWMGUI()
+	private Wine wineObject;
+	private CustomerAccount customerAccountObject;
+	
+	public LWMGUI(Wine wine, CustomerAccount customerAccount)
 	{
+		wineObject = wine;
+		customerAccountObject = customerAccount;
+		//setting up the interface
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setTitle("Lilybank Wine Merchants");
-		setSize(400, 400);
+		setTitle("Lilybank Wine Merchants"); //set title to Account Name
+		setSize(450, 500);
 		setLocation(100,100);
 		setResizable(false);	
 		layoutComponents();
-		setVisible(true);
-		
+		setVisible(true);	
 	}
 	
-	
+	//GUI Design
 	private void layoutComponents()
-	{
+	{ 
+	//setting a font I can read
+	Font readableFont = new Font("Arial", Font.BOLD, 14);
+	
+	//top area
 	top = new JPanel();
 	top.setBackground(Color.gray);
-	//set font to White and Bold and background color to burgundy/maroon (color of red wine)
 	
-	label = new JLabel("Hello. Welcome to Lilybank Wine Merchants Transaction Center");
+	//Opening Phrase
+	label = new JLabel("Welcome to Lilybank Wine Merchants Transaction Center");
+	label.setFont(readableFont);
+	
+	//add label and area to Layout
 	top.add(label);
-	
 	add(top, BorderLayout.NORTH);
 	
+	//middle area 
 	middle = new JPanel();
 	middle.setBackground(Color.WHITE);
 	
+	//Product Name Label
 	nameLabel = new JLabel("Please enter the product name");
+	nameLabel.setFont(readableFont);
 	middle.add(nameLabel);
+	
+	//Get Product Name from User Input
 	nameText = new JTextField(10);
+	nameText.addActionListener(this);
+	System.out.println(nameText.getText());
 	middle.add(nameText);
 	
+	//Product Amount Label
 	amountLabel = new JLabel("Please enter the quantity (i.e. 3)");
+	amountLabel.setFont(readableFont);
 	middle.add(amountLabel);
+	
+	//Get Product Amount from User Input. Convert to
 	amountText = new JTextField(10);
-	//int amountNumber = Integer.parseInt(amountText);
+	System.out.println(amountText.getText());
 	middle.add(amountText);
 	
+	//Product Cost
 	priceLabel = new JLabel("Please enter the price of your item £");
+	priceLabel.setFont(readableFont);
 	middle.add(priceLabel);
+	
+	//Get Product Cost from User Input
 	priceText = new JTextField(10);
+	System.out.println(priceText.getText());
 	middle.add(priceText);
 	
+	//Label to be switched to Transaction 
 	fillerLabel = new JLabel("Please Press a Button Below to Create the Transaction");
+	fillerLabel.setFont(readableFont);
 	middle.add(fillerLabel);
 	
-	//currentBalanceLabel = new JLabel("Current Balance" + currentBalance);
+	//Sale Button
+	saleButton = new JButton("Sale");
+	saleButton.setFont(readableFont);
+	saleButton.addActionListener(this);
+	middle.add(saleButton);
 	
-	
+	//Return Button
+	returnButton = new JButton("Return");
+	returnButton.setFont(readableFont);
+	returnButton.addActionListener(this);
+	middle.add(returnButton);
 	add(middle, BorderLayout.CENTER);
 	
+	//bottom area as a grid
 	bottom = new JPanel();
-	bottom.setBackground(Color.blue); 
+	bottom.setLayout(new GridLayout(6,2));
+	bottom.setBackground(Color.gray);
 	
-	saleButton = new JButton("Sale");
-	saleButton.addActionListener(this);
-	bottom.add(saleButton);
+	//Get product name for transaction
+	typePurchasedLabel = new JLabel("Product Purchased ");
+	typePurchasedLabel.setFont(readableFont);
+	bottom.add(typePurchasedLabel);
 	
-	returnButton = new JButton("Return");
-	returnButton.addActionListener(this);
-	bottom.add(returnButton);
+	purchasedText = new JTextField(10);
+	System.out.println(purchasedText.getText());
+	purchasedText.addActionListener(this);
+	//update to nameText
+	purchasedText.setText(nameText.getText());
+	bottom.add(purchasedText);
+	
+	
+	totalAmountLabel = new JLabel("Amount of Transaction:");
+	totalAmountLabel.setFont(readableFont);
+	bottom.add(totalAmountLabel);
+	
+	totalAmountText = new JTextField(10);
+	System.out.println(totalAmountText.getText());
+	bottom.add(totalAmountText);
+	
+	currentBalanceLabel = new JLabel("Current Balance:");
+	currentBalanceLabel.setFont(readableFont);
+	bottom.add(currentBalanceLabel);
+	//add the current Balance from JOptionPane Here
+	currentBalanceText = new JTextField(10);
+	System.out.println(currentBalanceText.getText());;
+	bottom.add(currentBalanceText); 
 	
 	add(bottom, BorderLayout.SOUTH);
 	bottom.setVisible(true);
 	}
 	
+	//Controller-ActionPerformed
 	public void actionPerformed(ActionEvent decideWhichAction)
 	{
+		String tempText = amountText.getText().trim();
+		try
+		{
+			int amountNumber = Integer.parseInt(tempText);
+			System.out.println(amountNumber);
+		}
+		catch(NumberFormatException x)
+		{
+			System.out.println("No Integer");
+		}
 		if (decideWhichAction.getSource()==saleButton)
 		{
-			printNameText();
-			//printAmountText();
-			//printPriceText();
+			printTransaction();
 		}
 		else if (decideWhichAction.getSource()==returnButton)
-			//exitProgram()
-			//printText();
+		{
+			printTransaction();
 			System.out.println("aswerio");
+		}
 		else if (decideWhichAction.getSource()==nameText)
+		{
 			System.out.println("name");
+		}
 		else if (decideWhichAction.getSource()==priceText)
+		{
 			System.out.println("pirce");
+		}
 		else if (decideWhichAction.getSource()==amountText)
+		{
 			System.out.println("amount");
+		}
 	}
-	private void printNameText() 
-	{
-		String s = nameText.getText();
-		fillerLabel.setText("You would like " + s);//we want to say "but whatever in textfield here", so need to use \ to get the "
-		nameText.setText("");//clears whatever is in text field
 		
-	}
-	private void printAmountText()
-	{
+	private void printTransaction() 
+	{//need to use Wine to multiple
+		//Wine transactionWine = new Wine();
+		String name = nameText.getText();
 		String amount = amountText.getText();
-		fillerLabel.setText("You entered: \""+amount+"\"");
+		String price = priceText.getText();
+		//Confirmation Text
+		fillerLabel.setText("You would like " + amount + " bottles of " + name + " costing £" + price + " per bottle");//we want to say "but whatever in textfield here", so need to use \ to get the "
+		nameText.setText("");
 		amountText.setText("");
-	}
-	private void printPriceText()
-	{
-		String s = priceText.getText();
-		fillerLabel.setText("You entered: \""+s+"\"");
-		priceText.setText("");
-	}
+		priceText.setText("");	
+	}	
 }

@@ -38,7 +38,7 @@ public class CustomerAccount
 		totalCost = numBottles * costBottle * 0.8;
 		
 		//updates account balance
-		currentBalance = currentBalance + totalCost;
+		//currentBalance = currentBalance + totalCost;
 		
 		//return total cost as double
 		return totalCost;
