@@ -16,20 +16,22 @@ public class LWMGUI extends JFrame implements ActionListener
 {
 	//instance vars
 	private JPanel top, middle, bottom;
-	private JTextField totalAmountText, currentBalanceText, purchasedText, nameText, amountText, priceText;
+	private JTextField  totalAmountText, currentBalanceText, purchasedText, nameText, amountText, priceText;
 	private JLabel totalAmountLabel, typePurchasedLabel, label, nameLabel, priceLabel, amountLabel, fillerLabel, currentBalanceLabel;
 	private JButton saleButton, returnButton;
 	
+	//create Obj of Wine and CustomerAccount classes
 	private Wine wineObject;
 	private CustomerAccount customerAccountObject;
 	
-	public LWMGUI(Wine wine, CustomerAccount customerAccount)
+	public LWMGUI(String accountName, double initialAmount, Wine wine, CustomerAccount customerAccount)
 	{
 		wineObject = wine;
 		customerAccountObject = customerAccount;
+		
 		//setting up the interface
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setTitle("Lilybank Wine Merchants"); //set title to Account Name
+		setTitle("Lilybank Wine Merchants:" + " " + accountName); //set title to Account Name
 		setSize(450, 500);
 		setLocation(100,100);
 		setResizable(false);	
@@ -118,29 +120,23 @@ public class LWMGUI extends JFrame implements ActionListener
 	typePurchasedLabel.setFont(readableFont);
 	bottom.add(typePurchasedLabel);
 	
-	purchasedText = new JTextField(10);
-	System.out.println(purchasedText.getText());
-	purchasedText.addActionListener(this);
-	//update to nameText
-	purchasedText.setText(nameText.getText());
-	bottom.add(purchasedText);
 	
-	
+	//Get total amount of transaction.
 	totalAmountLabel = new JLabel("Amount of Transaction:");
 	totalAmountLabel.setFont(readableFont);
 	bottom.add(totalAmountLabel);
 	
-	totalAmountText = new JTextField(10);
-	System.out.println(totalAmountText.getText());
+	//Update total Amount with calculation from CustomerAccount
+	totalAmountText = new JTextField(" ");
+	//totalAmountText.setText(customerAccountObject.getCurrentBalance));;
 	bottom.add(totalAmountText);
 	
+	//Current Balance Label
 	currentBalanceLabel = new JLabel("Current Balance:");
 	currentBalanceLabel.setFont(readableFont);
 	bottom.add(currentBalanceLabel);
+	
 	//add the current Balance from JOptionPane Here
-	currentBalanceText = new JTextField(10);
-	System.out.println(currentBalanceText.getText());;
-	bottom.add(currentBalanceText); 
 	
 	add(bottom, BorderLayout.SOUTH);
 	bottom.setVisible(true);
@@ -165,7 +161,7 @@ public class LWMGUI extends JFrame implements ActionListener
 		}
 		else if (decideWhichAction.getSource()==returnButton)
 		{
-			printTransaction();
+			printReturn();
 			System.out.println("aswerio");
 		}
 		else if (decideWhichAction.getSource()==nameText)
@@ -194,4 +190,15 @@ public class LWMGUI extends JFrame implements ActionListener
 		amountText.setText("");
 		priceText.setText("");	
 	}	
+	private void printReturn()
+	{
+		String name = nameText.getText();
+		String amount = amountText.getText();
+		String price = priceText.getText();
+		//Confirmation Text
+		fillerLabel.setText("You would like to return " + amount + " bottles of " + name + " at £" + price + " per bottle.");//we want to say "but whatever in textfield here", so need to use \ to get the "
+		nameText.setText("");
+		amountText.setText("");
+		priceText.setText("");	
+	}
 }

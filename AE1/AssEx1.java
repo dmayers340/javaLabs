@@ -10,6 +10,8 @@ import java.awt.*;
 
 public class AssEx1 
 {	
+	Wine wineObject;
+	CustomerAccount customerAccount;
 	public static void main(String [] args)
 	{	
 		//1. JOptionPane return String w/ customerName
@@ -23,24 +25,26 @@ public class AssEx1
 	     // error message if no error
 	     else 
 	     {
-	    	System.out.println();
+	    	System.out.println(accountName);
 	    	
 	     }
-	  
+	    String accountBalance;
+	    double initialAmount;
 	    //JOptionPane 2-return double for currentBalance
-	    String accountBalance = JOptionPane.showInputDialog(null, "Please enter your initial balance");
-		double initialAmount = Double.parseDouble(accountBalance);
-		
+	    do
+	    {
+	    	accountBalance = JOptionPane.showInputDialog(null, "Please enter your initial balance");
+		 	//JOptionPane.showMessageDialog(null,  "No info provided. Please try again");
+	
+		 }
 		//loop until enter a balance
-	 	while (accountBalance == null)
-	 	{
-	 		JOptionPane.showMessageDialog(null,  "No info provided");
-	 	}
-	 	System.out.println(initialAmount);
-	 	
+	 	while (accountBalance.isEmpty());
+	    initialAmount = Double.parseDouble(accountBalance);
+	    System.out.println("Double inital amount: " + initialAmount);
+	    System.out.println("String acount balance " + accountBalance);
 	 	
 	 	//Main Interface
-	 	LWMGUI myGUI = new LWMGUI();
+	 	LWMGUI myGUI = new LWMGUI(accountName, initialAmount, null, null);
 	
 	//CustomerAccount account = new CustomerAccount(accountName,initalAmount);
 	 	

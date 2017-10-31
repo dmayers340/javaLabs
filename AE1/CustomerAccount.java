@@ -52,5 +52,9 @@ public class CustomerAccount
 	{
 		return totalCost;
 	}
+	public int getCurrentBalance()
+	{
+		return currentBalance;
+	}
 
 }
