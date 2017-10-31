@@ -30,15 +30,24 @@ public class AssEx1
 	     }
 	    String accountBalance;
 	    double initialAmount;
-	    //JOptionPane 2-return double for currentBalance
+	    //JOptionPane 2-return double for currentBalance--NEEDS TO LOOP IF NOT DOUBLE
 	    do
 	    {
 	    	accountBalance = JOptionPane.showInputDialog(null, "Please enter your initial balance");
-		 	//JOptionPane.showMessageDialog(null,  "No info provided. Please try again");
-	
+		 	JOptionPane.showMessageDialog(null,  "No info provided. Please try again"); //occurs even if correct
+		 	try  
+		 	{
+		 		initialAmount = Double.parseDouble(accountBalance);
+		 		
+		 	}
+		 	catch (NumberFormatException exceptionNumber)
+		 	{
+		 		System.out.println("No double");
+		 	}
 		 }
-		//loop until enter a balance
+		
 	 	while (accountBalance.isEmpty());
+	    
 	    initialAmount = Double.parseDouble(accountBalance);
 	    System.out.println("Double inital amount: " + initialAmount);
 	    System.out.println("String acount balance " + accountBalance);

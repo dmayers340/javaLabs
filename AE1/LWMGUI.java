@@ -153,7 +153,7 @@ public class LWMGUI extends JFrame implements ActionListener
 		}
 		catch(NumberFormatException x)
 		{
-			System.out.println("No Integer");
+			System.err.println("No Integer");
 		}
 		if (decideWhichAction.getSource()==saleButton)
 		{
