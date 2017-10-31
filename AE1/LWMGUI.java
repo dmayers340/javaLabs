@@ -31,7 +31,7 @@ public class LWMGUI extends JFrame implements ActionListener
 		
 		//setting up the interface
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setTitle("Lilybank Wine Merchants:" + " " + accountName); //set title to Account Name
+		setTitle("Lilybank Wine Merchants:" + " " + accountName); //set title to Account Name from JPanel
 		setSize(450, 500);
 		setLocation(100,100);
 		setResizable(false);	
@@ -69,9 +69,9 @@ public class LWMGUI extends JFrame implements ActionListener
 	//Get Product Name from User Input
 	nameText = new JTextField(10);
 	nameText.addActionListener(this);
-	System.out.println(nameText.getText());
+	System.out.println(nameText.getText()); //isn't doing this
 	middle.add(nameText);
-	
+
 	//Product Amount Label
 	amountLabel = new JLabel("Please enter the quantity (i.e. 3)");
 	amountLabel.setFont(readableFont);
@@ -146,6 +146,10 @@ public class LWMGUI extends JFrame implements ActionListener
 	public void actionPerformed(ActionEvent decideWhichAction)
 	{
 		String tempText = amountText.getText().trim();
+		String name = nameText.getText();
+		Double price = Double.parseDouble(priceText.getText());
+		int amount = Integer.parseInt(amountText.getText());
+		Wine wine = new Wine(name,price,amount); //create new wine based on the users input
 		try
 		{
 			int amountNumber = Integer.parseInt(tempText);
@@ -155,31 +159,49 @@ public class LWMGUI extends JFrame implements ActionListener
 		{
 			System.err.println("No Integer");
 		}
+		
+		
+		String tempPrice = priceText.getText().trim();
+		try 
+		{
+			double tempPriceDouble = Double.parseDouble(tempPrice);
+			System.out.println(tempPriceDouble);
+		}
+		catch(NumberFormatException priceException)
+		{
+			System.err.println("Not a double");
+		}
+		
+		//prints out the product name but not checking if not a string
+		String tempProductName = nameText.getText().trim();
+		System.out.println(tempProductName);
+			
+			
 		if (decideWhichAction.getSource()==saleButton)
 		{
+			customerAccountObject.Sale(wine);
 			printTransaction();
 		}
 		else if (decideWhichAction.getSource()==returnButton)
 		{
+			customerAccountObject.Return(wine);
 			printReturn();
 			System.out.println("aswerio");
 		}
-		else if (decideWhichAction.getSource()==nameText)
-		{
-			System.out.println("name");
-		}
-		else if (decideWhichAction.getSource()==priceText)
-		{
-			System.out.println("pirce");
-		}
-		else if (decideWhichAction.getSource()==amountText)
-		{
-			System.out.println("amount");
-		}
+	
 	}
-		
+	
+//	public void processSale() {
+//		
+//	}
+//	
+//	public void processReturn() {
+//		
+//	}
+	
+	
 	private void printTransaction() 
-	{//need to use Wine to multiple
+	{
 		//Wine transactionWine = new Wine();
 		String name = nameText.getText();
 		String amount = amountText.getText();

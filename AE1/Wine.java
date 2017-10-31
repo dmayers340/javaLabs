@@ -4,13 +4,13 @@
  * Instance var: wineName, double price of bottle, int quantity needed
  * 
  */
-//retruned by method in GUI
+//returned by method in GUI
 public class Wine 
 {
 	private String wineName;
 	private double winePrice;
 	private int numberOfBottles;
-	
+		
 	//constructor to initalize instance variables
 	public Wine(String nameOfWine, double priceOfWine, int bottleNumber)
 	{
@@ -19,7 +19,7 @@ public class Wine
 		numberOfBottles = bottleNumber;
 		
 	}
-	//methods to return values of instance vars
+	//accessor methods to return values of instance vars
 	public String getWineName()
 	{
 		return wineName;

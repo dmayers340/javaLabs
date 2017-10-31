@@ -4,14 +4,19 @@
  */
 public class CustomerAccount 
 {
+	//instance vars
 	private String customerName;
 	private int currentBalance;
 	
+	//other vars
+	public double winePrice;
 	public int numBottles;
-	public double costBottle;
 	public int saleBottles;
 	public double totalCost;
 	public int serviceCharge;
+	
+	//reference to the Wine Script
+	//Wine wine;
 	
 	//constructor initializing instance variables
 	CustomerAccount(String name, int currentBalance)
@@ -21,11 +26,22 @@ public class CustomerAccount
 	}
 	
 	//Process sale of numBottles of wine w/ costBottle
-	public double Sale()
+	public double Sale(Wine wine)
 	{
-		costBottle = costBottle * 100;
-		totalCost = numBottles * costBottle;
+		winePrice = wine.getWinePrice();
+		
+		//sets to a whole number
+		winePrice = winePrice * 100;
+		
+		//get the number of bottles from Wine Class
+		numBottles = wine.getBottleNumber();
+		
+		//calculate the total cost by multiplying quantity * price
+		totalCost = numBottles * winePrice;
+		
+		//divide by 100 to put back into a float
 		totalCost = totalCost / 100;
+		
 		//updates account balance
 		currentBalance = (int) (currentBalance + totalCost);
 		
@@ -33,9 +49,9 @@ public class CustomerAccount
 		return totalCost;
 	}
 	
-	public double Return()
+	public double Return(Wine wine)
 	{	
-		totalCost = numBottles * costBottle * 0.8;
+		totalCost = numBottles * winePrice * 0.8;
 		
 		//updates account balance
 		//currentBalance = currentBalance + totalCost;

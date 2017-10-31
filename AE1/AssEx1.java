@@ -12,6 +12,7 @@ public class AssEx1
 {	
 	Wine wineObject;
 	CustomerAccount customerAccount;
+	
 	public static void main(String [] args)
 	{	
 		//1. JOptionPane return String w/ customerName
@@ -28,13 +29,15 @@ public class AssEx1
 	    	System.out.println(accountName);
 	    	
 	     }
-	    String accountBalance;
-	    double initialAmount;
-	    //JOptionPane 2-return double for currentBalance--NEEDS TO LOOP IF NOT DOUBLE
+	    String accountBalance = "";
+	    //because it is not an int will loop through because do while cannot be completed
+	    double initialAmount= Integer.MAX_VALUE;
+	    
+	    //JOptionPane 2
 	    do
 	    {
 	    	accountBalance = JOptionPane.showInputDialog(null, "Please enter your initial balance");
-		 	JOptionPane.showMessageDialog(null,  "No info provided. Please try again"); //occurs even if correct
+		 	
 		 	try  
 		 	{
 		 		initialAmount = Double.parseDouble(accountBalance);
@@ -42,11 +45,12 @@ public class AssEx1
 		 	}
 		 	catch (NumberFormatException exceptionNumber)
 		 	{
+		 		JOptionPane.showMessageDialog(null,  "No info provided. Please try again"); 
 		 		System.out.println("No double");
 		 	}
 		 }
 		
-	 	while (accountBalance.isEmpty());
+	 	while (initialAmount == Integer.MAX_VALUE);
 	    
 	    initialAmount = Double.parseDouble(accountBalance);
 	    System.out.println("Double inital amount: " + initialAmount);
