@@ -6,7 +6,7 @@ public class CustomerAccount
 {
 	//instance vars
 	private String customerName;
-	private int currentBalance;
+	private double currentBalance;
 	
 	//other vars
 	public double winePrice;
@@ -18,8 +18,9 @@ public class CustomerAccount
 	//reference to the Wine Script
 	//Wine wine;
 	
-	//constructor initializing instance variables
-	CustomerAccount(String name, int currentBalance)
+	//constructor initializing instance variables--this is what is referenced when creating new obj
+	//this is int and the ass ex is double
+	CustomerAccount(String name, double currentBalance)
 	{
 		customerName = name;
 		this.currentBalance = currentBalance;
@@ -68,7 +69,7 @@ public class CustomerAccount
 	{
 		return totalCost;
 	}
-	public int getCurrentBalance()
+	public double getCurrentBalance()
 	{
 		return currentBalance;
 	}
