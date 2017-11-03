@@ -9,8 +9,7 @@
  * If want a mehtod NEED TO CREATE IT, and use constrcutors 
  */
 import javax.swing.JOptionPane;
-import javax.swing.*;
-import java.awt.*;
+
 
 public class AssEx1 
 {	
@@ -20,10 +19,10 @@ public class AssEx1
 	
 	public static void main(String [] args)
 	{	
-		//1. JOptionPane return String w/ customerName
+		//JOptionPane1 get User Name
 	   String accountName = JOptionPane.showInputDialog("Please Enter The Account Name");
 
-	    // if they enter a name, return to user and return name
+	    //If nothing is answered, quit the system
 	    if (accountName.isEmpty())
 	    {
 	       System.exit(0);
@@ -34,51 +33,35 @@ public class AssEx1
 	    	System.out.println(accountName);
 	    	
 	     }
-	    String accountBalance = "";
-	    //because it is not an int will loop through because do while cannot be completed
+	    
+	    //Get Account Balance, if text field is empty or don't enter an int will loop through because the do while cannot be completed
 	    double initialAmount= Integer.MAX_VALUE;
 	    
-	    try {
-	    	accountBalance = JOptionPane.showInputDialog(null, "Please enter your initial balance");
-	    	initialAmount = Double.parseDouble(accountBalance);
-	    	
-	    	CustomerAccount customerAccount = new CustomerAccount(accountName, initialAmount);//info from dialog box---
-	    	LWMGUI myGUI = new LWMGUI(customerAccount); //THIS IS AN object-so need constructor in order to create the obj
-	    }
-	    catch(Exception exception1)
-	    {
-	    	
-	    }
-	    //JOptionPane 2 TAKE OUT Exception and just leave accountBalance, initalAmount, and customer account
+	    do
+	    {		    	
+	    	String accountBalance = JOptionPane.showInputDialog(null, "Please enter your initial balance");
+	    	try 
+	    	{
+	    		initialAmount = Double.parseDouble(accountBalance);
+	    		
+	    		//Create Customer account and GUI Objs
+	    		CustomerAccount customerAccount = new CustomerAccount(accountName, initialAmount);
+	    		LWMGUI myGUI = new LWMGUI(customerAccount); 
+	    		
+	    		if (initialAmount < 0);
+	    		{
+	    			System.out.println("Account Balance is a CR");
+	    		}
+	    	}
+	    	catch(Exception exception1)
+	    	{
+	    		JOptionPane.showMessageDialog(null,  "Incorrect information provided. Please try again"); 
+	    		System.out.println("No double");
+	    	}
 	    
-//	    do
-//	    {
-//	    	accountBalance = JOptionPane.showInputDialog(null, "Please enter your initial balance");
-//
-//	    	try  
-//	    	{
-//	    		initialAmount = Double.parseDouble(accountBalance);
-//
-//	    	}
-//	    	catch (NumberFormatException exceptionNumber)
-//	    	{
-//	    		JOptionPane.showMessageDialog(null,  "No info provided. Please try again"); 
-//	    		System.out.println("No double");
-//	    	}
-//	    	CustomerAccount customerAccount = new CustomerAccount(accountName, initialAmount);//info from dialog box---
-//	    }
-//
-//	    while (initialAmount == Integer.MAX_VALUE);
-	    
-	    initialAmount = Double.parseDouble(accountBalance);
-	    System.out.println("Double inital amount: " + initialAmount);
-	    System.out.println("String acount balance " + accountBalance);
-	 	
-	 	//Main Interface
-	 	LWMGUI myGUI = new LWMGUI(customerAccount);
-	 	//only argument should be customerAccount
-	
-	//CustomerAccount account = new CustomerAccount(accountName,initalAmount);
-	 	
+	    	System.out.println("Double inital amount: " + initialAmount);
+		    System.out.println("String acount balance " + accountBalance);
+	    	}
+	    while (initialAmount == Integer.MAX_VALUE);
 	}
 }

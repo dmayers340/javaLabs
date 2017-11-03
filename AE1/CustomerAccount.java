@@ -15,51 +15,55 @@ public class CustomerAccount
 	public double totalCost;
 	public int serviceCharge;
 	
-	//reference to the Wine Script
-	//Wine wine;
-	
-	//constructor initializing instance variables--this is what is referenced when creating new obj
-	//this is int and the ass ex is double
 	CustomerAccount(String name, double currentBalance)
 	{
 		customerName = name;
 		this.currentBalance = currentBalance;
 	}
 	
-	//Process sale of numBottles of wine w/ costBottle
+	//Process Sale
 	public double Sale(Wine wine)
 	{
+		//Wine Price
 		winePrice = wine.getWinePrice();
-		
-		//sets to a whole number
+		System.out.println("Wine price from CA:" + winePrice);//is getting this
 		winePrice = winePrice * 100;
 		
-		//get the number of bottles from Wine Class
+		//Num Bottles
 		numBottles = wine.getBottleNumber();
 		
-		//calculate the total cost by multiplying quantity * price
+		//TotalCost
 		totalCost = numBottles * winePrice;
-		
-		//divide by 100 to put back into a float
 		totalCost = totalCost / 100;
 		
 		//updates account balance
-		currentBalance = (int) (currentBalance + totalCost);
+		currentBalance = (int) (currentBalance - totalCost);
 		
 		//returns total cost as double
 		return totalCost;
 	}
 	
+	//Process Return
 	public double Return(Wine wine)
 	{	
+		//Wine Price
+		winePrice = wine.getWinePrice();
+		winePrice = winePrice * 100;
+				
+		//Num Bottles
+		numBottles = wine.getBottleNumber();
+		
+		//Total Cost
 		totalCost = numBottles * winePrice * 0.8;
+		totalCost = totalCost / 100;
 		
 		//updates account balance
-		//currentBalance = currentBalance + totalCost;
+		currentBalance = currentBalance + totalCost;
 		
 		//return total cost as double
 		return totalCost;
 	}
+	
 	//accessor to get instance var
 	public String getAccountName()
 	{
@@ -67,10 +71,12 @@ public class CustomerAccount
 	}
 	public double getTotalCost()
 	{
+		System.out.println("Total Cost from CA: " + totalCost);
 		return totalCost;
 	}
 	public double getCurrentBalance()
 	{
+		System.out.println("CurrentBalance from CA " + currentBalance);
 		return currentBalance;
 	}
 

@@ -18,15 +18,12 @@ public class LWMGUI extends JFrame implements ActionListener
 {
 	//instance vars
 	private JPanel top, middle, bottom;
-	private JTextField  totalAmountText, currentBalanceText, purchasedText, nameText, amountText, priceText;
-	private JLabel totalAmountLabel, typePurchasedLabel, label, nameLabel, priceLabel, amountLabel, fillerLabel, currentBalanceLabel;
+	private JTextField  updateCurrentBalanceText, totalAmountText, nameText, amountText, priceText;
+	private JLabel totalAmountLabel, label, nameLabel, priceLabel, amountLabel, fillerLabel, currentBalanceLabel;
 	private JButton saleButton, returnButton;
 	
-	//create Obj of Wine and CustomerAccount classes
-//	private Wine wineObject;
 	private CustomerAccount customerAccountObject;
 	
-	//constructor--need to String accountName, double initialAmount, Wine wine,
 	public LWMGUI(CustomerAccount customerAccount)
 	{
 		//wineObject = wine;
@@ -34,8 +31,8 @@ public class LWMGUI extends JFrame implements ActionListener
 		
 		//setting up the interface
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setTitle("Lilybank Wine Merchants:" + " " + customerAccount.getAccountName()); //set title to Account Name from JPanel
-		setSize(450, 500);
+		setTitle("Lilybank Wine Merchants:" + " " + customerAccountObject.getAccountName()); //set title to Account Name from JPanel
+		setSize(450, 400);
 		setLocation(100,100);
 		setResizable(false);	
 		layoutComponents();
@@ -50,7 +47,7 @@ public class LWMGUI extends JFrame implements ActionListener
 	
 	//top area
 	top = new JPanel();
-	top.setBackground(Color.gray);
+	top.setBackground(Color.WHITE);
 	
 	//Opening Phrase
 	label = new JLabel("Welcome to Lilybank Wine Merchants Transaction Center");
@@ -115,36 +112,31 @@ public class LWMGUI extends JFrame implements ActionListener
 	
 	//bottom area as a grid
 	bottom = new JPanel();
-	bottom.setLayout(new GridLayout(6,2));
-	bottom.setBackground(Color.gray);
+	bottom.setLayout(new GridLayout(2,1));
+	bottom.setBackground(Color.WHITE);
 	
-	//Get product name for transaction
-	typePurchasedLabel = new JLabel("Product Purchased ");
-	typePurchasedLabel.setFont(readableFont);
-	bottom.add(typePurchasedLabel);
 	
-	//get text field
-	
-	//Get total amount of transaction.
+	//Get total amount of transaction.sws
 	totalAmountLabel = new JLabel("Amount of Transaction:");
 	totalAmountLabel.setFont(readableFont);
 	bottom.add(totalAmountLabel);
 	
-	//need to make a connection between GUI and customer account
-	//Update total Amount with calculation from CustomerAccount
-	totalAmountText = new JTextField(" ");
-//get total amount
-	//double to string
-	
-	totalAmountText.setText(customerAccountObject.getCurrentBalance()+""); //the extra "" changes the double to a string
+	//Total Amount Text Field
+	totalAmountText = new JTextField(" ");	
+	totalAmountText.setText(customerAccountObject.getTotalCost()+""); 
 	bottom.add(totalAmountText);
+	System.out.println("From GUI " + totalAmountText);
 	
 	//Current Balance Label
 	currentBalanceLabel = new JLabel("Current Balance:");
 	currentBalanceLabel.setFont(readableFont);
 	bottom.add(currentBalanceLabel);
 	
-	//add the current Balance from JOptionPane Here
+	//Current Blanace Text Field
+	updateCurrentBalanceText = new JTextField(" ");	
+	updateCurrentBalanceText.setText(customerAccountObject.getCurrentBalance()+""); //the extra "" changes the double to a string
+	
+	bottom.add(updateCurrentBalanceText);
 	
 	add(bottom, BorderLayout.SOUTH);
 	bottom.setVisible(true);
@@ -158,9 +150,8 @@ public class LWMGUI extends JFrame implements ActionListener
 		Double price = Double.parseDouble(priceText.getText());
 		int amount = Integer.parseInt(amountText.getText());
 		Wine wine = new Wine(name,price,amount); //create new wine based on the users input
-		//when create obj need to use constructor-when create obj use constructor method w/ same args
-		//get wine name and put in text field for bottom
-	
+		
+		//If amount is not an integer, throw error
 		try
 		{
 			int amountNumber = Integer.parseInt(tempText);
@@ -171,7 +162,7 @@ public class LWMGUI extends JFrame implements ActionListener
 			System.err.println("No Integer");
 		}
 		
-		
+		//Get the price text, parse into double
 		String tempPrice = priceText.getText().trim();
 		try 
 		{
@@ -197,20 +188,10 @@ public class LWMGUI extends JFrame implements ActionListener
 		{
 			customerAccountObject.Return(wine);
 			printReturn();
-			System.out.println("aswerio");
 		}
 	
 	}
-	
-//	public void processSale() {
-//		
-//	}
-//	
-//	public void processReturn() {
-//		
-//	}
-	
-	
+		
 	private void printTransaction() 
 	{
 		//Wine transactionWine = new Wine();
@@ -222,6 +203,11 @@ public class LWMGUI extends JFrame implements ActionListener
 		nameText.setText("");
 		amountText.setText("");
 		priceText.setText("");	
+		
+		totalAmountText.setText(customerAccountObject.getTotalCost()+""); //the extra "" changes the double to a string
+		updateCurrentBalanceText.setText(customerAccountObject.getCurrentBalance()+""); //the extra "" changes the double to a string
+
+		
 	}	
 	private void printReturn()
 	{
@@ -233,5 +219,9 @@ public class LWMGUI extends JFrame implements ActionListener
 		nameText.setText("");
 		amountText.setText("");
 		priceText.setText("");	
+		
+		totalAmountText.setText(customerAccountObject.getTotalCost()+""); //the extra "" changes the double to a string
+		updateCurrentBalanceText.setText(customerAccountObject.getCurrentBalance()+""); //the extra "" changes the double to a string
 	}
 }
+//when hit button-need to make calcuatlion and show information--then how to get it to keep doing moer--i
