@@ -1,12 +1,8 @@
 /*
  * Main method. 1.) Gets customer name and starting balance from JOptionPane
- * Create two obj: Model Obj: Wine and Cust Account--View Control Obj too
+ * Create two Model Objects: Wine and Customer Account. 
  * 2.) Creates Customer Account Object w/ details
- * 3.) Displays GUI obj passing CustomerAccount as parameter
- * 
- * 1. NEed to add customer account
- * 
- * If want a mehtod NEED TO CREATE IT, and use constrcutors 
+ * 3.) Displays GUI object passing CustomerAccount as parameter
  */
 import javax.swing.JOptionPane;
 
@@ -48,20 +44,21 @@ public class AssEx1
 	    		CustomerAccount customerAccount = new CustomerAccount(accountName, initialAmount);
 	    		LWMGUI myGUI = new LWMGUI(customerAccount); 
 	    		
-	    		if (initialAmount < 0);
+	    		if (initialAmount < 0)
 	    		{
+	    			//IF neg: print out balance with a CR behind it
 	    			System.out.println("Account Balance is a CR");
+	    		}
+	    		else
+	    		{
+	    			System.out.println("Balance is normal");
 	    		}
 	    	}
 	    	catch(Exception exception1)
 	    	{
 	    		JOptionPane.showMessageDialog(null,  "Incorrect information provided. Please try again"); 
-	    		System.out.println("No double");
 	    	}
-	    
-	    	System.out.println("Double inital amount: " + initialAmount);
-		    System.out.println("String acount balance " + accountBalance);
-	    	}
-	    while (initialAmount == Integer.MAX_VALUE);
+	    }
+	    while (initialAmount == Integer.MAX_VALUE);		
 	}
 }

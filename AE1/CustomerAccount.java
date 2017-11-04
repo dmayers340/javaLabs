@@ -1,4 +1,4 @@
-/* Model class to define Customer account. Stores cust name
+/* Model class to define Customer account. Stores customer name
  * current balance, and performs operations to balance to update
  * instance var: int current balance, string customerName
  */
@@ -7,37 +7,43 @@ public class CustomerAccount
 	//instance vars
 	private String customerName;
 	private double currentBalance;
+	private double credit;
 	
 	//other vars
-	public double winePrice;
+	public double costBottle;
 	public int numBottles;
 	public int saleBottles;
 	public double totalCost;
 	public int serviceCharge;
 	
+	
+	//Constructor to initalize instance vars
 	CustomerAccount(String name, double currentBalance)
 	{
 		customerName = name;
 		this.currentBalance = currentBalance;
+		if (currentBalance < 0)
+		{
+			credit = currentBalance;
+		}
 	}
 	
-	//Process Sale
+	//Method to process Sale
 	public double Sale(Wine wine)
 	{
-		//Wine Price
-		winePrice = wine.getWinePrice();
-		System.out.println("Wine price from CA:" + winePrice);//is getting this
-		winePrice = winePrice * 100;
+		//Wine price per bottle
+		costBottle = wine.getWinePrice();
+		costBottle = costBottle * 100;
 		
 		//Num Bottles
 		numBottles = wine.getBottleNumber();
 		
 		//TotalCost
-		totalCost = numBottles * winePrice;
+		totalCost = numBottles * costBottle;
 		totalCost = totalCost / 100;
 		
 		//updates account balance
-		currentBalance = (int) (currentBalance - totalCost);
+		currentBalance = currentBalance - totalCost;
 		
 		//returns total cost as double
 		return totalCost;
@@ -47,14 +53,14 @@ public class CustomerAccount
 	public double Return(Wine wine)
 	{	
 		//Wine Price
-		winePrice = wine.getWinePrice();
-		winePrice = winePrice * 100;
+		costBottle = wine.getWinePrice();
+		costBottle = costBottle * 100;
 				
 		//Num Bottles
 		numBottles = wine.getBottleNumber();
 		
 		//Total Cost
-		totalCost = numBottles * winePrice * 0.8;
+		totalCost = numBottles * costBottle * 0.8;
 		totalCost = totalCost / 100;
 		
 		//updates account balance
@@ -64,20 +70,22 @@ public class CustomerAccount
 		return totalCost;
 	}
 	
-	//accessor to get instance var
+	//methods to return values of instance vars
 	public String getAccountName()
 	{
 		return customerName;
 	}
 	public double getTotalCost()
 	{
-		System.out.println("Total Cost from CA: " + totalCost);
 		return totalCost;
 	}
 	public double getCurrentBalance()
 	{
-		System.out.println("CurrentBalance from CA " + currentBalance);
 		return currentBalance;
+	}
+	public double getCreditCurrentBalance()
+	{
+		return credit;
 	}
 
 }

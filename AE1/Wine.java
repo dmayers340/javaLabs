@@ -7,6 +7,7 @@
 //returned by method in GUI
 public class Wine 
 {
+	//instance vars
 	private String wineName;
 	private double winePrice;
 	private int numberOfBottles;
@@ -19,7 +20,8 @@ public class Wine
 		numberOfBottles = bottleNumber;
 		
 	}
-	//accessor methods to return values of instance vars
+	
+	//methods to return values of instance vars
 	public String getWineName()
 	{
 		return wineName;
