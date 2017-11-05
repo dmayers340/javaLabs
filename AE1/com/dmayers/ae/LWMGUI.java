@@ -1,3 +1,4 @@
+package com.dmayers.ae;
 /*
  * User Interface, handle events=View/Controller Class
  * -Veiw in constructor-controller: actionPerformed
@@ -150,34 +151,29 @@ public class LWMGUI extends JFrame implements ActionListener
 	public void actionPerformed(ActionEvent decideWhichAction)
 	{
 		
-		String tempAmountText = amountText.getText().trim();
+		String amountTextString = amountText.getText().trim();
 		String name = nameText.getText();
-		Double price = Double.parseDouble(priceText.getText());
-		int amount = Integer.parseInt(amountText.getText());
+		String tempPrice = priceText.getText().trim();	//because you were trying to parse here it was throwing the exception 
+														//and stopping your code before it even got to your try catch blocks
 		
-		Wine wine = new Wine(name,price,amount); 
+		int amount = 0;
+		double price = 0.0;
 		
-		//If amount is not an integer, throw error--THIS DOES NOT WORK
+		//If amount is not an integer, throw error--should work now
 		try
 		{
-			amount = Integer.parseInt(tempAmountText);
+			amount = Integer.parseInt(amountTextString);
+			price = Double.parseDouble(tempPrice);
+
 		}
 		catch(NumberFormatException wrongFormat)
 		{
-			JOptionPane.showMessageDialog(null, "Incorrect information provided."); 
+			JOptionPane.showMessageDialog(null, "Incorrect information provided."); // now we try to parse and if we can't we do something
+																					//if we can then all is good and we can create wine 
+																					//(though not sure why you're creating wine...)
 		}
-		
-		//Get price text from string to double
-		String tempPrice = priceText.getText().trim();
-		try 
-		{
-			 price = Double.parseDouble(tempPrice);
-		}
-		catch(NumberFormatException priceException)
-		{
-    		JOptionPane.showMessageDialog(null,  "Incorrect information provided. Please try again"); 
-			System.err.println("Not a double");
-		}
+
+		Wine wine = new Wine(name,price,amount); 
 
 		//Process Sale
 		if (decideWhichAction.getSource()==saleButton)

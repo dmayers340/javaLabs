@@ -1,3 +1,4 @@
+package com.dmayers.ae;
 /*
  * Main method. 1.) Gets customer name and starting balance from JOptionPane
  * Create two Model Objects: Wine and Customer Account. 
