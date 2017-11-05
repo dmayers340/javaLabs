@@ -7,7 +7,6 @@ public class CustomerAccount
 	//instance vars
 	private String customerName;
 	private double currentBalance;
-	private double credit;
 	
 	//other vars
 	public double costBottle;
@@ -15,6 +14,8 @@ public class CustomerAccount
 	public int saleBottles;
 	public double totalCost;
 	public int serviceCharge;
+	public double credit;
+
 	
 	
 	//Constructor to initalize instance vars

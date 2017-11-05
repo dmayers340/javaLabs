@@ -23,12 +23,6 @@ public class AssEx1
 	    {
 	       System.exit(0);
 	    }
-	     // error message if no error
-	     else 
-	     {
-	    	System.out.println(accountName);
-	    	
-	     }
 	    
 	    //Get Account Balance, if text field is empty or don't enter an int will loop through because the do while cannot be completed
 	    double initialAmount= Integer.MAX_VALUE;
@@ -36,6 +30,12 @@ public class AssEx1
 	    do
 	    {		    	
 	    	String accountBalance = JOptionPane.showInputDialog(null, "Please enter your initial balance");
+
+	    	//if users presses cancel or red x at top, exit program
+	    	if (accountBalance == null)
+	    	{
+	    		System.exit(0);
+	    	}
 	    	try 
 	    	{
 	    		initialAmount = Double.parseDouble(accountBalance);
@@ -43,16 +43,6 @@ public class AssEx1
 	    		//Create Customer account and GUI Objs
 	    		CustomerAccount customerAccount = new CustomerAccount(accountName, initialAmount);
 	    		LWMGUI myGUI = new LWMGUI(customerAccount); 
-	    		
-	    		if (initialAmount < 0)
-	    		{
-	    			//IF neg: print out balance with a CR behind it
-	    			System.out.println("Account Balance is a CR");
-	    		}
-	    		else
-	    		{
-	    			System.out.println("Balance is normal");
-	    		}
 	    	}
 	    	catch(Exception exception1)
 	    	{

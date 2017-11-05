@@ -152,33 +152,22 @@ public class LWMGUI extends JFrame implements ActionListener
 		
 		String tempAmountText = amountText.getText().trim();
 		String name = nameText.getText();
-		Double price = Double.parseDouble(priceText.getText());
-		int amount = Integer.parseInt(amountText.getText());
-		
-		Wine wine = new Wine(name,price,amount); 
-		
+		String tempPrice = priceText.getText().trim();
+		int amount = 0;
+		double price = 0;
 		//If amount is not an integer, throw error--THIS DOES NOT WORK
 		try
 		{
 			amount = Integer.parseInt(tempAmountText);
+			price = Double.parseDouble(tempPrice);
+
 		}
 		catch(NumberFormatException wrongFormat)
 		{
 			JOptionPane.showMessageDialog(null, "Incorrect information provided."); 
 		}
-		
-		//Get price text from string to double
-		String tempPrice = priceText.getText().trim();
-		try 
-		{
-			 price = Double.parseDouble(tempPrice);
-		}
-		catch(NumberFormatException priceException)
-		{
-    		JOptionPane.showMessageDialog(null,  "Incorrect information provided. Please try again"); 
-			System.err.println("Not a double");
-		}
 
+		Wine wine = new Wine(name, price, amount);
 		//Process Sale
 		if (decideWhichAction.getSource()==saleButton)
 		{
