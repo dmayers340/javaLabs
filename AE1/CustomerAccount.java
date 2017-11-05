@@ -42,8 +42,8 @@ public class CustomerAccount
 		totalCost = numBottles * costBottle;
 		totalCost = totalCost / 100;
 		
-		//updates account balance
-		currentBalance = currentBalance - totalCost;
+		//updates account balance. Adding because we owe LWM current balance plus total cost.
+		currentBalance = currentBalance + totalCost;
 		
 		//returns total cost as double
 		return totalCost;
@@ -63,8 +63,8 @@ public class CustomerAccount
 		totalCost = numBottles * costBottle * 0.8;
 		totalCost = totalCost / 100;
 		
-		//updates account balance
-		currentBalance = currentBalance + totalCost;
+		//updates account balance, subtracting because LWM owed us money, but now we buy wine
+		currentBalance = currentBalance - totalCost;
 		
 		//return total cost as double
 		return totalCost;

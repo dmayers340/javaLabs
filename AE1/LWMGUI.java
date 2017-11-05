@@ -126,8 +126,19 @@ public class LWMGUI extends JFrame implements ActionListener
 	bottom.add(currentBalanceLabel);
 	
 	//Current Balance Text Field provided by Customer Account
-	updateCurrentBalanceText = new JTextField(" ");	
-	updateCurrentBalanceText.setText(customerAccountObject.getCurrentBalance()+""); 
+	updateCurrentBalanceText = new JTextField(" ");
+	double tempCurrentBalance = customerAccountObject.getCreditCurrentBalance();
+	if (tempCurrentBalance < 0)
+	{
+		double absCurrentBalance = Math.abs(tempCurrentBalance);
+		tempCurrentBalance = absCurrentBalance;
+		updateCurrentBalanceText.setText(tempCurrentBalance +" CR"); 
+	}
+	else
+	{
+		updateCurrentBalanceText.setText(customerAccountObject.getCurrentBalance()+""); 
+	}
+	
 	bottom.add(updateCurrentBalanceText);
 	
 	//add the bottom to layout
