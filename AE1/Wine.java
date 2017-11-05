@@ -10,14 +10,14 @@ public class Wine
 	//instance vars
 	private String wineName;
 	private double winePrice;
-	private int numberOfBottles;
+	private int wineAmount;
 		
 	//constructor to initalize instance variables
 	public Wine(String nameOfWine, double priceOfWine, int bottleNumber)
 	{
 		wineName = nameOfWine; 
 		winePrice = priceOfWine;
-		numberOfBottles = bottleNumber;
+		wineAmount = bottleNumber;
 		
 	}
 	
@@ -34,6 +34,6 @@ public class Wine
 	
 	public int getBottleNumber()
 	{
-		return numberOfBottles;
+		return wineAmount;
 	}
 }

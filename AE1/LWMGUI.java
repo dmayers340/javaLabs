@@ -149,6 +149,7 @@ public class LWMGUI extends JFrame implements ActionListener
 	//Controller-ActionPerformed
 	public void actionPerformed(ActionEvent decideWhichAction)
 	{
+		
 		String tempAmountText = amountText.getText().trim();
 		String name = nameText.getText();
 		Double price = Double.parseDouble(priceText.getText());
@@ -156,24 +157,25 @@ public class LWMGUI extends JFrame implements ActionListener
 		
 		Wine wine = new Wine(name,price,amount); 
 		
-		//If amount is not an integer, throw error
+		//If amount is not an integer, throw error--THIS DOES NOT WORK
 		try
 		{
-			int amountNumber = Integer.parseInt(tempAmountText);
+			amount = Integer.parseInt(tempAmountText);
 		}
-		catch(NumberFormatException x)
+		catch(NumberFormatException wrongFormat)
 		{
-			System.err.println("No Integer");
+			JOptionPane.showMessageDialog(null, "Incorrect information provided."); 
 		}
 		
 		//Get price text from string to double
 		String tempPrice = priceText.getText().trim();
 		try 
 		{
-			double tempPriceDouble = Double.parseDouble(tempPrice);
+			 price = Double.parseDouble(tempPrice);
 		}
 		catch(NumberFormatException priceException)
 		{
+    		JOptionPane.showMessageDialog(null,  "Incorrect information provided. Please try again"); 
 			System.err.println("Not a double");
 		}
 
@@ -208,8 +210,22 @@ public class LWMGUI extends JFrame implements ActionListener
 		
 		//update the total amount and current balance boxes
 		totalAmountText.setText(customerAccountObject.getTotalCost()+""); 
-		updateCurrentBalanceText.setText(customerAccountObject.getCurrentBalance()+""); 
-
+		
+		//updateCurrentBalanceText.setText(customerAccountObject.getCurrentBalance()+""); if only have this line the result will be in a negative
+		
+		//this if-else works for everything but sale when initial balance is negative
+		double tempCurrentBalance = customerAccountObject.getCreditCurrentBalance();
+		if (tempCurrentBalance < 0)
+		{
+			double absCurrentBalance = Math.abs(tempCurrentBalance);
+			tempCurrentBalance = absCurrentBalance;
+			updateCurrentBalanceText.setText(tempCurrentBalance +" CR"); 
+		}
+		else
+		{
+			updateCurrentBalanceText.setText(customerAccountObject.getCurrentBalance()+""); 
+		}
+		
 		
 	}	
 	private void printReturn()
