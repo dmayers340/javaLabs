@@ -1,3 +1,4 @@
+package com.dmayers.ae;
 /* Model class to define Customer account. Stores customer name
  * current balance, and performs operations to balance to update
  * instance var: int current balance, string customerName

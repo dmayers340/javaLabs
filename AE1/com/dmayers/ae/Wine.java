@@ -1,3 +1,4 @@
+package com.dmayers.ae;
 /*
  * Model Class
  * represented info about type of wine involved in transaction
