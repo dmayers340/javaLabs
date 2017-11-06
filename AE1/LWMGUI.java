@@ -64,7 +64,6 @@ public class LWMGUI extends JFrame implements ActionListener
 	//Get Product Name from User Input
 	nameText = new JTextField(10);
 	nameText.addActionListener(this);
-	System.out.println(nameText.getText());
 	middle.add(nameText);
 
 	//Product Amount Label
@@ -74,7 +73,6 @@ public class LWMGUI extends JFrame implements ActionListener
 	
 	//Get Product Amount from User Input
 	amountText = new JTextField(10);
-	System.out.println(amountText.getText());
 	middle.add(amountText);
 	
 	//Product Cost
@@ -84,7 +82,6 @@ public class LWMGUI extends JFrame implements ActionListener
 	
 	//Get Product Cost from User Input
 	priceText = new JTextField(10);
-	System.out.println(priceText.getText());
 	middle.add(priceText);
 	
 	//Label to be switched to transaction information
@@ -175,7 +172,7 @@ public class LWMGUI extends JFrame implements ActionListener
 		if (decideWhichAction.getSource()==saleButton)
 		{
 			customerAccountObject.Sale(wine);
-			printTransaction();
+			printSale();
 		}
 		//Process Return
 		else if (decideWhichAction.getSource()==returnButton)
@@ -185,8 +182,9 @@ public class LWMGUI extends JFrame implements ActionListener
 		}
 	
 	}
-		
-	private void printTransaction() 
+	
+	//Print Sale
+	private void printSale() 
 	{
 		String name = nameText.getText();
 		String amount = amountText.getText();
@@ -203,10 +201,8 @@ public class LWMGUI extends JFrame implements ActionListener
 		//update the total amount and current balance boxes
 		totalAmountText.setText(customerAccountObject.getTotalCost()+""); 
 		
-		//updateCurrentBalanceText.setText(customerAccountObject.getCurrentBalance()+""); if only have this line the result will be in a negative
-		
-		//this if-else works for everything but sale when initial balance is negative
-		double tempCurrentBalance = customerAccountObject.getCreditCurrentBalance();
+		//If return turns the current balance to a negative number, it displays the negative amount rather than positive number with a CR
+		double tempCurrentBalance = customerAccountObject.getCurrentBalance();
 		if (tempCurrentBalance < 0)
 		{
 			double absCurrentBalance = Math.abs(tempCurrentBalance);
@@ -215,11 +211,11 @@ public class LWMGUI extends JFrame implements ActionListener
 		}
 		else
 		{
-			updateCurrentBalanceText.setText(customerAccountObject.getCurrentBalance()+""); 
+			updateCurrentBalanceText.setText(tempCurrentBalance +""); 
 		}
-		
-		
 	}	
+	
+	//Print Return Method
 	private void printReturn()
 	{
 		String name = nameText.getText();
@@ -236,6 +232,17 @@ public class LWMGUI extends JFrame implements ActionListener
 		
 		//update the total amount and current balance boxes
 		totalAmountText.setText(customerAccountObject.getTotalCost()+""); 
-		updateCurrentBalanceText.setText(customerAccountObject.getCurrentBalance()+""); 
+		
+		double tempCurrentBalance = customerAccountObject.getCurrentBalance();
+		if (tempCurrentBalance < 0)
+		{
+			double absCurrentBalance = Math.abs(tempCurrentBalance);
+			tempCurrentBalance = absCurrentBalance;
+			updateCurrentBalanceText.setText(tempCurrentBalance +" CR"); 
+		}
+		else
+		{
+			updateCurrentBalanceText.setText(tempCurrentBalance +""); 
+		}
 	}
 }

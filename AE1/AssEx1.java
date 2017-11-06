@@ -47,7 +47,6 @@ public class AssEx1
 	    	catch(Exception exception1)
 	    	{
 	    		JOptionPane.showMessageDialog(null,  "Incorrect information provided. Please try again"); 
-	    		System.out.println("No double");
 	    	}
 	    }
 	    while (initialAmount == Integer.MAX_VALUE);		
