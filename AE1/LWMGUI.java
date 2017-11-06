@@ -1,9 +1,8 @@
-/*
- * User Interface, handle events=View/Controller Class
- * -Veiw in constructor-controller: actionPerformed
- * 1. Layout components
- * 2. Listen for events
- * Process Sales and Returns
+/* View/Controller Class. User Interface. 
+ * It will: 
+ * 1.) Lay out components
+ * 2.) Listen for events
+ * 3.) Process sales and returns
  */
 import java.awt.*;
 import java.awt.event.*;
@@ -16,7 +15,7 @@ public class LWMGUI extends JFrame implements ActionListener
 	private JLabel totalAmountLabel, label, nameLabel, priceLabel, amountLabel, fillerLabel, currentBalanceLabel;
 	private JButton saleButton, returnButton;
 	
-	//create the CustomerAccount object
+	//create the CustomerAccount object reference
 	private CustomerAccount customerAccountObject;
 	
 	//Set up the GUI
@@ -37,27 +36,21 @@ public class LWMGUI extends JFrame implements ActionListener
 	//Setting up the components of the GUI Design
 	private void layoutComponents()
 	{ 
-	//Setting a font I can read
+	//Setting a font that is more readable. 
 	Font readableFont = new Font("Arial", Font.BOLD, 14);
 	
 	//Top area
 	top = new JPanel();
 	top.setBackground(Color.WHITE);
-	
-	//Opening Phrase
 	label = new JLabel("Welcome to Lilybank Wine Merchants Transaction Center");
 	label.setFont(readableFont);
-	
-	//add label and area to Layout
 	top.add(label);
 	add(top, BorderLayout.NORTH);
 	
 	//middle area 
 	middle = new JPanel();
 	middle.setBackground(Color.WHITE);
-	
-	//Product Name Label
-	nameLabel = new JLabel("Please enter the product name");
+	nameLabel = new JLabel("Please enter the product name"); //product name label
 	nameLabel.setFont(readableFont);
 	middle.add(nameLabel);
 	
@@ -145,7 +138,7 @@ public class LWMGUI extends JFrame implements ActionListener
 	bottom.setVisible(true);
 	}
 	
-	//Controller-ActionPerformed
+	//Controller-ActionPerformed Method
 	public void actionPerformed(ActionEvent decideWhichAction)
 	{
 		
@@ -154,7 +147,8 @@ public class LWMGUI extends JFrame implements ActionListener
 		String tempPrice = priceText.getText().trim();
 		int amount = 0;
 		double price = 0;
-		//If amount is not an integer, throw error--THIS DOES NOT WORK
+		
+		//If amount is not an integer, or price is not a double throw error
 		try
 		{
 			amount = Integer.parseInt(tempAmountText);
@@ -165,7 +159,8 @@ public class LWMGUI extends JFrame implements ActionListener
 		{
 			JOptionPane.showMessageDialog(null, "Incorrect information provided."); 
 		}
-
+		
+		//creating new wine object to use in Sale and Return methods
 		Wine wine = new Wine(name, price, amount);
 		
 		//Process Sale
@@ -186,6 +181,7 @@ public class LWMGUI extends JFrame implements ActionListener
 	//Print Sale
 	private void printSale() 
 	{
+		//get name, amount, and price 
 		String name = nameText.getText();
 		String amount = amountText.getText();
 		String price = priceText.getText();
@@ -201,12 +197,13 @@ public class LWMGUI extends JFrame implements ActionListener
 		//update the total amount and current balance boxes
 		totalAmountText.setText(customerAccountObject.getTotalCost()+""); 
 		
-		//If return turns the current balance to a negative number, it displays the negative amount rather than positive number with a CR
+		//set a temporary current balance to check if negative
 		double tempCurrentBalance = customerAccountObject.getCurrentBalance();
+
+		//If current balance is a negative number, it displays a positive number with a CR
 		if (tempCurrentBalance < 0)
 		{
-			double absCurrentBalance = Math.abs(tempCurrentBalance);
-			tempCurrentBalance = absCurrentBalance;
+			tempCurrentBalance = Math.abs(tempCurrentBalance);
 			updateCurrentBalanceText.setText(tempCurrentBalance +" CR"); 
 		}
 		else
@@ -218,6 +215,7 @@ public class LWMGUI extends JFrame implements ActionListener
 	//Print Return Method
 	private void printReturn()
 	{
+		//get name, amount, and price 
 		String name = nameText.getText();
 		String amount = amountText.getText();
 		String price = priceText.getText();
@@ -232,12 +230,14 @@ public class LWMGUI extends JFrame implements ActionListener
 		
 		//update the total amount and current balance boxes
 		totalAmountText.setText(customerAccountObject.getTotalCost()+""); 
-		
+
+		//set a temporary current balance to check if negative
 		double tempCurrentBalance = customerAccountObject.getCurrentBalance();
+		
+		//If current balance is a negative number, it displays a positive number with a CR
 		if (tempCurrentBalance < 0)
 		{
-			double absCurrentBalance = Math.abs(tempCurrentBalance);
-			tempCurrentBalance = absCurrentBalance;
+			tempCurrentBalance = Math.abs(tempCurrentBalance);
 			updateCurrentBalanceText.setText(tempCurrentBalance +" CR"); 
 		}
 		else

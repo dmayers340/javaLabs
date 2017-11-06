@@ -9,16 +9,12 @@ import javax.swing.JOptionPane;
 
 public class AssEx1 
 {	
-	Wine wineObject;
-	static CustomerAccount customerAccount;
-	
-	
 	public static void main(String [] args)
 	{	
 		//JOptionPane1 get User Name
 	   String accountName = JOptionPane.showInputDialog("Please Enter The Account Name");
 
-	    //If nothing is answered, quit the system
+	    //If no input, quit the system
 	    if (accountName.isEmpty())
 	    {
 	       System.exit(0);
@@ -36,15 +32,17 @@ public class AssEx1
 	    	{
 	    		System.exit(0);
 	    	}
+	    	
+	    	//exception if cannot parse the amount
 	    	try 
 	    	{
 	    		initialAmount = Double.parseDouble(accountBalance);
 	    		
-	    		//Create Customer account and GUI Objs
+	    		//Create Customer account and GUI OBJs
 	    		CustomerAccount customerAccount = new CustomerAccount(accountName, initialAmount);
 	    		LWMGUI myGUI = new LWMGUI(customerAccount); 
 	    	}
-	    	catch(Exception exception1)
+	    	catch(Exception badInfo)
 	    	{
 	    		JOptionPane.showMessageDialog(null,  "Incorrect information provided. Please try again"); 
 	    	}

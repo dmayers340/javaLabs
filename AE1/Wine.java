@@ -1,10 +1,11 @@
-/*
- * Model Class
- * represented info about type of wine involved in transaction
- * Instance var: wineName, double price of bottle, int quantity needed
- * 
+/* Model Class
+ * Represents info about type of wine involved in transaction
+ * Instance var: wineName, double price of bottle, int quantity 
+ * Contains:
+ * 1.) Constructor to initialize instance vars
+ * 2.) Methods to return instance var values
  */
-//returned by method in GUI
+
 public class Wine 
 {
 	//instance vars
