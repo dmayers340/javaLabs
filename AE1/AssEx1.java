@@ -24,7 +24,7 @@ public class AssEx1
 	       System.exit(0);
 	    }
 	    
-	    //Get Account Balance, if text field is empty or don't enter an int will loop through because the do while cannot be completed
+	    //Get Account Balance, if text field is empty or user doesn't enter an int the program will loop through because the do while cannot be completed w/ MAX_VALUE
 	    double initialAmount= Integer.MAX_VALUE;
 	    
 	    do

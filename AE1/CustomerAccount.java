@@ -9,14 +9,10 @@ public class CustomerAccount
 	private double currentBalance;
 	
 	//other vars
-	public double costBottle;
-	public int numBottles;
 	public int saleBottles;
 	public double totalCost;
 	public int serviceCharge;
 	public double credit;
-
-	
 	
 	//Constructor to initalize instance vars
 	CustomerAccount(String name, double currentBalance)
@@ -32,16 +28,15 @@ public class CustomerAccount
 	//Method to process Sale
 	public double Sale(Wine wine)
 	{
+
 		//Wine price per bottle
-		costBottle = wine.getWinePrice();
-		costBottle = costBottle * 100;
+		double costBottle = wine.getWinePrice();
 		
 		//Num Bottles
-		numBottles = wine.getBottleNumber();
+		int numBottles = wine.getBottleNumber();
 		
 		//TotalCost
 		totalCost = numBottles * costBottle;
-		totalCost = totalCost / 100;
 		
 		//updates account balance. Adding because we owe LWM current balance plus total cost.
 		currentBalance = currentBalance + totalCost;
@@ -54,15 +49,13 @@ public class CustomerAccount
 	public double Return(Wine wine)
 	{	
 		//Wine Price
-		costBottle = wine.getWinePrice();
-		costBottle = costBottle * 100;
+		double costBottle = wine.getWinePrice();
 				
 		//Num Bottles
-		numBottles = wine.getBottleNumber();
+		int numBottles = wine.getBottleNumber();
 		
 		//Total Cost
 		totalCost = numBottles * costBottle * 0.8;
-		totalCost = totalCost / 100;
 		
 		//updates account balance, subtracting because LWM owed us money, but now we buy wine
 		currentBalance = currentBalance - totalCost;

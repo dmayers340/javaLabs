@@ -128,6 +128,8 @@ public class LWMGUI extends JFrame implements ActionListener
 	//Current Balance Text Field provided by Customer Account
 	updateCurrentBalanceText = new JTextField(" ");
 	double tempCurrentBalance = customerAccountObject.getCreditCurrentBalance();
+	
+	//if the initial Balance is negative, set as a positive number with CR
 	if (tempCurrentBalance < 0)
 	{
 		double absCurrentBalance = Math.abs(tempCurrentBalance);
@@ -168,6 +170,7 @@ public class LWMGUI extends JFrame implements ActionListener
 		}
 
 		Wine wine = new Wine(name, price, amount);
+		
 		//Process Sale
 		if (decideWhichAction.getSource()==saleButton)
 		{
