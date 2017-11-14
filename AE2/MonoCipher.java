@@ -10,7 +10,9 @@ public class MonoCipher
 	/** The alphabet. */
 	private char [] alphabet;
 	
-	/** The cipher array. */
+	/** The cipher array.
+	 * Will take keyword as the first letters and then make the rest of the alpabet after
+	 */
 	private char [] cipher;
 
 	/**
@@ -24,6 +26,7 @@ public class MonoCipher
 		for (int i = 0; i < SIZE; i++)
 			alphabet[i] = (char)('A' + i);
 		
+		System.out.println("monoc " + keyword);
 		// create first part of cipher from keyword
 		// create remainder of cipher from the remaining characters of the alphabet
 		// print cipher array for testing and tutors

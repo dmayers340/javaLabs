@@ -15,6 +15,7 @@ import java.util.*;
  */
 public class CipherGUI extends JFrame implements ActionListener
 {
+	
 	//instance variables which are the components
 	private JPanel top, bottom, middle;
 	private JButton monoButton, vigenereButton;
@@ -27,6 +28,8 @@ public class CipherGUI extends JFrame implements ActionListener
 	private MonoCipher mcipher;
 	private VCipher vcipher;
 	
+	private String userKeyword;
+	
 	/**
 	 * The constructor adds all the components to the frame
 	 */
@@ -37,6 +40,7 @@ public class CipherGUI extends JFrame implements ActionListener
 		this.setTitle("Cipher GUI");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.layoutComponents();
+		
 	}
 	
 	/**
@@ -63,7 +67,6 @@ public class CipherGUI extends JFrame implements ActionListener
 		this.add(middle,BorderLayout.CENTER);
 		
 		//bottom panel is green and contains 2 buttons
-		
 		bottom = new JPanel();
 		bottom.setBackground(Color.white);
 		//create mono button and add it to the top panel
@@ -85,9 +88,34 @@ public class CipherGUI extends JFrame implements ActionListener
 	 */
 	public void actionPerformed(ActionEvent e)
 	{
+		this.getKeyword();
+		this.processFileName();
+		
+		if (e.getSource()==monoButton)
+		{
+			System.out.println(getKeyword());
+			System.out.println(processFileName());
+			
+			//create a monocipher obj named mcipher, give it the userKeyword
+			MonoCipher mcipher = new MonoCipher(userKeyword);
+			//mcipher.encode(ch);
+			//mcipher.decode();
+			
+			this.processFile(false);
+
+		}
+		else if (e.getSource()==vigenereButton)
+		{
+			this.processFile(true);
+
+			//do vigstuff
+		}
+
+
 	    // your code
 	}
 	
+
 	/** 
 	 * Obtains cipher keyword
 	 * If the keyword is invalid, a message is produced
@@ -95,6 +123,9 @@ public class CipherGUI extends JFrame implements ActionListener
 	 */
 	private boolean getKeyword()
 	{
+		userKeyword = keyField.getText();
+		System.out.println(userKeyword);
+		
 	    return true;  // replace with your code
 	}
 	
@@ -107,7 +138,9 @@ public class CipherGUI extends JFrame implements ActionListener
 	 */
 	private boolean processFileName()
 	{
-	    return true;  // replace with your code
+		String userFileName = messageField.getText();
+		System.out.println(userFileName);
+		return true;
 	}
 	
 	/** 
@@ -119,6 +152,49 @@ public class CipherGUI extends JFrame implements ActionListener
 	 */
 	private boolean processFile(boolean vigenere)
 	{
-	    return true;  // replace with your code
+		FileReader userFileReader = null;
+		try
+		{
+			try
+			{
+				userFileReader = new FileReader("messageP.txt");
+				boolean finishedReading = false;
+				
+				while (!finishedReading)
+				{
+					//keep reading characters until -1 
+					int nextChar = userFileReader.read();
+					
+					// -1 indicates EOF
+					if (nextChar == -1)
+					{
+						//if EOF then it is finished
+						finishedReading = true;
+					}
+					else
+					{
+						//make nextChar into chars
+						char fileChar = (char) nextChar;
+						System.out.print(fileChar);
+					}
+				}
+			}	
+			finally 
+			{
+				//even if exception is raised
+				System.out.println("EOF");
+				//close the file
+				if (userFileReader != null)
+				{
+					userFileReader.close();
+				}
+			}
+		}
+		catch (IOException noFileFound)
+		{
+			System.err.println("Could not find file: " + noFileFound);
+		}
+		
+			return true;
 	}
 }
