@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * Programming AE2
  * Contains monoalphabetic cipher and methods to encode and decode a character.
@@ -27,6 +29,20 @@ public class MonoCipher
 			alphabet[i] = (char)('A' + i);
 		
 		System.out.println("monoc " + keyword);
+		char keywordArray[] = new char[(keyword.length())];
+		for (int keywordLength =0; keywordLength<keyword.length();keywordLength++)
+		{
+			for (int alphabetLength = 0; alphabetLength<SIZE; alphabetLength++)
+			{
+				if (alphabet[alphabetLength]==keyword.charAt(keywordLength))
+				{
+					keywordArray[keywordLength]=cipher[alphabetLength];
+				}
+			}
+		}
+		//[ , , ]?? WITH KEYWORD ABC
+		System.out.println(Arrays.toString(keywordArray));
+		System.out.println(Arrays.toString(alphabet));
 		// create first part of cipher from keyword
 		// create remainder of cipher from the remaining characters of the alphabet
 		// print cipher array for testing and tutors
