@@ -121,12 +121,32 @@ public class CipherGUI extends JFrame implements ActionListener
 	 * If the keyword is invalid, a message is produced
 	 * @return whether a valid keyword was entered
 	 */
+	boolean keywordisValid;
+
 	private boolean getKeyword()
 	{
-		userKeyword = keyField.getText();
-		System.out.println(userKeyword);
-		
-	    return true;  // replace with your code
+		userKeyword = keyField.getText().toUpperCase();
+		try
+		{
+			if (keyField.getText().equals("")) //if empty show error message
+			{
+				JOptionPane.showMessageDialog(null,  "Keyword cannot be empty");
+				keywordisValid = false;
+			}
+
+			else
+			{
+				keywordisValid = true;
+				
+			}
+			keyField.setText("");//set back to nothing
+		}
+		catch(NumberFormatException exception)
+		{
+			JOptionPane.showMessageDialog(null, "Incorrect Keyword Input");
+		}
+		return keywordisValid;
+
 	}
 	
 	/** 
@@ -136,9 +156,14 @@ public class CipherGUI extends JFrame implements ActionListener
 	 * The details obtained from the filename must be remembered
 	 * @return whether a valid filename was entered
 	 */
+	String userFileName;
 	private boolean processFileName()
 	{
-		String userFileName = messageField.getText();
+		userFileName = messageField.getText();
+		if (userFileName.equals(""))
+		{
+			JOptionPane.showMessageDialog(null,  "Cannot Be Empty");
+		}
 		System.out.println(userFileName);
 		return true;
 	}
@@ -150,6 +175,8 @@ public class CipherGUI extends JFrame implements ActionListener
 	 * @param vigenere whether the encoding is Vigenere (true) or Mono (false)
 	 * @return whether the I/O operations were successful
 	 */
+	String fileText;
+
 	private boolean processFile(boolean vigenere)
 	{
 		FileReader userFileReader = null;
@@ -157,7 +184,7 @@ public class CipherGUI extends JFrame implements ActionListener
 		{
 			try
 			{
-				userFileReader = new FileReader("messageP.txt");
+				userFileReader = new FileReader(userFileName + ".txt");
 				boolean finishedReading = false;
 				
 				while (!finishedReading)
@@ -176,13 +203,14 @@ public class CipherGUI extends JFrame implements ActionListener
 						//make nextChar into chars
 						char fileChar = (char) nextChar;
 						System.out.print(fileChar);
+						
 					}
 				}
 			}	
 			finally 
 			{
 				//even if exception is raised
-				System.out.println("EOF");
+				System.out.println("\nEOF");
 				//close the file
 				if (userFileReader != null)
 				{
@@ -194,7 +222,7 @@ public class CipherGUI extends JFrame implements ActionListener
 		{
 			System.err.println("Could not find file: " + noFileFound);
 		}
-		
+		System.out.println(fileText);
 			return true;
 	}
 }

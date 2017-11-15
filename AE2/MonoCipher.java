@@ -13,9 +13,10 @@ public class MonoCipher
 	private char [] alphabet;
 	
 	/** The cipher array.
-	 * Will take keyword as the first letters and then make the rest of the alpabet after
+	 * Will take keyword as the first letters and then make the rest of the alphabet after
 	 */
 	private char [] cipher;
+	
 
 	/**
 	 * Instantiates a new mono cipher.
@@ -26,26 +27,46 @@ public class MonoCipher
 		//create alphabet
 		alphabet = new char [SIZE];
 		for (int i = 0; i < SIZE; i++)
-			alphabet[i] = (char)('A' + i);
-		
-		System.out.println("monoc " + keyword);
-		char keywordArray[] = new char[(keyword.length())];
-		for (int keywordLength =0; keywordLength<keyword.length();keywordLength++)
+			alphabet[i] = (char)('Z' - i);
+				
+		// create first part of cipher from keyword
+		cipher = new char [SIZE];
+		for (int i = 0; i < keyword.length(); i++) 
 		{
-			for (int alphabetLength = 0; alphabetLength<SIZE; alphabetLength++)
+			cipher[i] = keyword.charAt(i);	
+		}
+		
+		//backwards alphabet should start at count which is the end of the keyword 
+		int count = keyword.length();
+		
+		//if in the keyword add to cipher
+		boolean inKeyword;
+
+		for (char currentLetter: alphabet) 
+		{
+			inKeyword = false;
+			for (int j = 0; j < keyword.length(); j++)
 			{
-				if (alphabet[alphabetLength]==keyword.charAt(keywordLength))
+				if (currentLetter == keyword.charAt(j)) 
 				{
-					keywordArray[keywordLength]=cipher[alphabetLength];
-				}
+					//if letter is in keyword, add to cipher at beginning 
+					inKeyword = true;
+				}				
+			}
+			// create remainder of cipher from the remaining characters of the alphabet
+			if(!inKeyword) 
+			{
+				cipher[count] = currentLetter; //letter not in cipher 
+				count ++; //increase index
 			}
 		}
-		//[ , , ]?? WITH KEYWORD ABC
-		System.out.println(Arrays.toString(keywordArray));
+		
+		//set alphabet array back to normal
+		for (int k = 0; k < SIZE; k++)
+			alphabet[k] = (char)('A' + k);
+		// print cipher array for testing and tutors                                                                                                                                                                                                                                                                                       
 		System.out.println(Arrays.toString(alphabet));
-		// create first part of cipher from keyword
-		// create remainder of cipher from the remaining characters of the alphabet
-		// print cipher array for testing and tutors
+		System.out.println(Arrays.toString(cipher));
 	}
 	
 	/**
@@ -54,8 +75,19 @@ public class MonoCipher
 	 * @return the encoded character
 	 */
 	public char encode(char ch)
-	{
-	    return ' ';  // replace with your code
+	{	
+		char character = ch;
+		boolean findCharacter = false;
+		
+		for(int i=0; i<SIZE && !findCharacter; i++)
+		{
+			if(ch == alphabet[i])
+			{
+				character = cipher[i];
+				findCharacter = true;
+			}			
+		}	
+		return character;
 	}
 
 	/**
@@ -65,6 +97,11 @@ public class MonoCipher
 	 */
 	public char decode(char ch)
 	{
-	    return ' ';  // replace with your code
+		char decoded = ch;
+		for (int i=0; i<SIZE; i++)
+		{
+			decoded = alphabet[i];
+		}
+	    return decoded;  // replace with your code
 	}
 }
