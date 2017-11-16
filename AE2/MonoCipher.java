@@ -77,14 +77,14 @@ public class MonoCipher
 	public char encode(char ch)
 	{	
 		char character = ch;
-		boolean findCharacter = false;
+		boolean foundChar = false;
 		
-		for(int i=0; i<SIZE && !findCharacter; i++)
+		for(int i=0; i<SIZE && !foundChar; i++)
 		{
 			if(ch == alphabet[i])
 			{
 				character = cipher[i];
-				findCharacter = true;
+				foundChar = true;
 			}			
 		}	
 		return character;
@@ -97,11 +97,13 @@ public class MonoCipher
 	 */
 	public char decode(char ch)
 	{
-		char decoded = ch;
+		char decodedChar = ch;
+		boolean foundChar = false;
 		for (int i=0; i<SIZE; i++)
 		{
-			decoded = alphabet[i];
+			decodedChar = alphabet[i];
+			foundChar = true;
 		}
-	    return decoded;  // replace with your code
+	    return decodedChar;  // replace with your code
 	}
 }

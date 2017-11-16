@@ -27,8 +27,11 @@ public class CipherGUI extends JFrame implements ActionListener
 	//some way of indicating whether encoding or decoding is to be done
 	private MonoCipher mcipher;
 	private VCipher vcipher;
+	private LetterFrequencies frequentLetters;
 	
 	private String userKeyword;
+	
+	boolean vigenere;
 	
 	/**
 	 * The constructor adds all the components to the frame
@@ -93,26 +96,17 @@ public class CipherGUI extends JFrame implements ActionListener
 		
 		if (e.getSource()==monoButton)
 		{
-			System.out.println(getKeyword());
-			System.out.println(processFileName());
-			
 			//create a monocipher obj named mcipher, give it the userKeyword
-			MonoCipher mcipher = new MonoCipher(userKeyword);
-			//mcipher.encode(ch);
-			//mcipher.decode();
-			
-			this.processFile(false);
-
+			mcipher = new MonoCipher(userKeyword);
+			vigenere = false;
+			this.processFile(vigenere);
 		}
 		else if (e.getSource()==vigenereButton)
 		{
-			this.processFile(true);
-
-			//do vigstuff
+			vcipher = new VCipher(userKeyword);
+			vigenere = true;
+			this.processFile(vigenere);
 		}
-
-
-	    // your code
 	}
 	
 
@@ -121,32 +115,39 @@ public class CipherGUI extends JFrame implements ActionListener
 	 * If the keyword is invalid, a message is produced
 	 * @return whether a valid keyword was entered
 	 */
-	boolean keywordisValid;
-
 	private boolean getKeyword()
-	{
+	{		
+		//get keyword from textfield
 		userKeyword = keyField.getText().toUpperCase();
-		try
+		
+		//check if keyword is valid 1.) Not null. 2.) no duplicate letters
+		if (userKeyword.isEmpty())
 		{
-			if (keyField.getText().equals("")) //if empty show error message
-			{
-				JOptionPane.showMessageDialog(null,  "Keyword cannot be empty");
-				keywordisValid = false;
-			}
-
-			else
-			{
-				keywordisValid = true;
-				
-			}
-			keyField.setText("");//set back to nothing
+			JOptionPane.showMessageDialog(null, "Keyword Cannot be empty");
+			keyField.setText(""); //reset keyField 
 		}
-		catch(NumberFormatException exception)
-		{
-			JOptionPane.showMessageDialog(null, "Incorrect Keyword Input");
-		}
-		return keywordisValid;
-
+		
+//		//check for duplicates
+//		for (int i =0; i<userKeyword.length(); i++)
+//		{
+//			inKeyword = false;
+//			
+//			//check again, like alphabet
+//			for (int j = 0; j<userKeyword.length(); j++)
+//			{
+//				if (userKeyword.charAt(i) == userKeyword.charAt(j))
+//				{
+//					inKeyword = true;
+//					count++;
+//				}
+//			}
+//			if(inKeyword)
+//			{
+//				JOptionPane.showMessageDialog(null, "Cannot have duplicate letters");
+//				keyField.setText("");
+//			}
+//		}
+		return true;
 	}
 	
 	/** 
@@ -156,15 +157,16 @@ public class CipherGUI extends JFrame implements ActionListener
 	 * The details obtained from the filename must be remembered
 	 * @return whether a valid filename was entered
 	 */
-	String userFileName;
+	private String userFileName;
+	
 	private boolean processFileName()
 	{
 		userFileName = messageField.getText();
+		
 		if (userFileName.equals(""))
 		{
 			JOptionPane.showMessageDialog(null,  "Cannot Be Empty");
 		}
-		System.out.println(userFileName);
 		return true;
 	}
 	
@@ -175,11 +177,13 @@ public class CipherGUI extends JFrame implements ActionListener
 	 * @param vigenere whether the encoding is Vigenere (true) or Mono (false)
 	 * @return whether the I/O operations were successful
 	 */
-	String fileText;
+	
 
 	private boolean processFile(boolean vigenere)
-	{
+	{	
+		char fileChar = 0;
 		FileReader userFileReader = null;
+
 		try
 		{
 			try
@@ -201,12 +205,14 @@ public class CipherGUI extends JFrame implements ActionListener
 					else
 					{
 						//make nextChar into chars
-						char fileChar = (char) nextChar;
+						fileChar = (char) nextChar;
 						System.out.print(fileChar);
+						char characterMEncoded = mcipher.encode(fileChar);
+						System.out.println(characterMEncoded);
 						
 					}
 				}
-			}	
+			}
 			finally 
 			{
 				//even if exception is raised
@@ -221,8 +227,9 @@ public class CipherGUI extends JFrame implements ActionListener
 		catch (IOException noFileFound)
 		{
 			System.err.println("Could not find file: " + noFileFound);
-		}
-		System.out.println(fileText);
-			return true;
+		}		
+
+
+		return true;
 	}
 }
