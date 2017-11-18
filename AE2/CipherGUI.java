@@ -206,10 +206,9 @@ public class CipherGUI extends JFrame implements ActionListener
 					{
 						//make nextChar into chars
 						fileChar = (char) nextChar;
-						System.out.print(fileChar);
+						System.out.print(Character.toString(fileChar));
 						char characterMEncoded = mcipher.encode(fileChar);
-						System.out.println(characterMEncoded);
-						
+						System.out.println(Character.toString(characterMEncoded));
 					}
 				}
 			}

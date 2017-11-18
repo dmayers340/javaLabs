@@ -64,6 +64,7 @@ public class MonoCipher
 		//set alphabet array back to normal
 		for (int k = 0; k < SIZE; k++)
 			alphabet[k] = (char)('A' + k);
+		
 		// print cipher array for testing and tutors                                                                                                                                                                                                                                                                                       
 		System.out.println(Arrays.toString(alphabet));
 		System.out.println(Arrays.toString(cipher));
