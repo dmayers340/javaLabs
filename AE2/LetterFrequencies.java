@@ -49,7 +49,18 @@ public class LetterFrequencies
 	 */
 	public void addChar(char ch)
 	{
-	    // your code
+		char characterFrequent = ch;
+		boolean foundCharInText = false;
+		
+		for(int i = 0; i<SIZE && !foundCharInText; i++)
+		{
+			if(characterFrequent == alphabet[i])
+			{
+				foundCharInText = true;
+				alphaCounts[i]++; //increase count of each individual letter
+				totChars++; //increase total numbers
+			}
+		}
 	}
 	
 	/**
@@ -57,8 +68,20 @@ public class LetterFrequencies
 	 * @return the maximum frequency
 	 */
 	private double getMaxPC()
-        {
-	    return 0.0;  // replace with your code
+    {
+		int maxChar = 0;
+		
+		for(int i =0; i<SIZE; i++)
+		{
+			if(maxChar < alphaCounts[i])
+			{
+				maxChar = alphaCounts[i];
+				maxCh = alphabet[i];
+			}
+		}
+		
+		double max = (double)maxChar/totChars;
+		return max;
 	}
 	
 	/**
@@ -67,6 +90,9 @@ public class LetterFrequencies
 	 */
 	public String getReport()
 	{
-	    return "";  // replace with your code
+		String textReport = "";
+		
+		String 
+		
 	}
 }
