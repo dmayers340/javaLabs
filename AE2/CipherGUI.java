@@ -29,7 +29,12 @@ public class CipherGUI extends JFrame implements ActionListener
 	private VCipher vcipher;
 	private LetterFrequencies frequentLetters;
 	
+	private char characterMEncoded;
+	
 	private String userKeyword;
+	int userFileNameLength;
+	String userFileName = "";
+	private String encodedString;
 	
 	boolean vigenere;
 	
@@ -157,17 +162,32 @@ public class CipherGUI extends JFrame implements ActionListener
 	 * The details obtained from the filename must be remembered
 	 * @return whether a valid filename was entered
 	 */
-	private String userFileName;
 	
 	private boolean processFileName()
 	{
 		userFileName = messageField.getText();
 		
+		/*Check file name. If the last letter is a P, file should be encoded
+		 * If it is a C, needs to be decoded
+		*D file is decrypted and should be equal to P
+		*/
+		
+		//first find last letter
+		int userFileNameLength = userFileName.length();
 		if (userFileName.equals(""))
 		{
 			JOptionPane.showMessageDialog(null,  "Cannot Be Empty");
+			return false;
 		}
-		return true;
+		else if (userFileName.charAt(userFileNameLength-1) == 'P' || userFileName.charAt(userFileNameLength-1) == 'C')
+		{
+			return true;
+		}
+		else 
+		{
+			JOptionPane.showMessageDialog(null,  "Please enter a valid file name");
+			return false;
+		}
 	}
 	
 	/** 
@@ -183,7 +203,15 @@ public class CipherGUI extends JFrame implements ActionListener
 	{	
 		char fileChar = 0;
 		FileReader userFileReader = null;
+		FileWriter userFileWriter = null;
+		
+		//File Outputs
+		String encodedFile = userFileName + (userFileNameLength - 1) + "C.txt"; //Encoded file
+		String decodedFile = userFileName + (userFileNameLength - 1) + "D.txt";	//decoded file
+		String frequencyFile = userFileName + (userFileNameLength - 1) + "F.txt"; //frequency file
 
+
+		//file reading
 		try
 		{
 			try
@@ -206,9 +234,18 @@ public class CipherGUI extends JFrame implements ActionListener
 					{
 						//make nextChar into chars
 						fileChar = (char) nextChar;
+						
+						//encode character
+						characterMEncoded = mcipher.encode(fileChar);
+						
+						//add to letter frequencies
+						//frequentLetters.addChar(characterMEncoded); 
+						
 						System.out.print(Character.toString(fileChar));
-						char characterMEncoded = mcipher.encode(fileChar);
-						System.out.println(Character.toString(characterMEncoded));
+						System.out.println(encodedString);
+						
+						//char charDecoded = mcipher.decode(fileChar);
+						//System.out.println("decode " + String.valueOf(charDecoded));
 					}
 				}
 			}
@@ -222,13 +259,12 @@ public class CipherGUI extends JFrame implements ActionListener
 					userFileReader.close();
 				}
 			}
+			return true;
 		}
 		catch (IOException noFileFound)
 		{
 			System.err.println("Could not find file: " + noFileFound);
-		}		
-
-
-		return true;
-	}
+			return false;
+		}	
+	}	
 }

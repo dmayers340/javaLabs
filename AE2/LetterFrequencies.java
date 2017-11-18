@@ -34,7 +34,13 @@ public class LetterFrequencies
 	 */
 	public LetterFrequencies()
 	{
-	    // your code
+		//SET UP array-code from MonoCipher
+		alphabet = new char[SIZE];
+		alphaCounts = new int[SIZE];
+		for (int i = 0; i < SIZE; i++)
+		{
+			alphabet[i] = (char)('Z' - i);
+		}
 	}
 		
 	/**

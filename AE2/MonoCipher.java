@@ -100,11 +100,14 @@ public class MonoCipher
 	{
 		char decodedChar = ch;
 		boolean foundChar = false;
-		for (int i=0; i<SIZE; i++)
+		
+		for (int i=0; i<SIZE && !foundChar; i++)
 		{
 			decodedChar = alphabet[i];
 			foundChar = true;
 		}
+
 	    return decodedChar;  // replace with your code
+	   
 	}
 }
