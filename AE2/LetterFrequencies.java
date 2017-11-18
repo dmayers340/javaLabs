@@ -87,12 +87,37 @@ public class LetterFrequencies
 	/**
 	 * Returns a String consisting of the full frequency report
 	 * @return the report
+	 * 1. return letter...then freq...freq%, avgfreq%...diff between freq% and avfreq
 	 */
 	public String getReport()
 	{
 		String textReport = "";
+		String header = "Letter Analysis";
+		String headerTwo = String.format("%5s, %5s, %5s, %5s, %5s", "Letter", "Freq", 
+				"Freq%", "AvgFreq%", "Diff");
 		
-		String 
+		String frequency = String.format("%5s %c %s %.1f", "The most frequent letter is ", maxCh, "at", getMaxPC(), "%.");
+		String colOne;
+		String colTwo;
+		String colThree;
+		String colFour;
+		String colFive;
+		//get Freq%
+		for(int i = 0; i<SIZE; i++)
+		{
+			double displayFreqPerc = (double)(alphaCounts[i])/totChars;
+			double difference = displayFreqPerc-avgCounts[i];
+			
+			colOne = String.format("%5s", (char)('A' +i));
+			colTwo = String.format("%5d", alphaCounts[i]);
+			colThree = String.format("%5f", displayFreqPerc);
+			colFour = String.format("5%", avgCounts[i]);
+			colFive = String.format("5%", difference);
+			
+			textReport = colOne + colTwo +colThree + colFour + colFive; 	
+		}
 		
+		String finalReport = header + headerTwo + textReport + frequency;
+		return finalReport;
 	}
 }

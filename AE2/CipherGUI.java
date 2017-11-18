@@ -21,7 +21,6 @@ public class CipherGUI extends JFrame implements ActionListener
 	private JButton monoButton, vigenereButton;
 	private JTextField keyField, messageField;
 	private JLabel keyLabel, messageLabel;
-
 	//application instance variables
 	//including the 'core' part of the textfile filename
 	//some way of indicating whether encoding or decoding is to be done
@@ -29,14 +28,14 @@ public class CipherGUI extends JFrame implements ActionListener
 	private VCipher vcipher;
 	private LetterFrequencies frequentLetters;
 	
-	private char characterMEncoded;
-	
 	private String userKeyword;
 	int userFileNameLength;
 	String userFileName = "";
-	private String encodedString;
-	
 	boolean vigenere;
+	char characterMEncoded;
+	char finalChar = 0;
+	PrintWriter userFreqWriter;
+	PrintWriter userEncodeWriter;
 	
 	/**
 	 * The constructor adds all the components to the frame
@@ -114,7 +113,6 @@ public class CipherGUI extends JFrame implements ActionListener
 		}
 	}
 	
-
 	/** 
 	 * Obtains cipher keyword
 	 * If the keyword is invalid, a message is produced
@@ -201,15 +199,16 @@ public class CipherGUI extends JFrame implements ActionListener
 
 	private boolean processFile(boolean vigenere)
 	{	
-		char fileChar = 0;
-		FileReader userFileReader = null;
-		FileWriter userFileWriter = null;
-		
 		//File Outputs
 		String encodedFile = userFileName + (userFileNameLength - 1) + "C.txt"; //Encoded file
 		String decodedFile = userFileName + (userFileNameLength - 1) + "D.txt";	//decoded file
 		String frequencyFile = userFileName + (userFileNameLength - 1) + "F.txt"; //frequency file
-
+		
+		char fileChar = 0;
+		FileReader userFileReader = null;
+		userFreqWriter = new PrintWriter(frequencyFile);
+		userEncodeWriter = new PrintWriter(encodedFile);
+		frequentLetters = new LetterFrequencies();
 
 		//file reading
 		try
@@ -234,20 +233,28 @@ public class CipherGUI extends JFrame implements ActionListener
 					{
 						//make nextChar into chars
 						fileChar = (char) nextChar;
-						
-						//encode character
-						characterMEncoded = mcipher.encode(fileChar);
-						
-						//add to letter frequencies
-						//frequentLetters.addChar(characterMEncoded); 
-						
-						System.out.print(Character.toString(fileChar));
-						System.out.println(encodedString);
-						
-						//char charDecoded = mcipher.decode(fileChar);
-						//System.out.println("decode " + String.valueOf(charDecoded));
+				
+						if(vigenere)
+						{
+							finalChar = vcipher.encode(fileChar);
+						}
+						else
+						{
+							finalChar = mcipher.encode(fileChar);
+						}
+						System.out.println(fileChar);
+						System.out.println(finalChar);
 					}
 				}
+			try
+			{
+				userFreqWriter.write(frequentLetters.getReport());
+				userEncodeWriter.write(finalChar);
+			}
+			finally
+			{
+				JOptionPane.showMessageDialog(null, "File Processed");
+			}
 			}
 			finally 
 			{
