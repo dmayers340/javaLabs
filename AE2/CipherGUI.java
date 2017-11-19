@@ -124,32 +124,35 @@ public class CipherGUI extends JFrame implements ActionListener
 		userKeyword = keyField.getText().toUpperCase();
 		
 		//check if keyword is valid 1.) Not null. 2.) no duplicate letters
+		//assume keyword is smaller than the alphabet with no duplicates
 		if (userKeyword.isEmpty())
 		{
 			JOptionPane.showMessageDialog(null, "Keyword Cannot be empty");
 			keyField.setText(""); //reset keyField 
 		}
+		else if (inKeyword())
+		{
+			JOptionPane.showMessageDialog(null, "Keyword Cannot Have Repeating Letters");
+			keyField.setText(""); //reset keyField
+		}
 		
-//		//check for duplicates
-//		for (int i =0; i<userKeyword.length(); i++)
-//		{
-//			inKeyword = false;
-//			
-//			//check again, like alphabet
-//			for (int j = 0; j<userKeyword.length(); j++)
-//			{
-//				if (userKeyword.charAt(i) == userKeyword.charAt(j))
-//				{
-//					inKeyword = true;
-//					count++;
-//				}
-//			}
-//			if(inKeyword)
-//			{
-//				JOptionPane.showMessageDialog(null, "Cannot have duplicate letters");
-//				keyField.setText("");
-//			}
-//		}
+		return true;
+	}
+	
+	private boolean inKeyword()
+	{
+		//check for duplicates
+		for (int firstCheck =0; firstCheck<userKeyword.length(); firstCheck++)
+		{	
+			//check again, like alphabet
+			for (int secondCheck = 0; secondCheck<userKeyword.length(); secondCheck++)
+			{
+				if (userKeyword.charAt(firstCheck) == userKeyword.charAt(secondCheck))
+				{
+					return false;
+				}
+			}
+		}
 		return true;
 	}
 	
