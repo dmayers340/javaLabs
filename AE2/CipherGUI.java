@@ -227,6 +227,7 @@ public class CipherGUI extends JFrame implements ActionListener
 		
 		char fileChar = 0;
 		FileReader userFileReader = null;
+		PrintWriter frequentLetterWriter = new PrintWriter(userFileName + "F.txt");
 		PrintWriter userFileWriter = new PrintWriter(userFileName + fileToBeWritten + ".txt");
 	
 		//file reading
@@ -264,13 +265,10 @@ public class CipherGUI extends JFrame implements ActionListener
 						}
 						System.out.println(String.valueOf(fileChar));
 						System.out.println((finalChar));
-						
 					}
-					userFileWriter.close();
 				}
 			try
 			{
-				PrintWriter frequentLetterWriter = new PrintWriter(userFileName + "F.txt");
 				System.out.println(frequentLetters.getReport());
 				frequentLetterWriter.write(frequentLetters.getReport());
 				frequentLetterWriter.close();
@@ -278,6 +276,7 @@ public class CipherGUI extends JFrame implements ActionListener
 			finally
 			{
 				JOptionPane.showMessageDialog(null, "File Processed");
+				userFileReader.close();
 			}
 			}
 			finally 
@@ -285,10 +284,7 @@ public class CipherGUI extends JFrame implements ActionListener
 				//even if exception is raised
 				System.out.println("\nEOF");
 				//close the file
-				if (userFileReader != null)
-				{
-					userFileReader.close();
-				}
+				
 			}
 		}
 		catch (IOException noFileFound)
