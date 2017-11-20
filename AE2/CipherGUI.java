@@ -285,8 +285,11 @@ public class CipherGUI extends JFrame implements ActionListener
 			{
 				//even if exception is raised
 				System.out.println("\nEOF");
-				userFileReader.close();
-				//close the file
+				if(userFileReader!=null)
+				{
+					userFileReader.close();
+					//close the file
+				}
 				
 			}
 		}

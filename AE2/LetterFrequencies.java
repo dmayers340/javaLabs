@@ -115,11 +115,11 @@ public class LetterFrequencies
 			double displayFreqPerc = (double)(alphaCounts[i])/totChars;
 			double difference = displayFreqPerc-avgCounts[i];
 			
-			colOne = String.format("%5s", alphabet[i] + " ");
-			colTwo = String.format("%5s", alphaCounts[i]);
-			colThree = String.format("%5s", displayFreqPerc);
-			colFour = String.format("%5s", avgCounts[i]);
-			colFive = String.format("%5s\n", difference);
+			colOne = String.format("%5s", alphabet[i]);
+			colTwo = String.format("%5d", alphaCounts[i]);
+			colThree = String.format("%5f", displayFreqPerc);
+			colFour = String.format("%5f", avgCounts[i]);
+			colFive = String.format("%5f\n", difference);
 			
 			textReport = colOne + colTwo +colThree + colFour + colFive; 	
 		}
