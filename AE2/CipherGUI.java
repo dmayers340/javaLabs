@@ -177,8 +177,7 @@ public class CipherGUI extends JFrame implements ActionListener
 		int userFileNameLength = userFileName.length();
 		if (userFileName.equals(""))
 		{
-			JOptionPane.showMessageDialog(null,  "Cannot Be Empty");
-			return false;
+			JOptionPane.showMessageDialog(null, "Cannot Be Empty");
 		}
 		else if (userFileName.charAt(userFileNameLength-1) == 'P' || userFileName.charAt(userFileNameLength-1) == 'C')
 		{
@@ -189,6 +188,7 @@ public class CipherGUI extends JFrame implements ActionListener
 			JOptionPane.showMessageDialog(null,  "Please enter a valid file name");
 			return false;
 		}
+		return true;
 	}
 	
 	/** 
@@ -209,8 +209,8 @@ public class CipherGUI extends JFrame implements ActionListener
 		
 		char fileChar = 0;
 		FileReader userFileReader = null;
-		userFreqWriter = new PrintWriter(frequencyFile);
-		userEncodeWriter = new PrintWriter(encodedFile);
+	//	userFreqWriter = new PrintWriter(frequencyFile);
+		//userEncodeWriter = new PrintWriter(encodedFile);
 		frequentLetters = new LetterFrequencies();
 
 		//file reading
@@ -251,8 +251,9 @@ public class CipherGUI extends JFrame implements ActionListener
 				}
 			try
 			{
-				userFreqWriter.write(frequentLetters.getReport());
-				userEncodeWriter.write(finalChar);
+				System.out.println(frequentLetters.getReport());
+				//userFreqWriter.write(frequentLetters.getReport());
+				//userEncodeWriter.write(finalChar);
 			}
 			finally
 			{

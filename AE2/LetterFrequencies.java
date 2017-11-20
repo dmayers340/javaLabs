@@ -39,7 +39,8 @@ public class LetterFrequencies
 		alphaCounts = new int[SIZE];
 		for (int i = 0; i < SIZE; i++)
 		{
-			alphabet[i] = (char)('Z' - i);
+			alphabet[i] = (char)('A' + i);
+			System.out.println("letterfrequencies " + alphabet[i]);
 		}
 	}
 		
@@ -69,18 +70,20 @@ public class LetterFrequencies
 	 */
 	private double getMaxPC()
     {
-		int maxChar = 0;
+		maxCh = 0;
 		
 		for(int i =0; i<SIZE; i++)
 		{
-			if(maxChar < alphaCounts[i])
+			maxCh = alphabet[i];
+
+			if(maxCh < alphaCounts[i])
 			{
-				maxChar = alphaCounts[i];
-				maxCh = alphabet[i];
+				maxCh = (char) alphaCounts[i];
 			}
 		}
 		
-		double max = (double)maxChar/totChars;
+		double max = (double)maxCh/totChars;
+		System.out.println("letterfre" + max);
 		return max;
 	}
 	
@@ -91,28 +94,32 @@ public class LetterFrequencies
 	 */
 	public String getReport()
 	{
+		//Structure report with header, then row definition
 		String textReport = "";
 		String header = "Letter Analysis";
-		String headerTwo = String.format("%5s, %5s, %5s, %5s, %5s", "Letter", "Freq", 
-				"Freq%", "AvgFreq%", "Diff");
+		String headerTwo = String.format("\n%10s, %10s, %10s, %10s, %10s", "Letter", "Freq", 
+				"Freq%", "AvgFreq%", "Diff"); //row definition
 		
-		String frequency = String.format("%5s %c %s %.1f", "The most frequent letter is ", maxCh, "at", getMaxPC(), "%.");
+		String frequency = String.format("%5s %c %s %.1f", "The most frequent letter is ", maxCh, "at", getMaxPC(), "%."); //LAST line of file
+		
+		//Define Grid
 		String colOne;
 		String colTwo;
 		String colThree;
 		String colFour;
 		String colFive;
+		
 		//get Freq%
 		for(int i = 0; i<SIZE; i++)
 		{
 			double displayFreqPerc = (double)(alphaCounts[i])/totChars;
 			double difference = displayFreqPerc-avgCounts[i];
 			
-			colOne = String.format("%5s", (char)('A' +i));
-			colTwo = String.format("%5d", alphaCounts[i]);
-			colThree = String.format("%5f", displayFreqPerc);
-			colFour = String.format("5%", avgCounts[i]);
-			colFive = String.format("5%", difference);
+			colOne = String.format("%5s", (char)('A' + i));
+			colTwo = String.format("%5s", alphaCounts[i]);
+			colThree = String.format("%5s", displayFreqPerc);
+			colFour = String.format("%5s", avgCounts[i]);
+			colFive = String.format("%5s\n", difference);
 			
 			textReport = colOne + colTwo +colThree + colFour + colFive; 	
 		}
