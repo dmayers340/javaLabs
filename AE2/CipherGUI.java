@@ -214,6 +214,9 @@ public class CipherGUI extends JFrame implements ActionListener
 
 	private boolean processFile(boolean vigenere) throws FileNotFoundException
 	{	
+		char fileChar = 0;
+		FileReader userFileReader = null;
+		PrintWriter frequentLetterWriter = new PrintWriter(userFileName + "F.txt");
 		frequentLetters = new LetterFrequencies();
 		char fileToBeWritten; 
 		if(userFileName.charAt(userFileName.length()-1) == 'P')
@@ -224,12 +227,9 @@ public class CipherGUI extends JFrame implements ActionListener
 		{
 			fileToBeWritten = 'D';
 		}
-		
-		char fileChar = 0;
-		FileReader userFileReader = null;
-		PrintWriter frequentLetterWriter = new PrintWriter(userFileName + "F.txt");
 		PrintWriter userFileWriter = new PrintWriter(userFileName + fileToBeWritten + ".txt");
-	
+
+		
 		//file reading
 		try
 		{
@@ -276,13 +276,13 @@ public class CipherGUI extends JFrame implements ActionListener
 			finally
 			{
 				JOptionPane.showMessageDialog(null, "File Processed");
-				userFileReader.close();
 			}
 			}
 			finally 
 			{
 				//even if exception is raised
 				System.out.println("\nEOF");
+				userFileReader.close();
 				//close the file
 				
 			}
