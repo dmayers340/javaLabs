@@ -34,8 +34,6 @@ public class CipherGUI extends JFrame implements ActionListener
 	boolean vigenere;
 	char characterMEncoded;
 	char finalChar = 0;
-	PrintWriter userFreqWriter;
-	PrintWriter userEncodeWriter;
 	
 	/**
 	 * The constructor adds all the components to the frame
@@ -95,21 +93,30 @@ public class CipherGUI extends JFrame implements ActionListener
 	 */
 	public void actionPerformed(ActionEvent e)
 	{
-		this.getKeyword();
-		this.processFileName();
-		
-		if (e.getSource()==monoButton)
+		if(getKeyword() && processFileName())
 		{
-			//create a monocipher obj named mcipher, give it the userKeyword
-			mcipher = new MonoCipher(userKeyword);
-			vigenere = false;
-			this.processFile(vigenere);
-		}
-		else if (e.getSource()==vigenereButton)
-		{
-			vcipher = new VCipher(userKeyword);
-			vigenere = true;
-			this.processFile(vigenere);
+			boolean vigenere = true;
+			
+			if (e.getSource()==monoButton)
+			{
+				//create a monocipher obj named mcipher, give it the userKeyword
+				mcipher = new MonoCipher(userKeyword);
+				vigenere = false;
+			}
+			else if (e.getSource()==vigenereButton)
+			{
+				vcipher = new VCipher(userKeyword);  
+				vigenere = true;
+			}
+			
+			try
+			{
+				processFile(vigenere);
+			}
+			catch (FileNotFoundException pleaseFindItThisTime)
+			{
+				pleaseFindItThisTime.printStackTrace();
+			}
 		}
 	}
 	
@@ -119,43 +126,47 @@ public class CipherGUI extends JFrame implements ActionListener
 	 * @return whether a valid keyword was entered
 	 */
 	private boolean getKeyword()
-	{		
+	{	
+		boolean validKeyword = true;
 		//get keyword from textfield
 		userKeyword = keyField.getText().toUpperCase();
+		
 		
 		//check if keyword is valid 1.) Not null. 2.) no duplicate letters
 		//assume keyword is smaller than the alphabet with no duplicates
 		if (userKeyword.isEmpty())
 		{
+			validKeyword = false;
 			JOptionPane.showMessageDialog(null, "Keyword Cannot be empty");
 			keyField.setText(""); //reset keyField 
 		}
-		else if (inKeyword())
+	
+//		//check for duplicates
+//		for (int firstCheck =0; firstCheck<userKeyword.length(); firstCheck++)
+//		{	
+//			//check again, like alphabet
+//			for (int secondCheck = 0; secondCheck<userKeyword.length(); secondCheck++)
+//			{
+//				if (userKeyword.charAt(firstCheck) == userKeyword.charAt(secondCheck))
+//				{
+//					validKeyword = false;
+//				}
+//			}
+//			validKeyword = false;
+//			JOptionPane.showMessageDialog(null, "Keyword Cannot Have Repeating Letters");
+//			keyField.setText(""); //reset keyField
+//		}
+		if(!validKeyword)
 		{
-			JOptionPane.showMessageDialog(null, "Keyword Cannot Have Repeating Letters");
-			keyField.setText(""); //reset keyField
+			JOptionPane.showMessageDialog(null, "INVALID KEYWORD");
+			keyField.setText("");
+			return false;
 		}
-		
-		return true;
-	}
-	
-	private boolean inKeyword()
-	{
-		//check for duplicates
-		for (int firstCheck =0; firstCheck<userKeyword.length(); firstCheck++)
-		{	
-			//check again, like alphabet
-			for (int secondCheck = 0; secondCheck<userKeyword.length(); secondCheck++)
-			{
-				if (userKeyword.charAt(firstCheck) == userKeyword.charAt(secondCheck))
-				{
-					return false;
-				}
-			}
+		else
+		{
+			return true;
 		}
-		return true;
 	}
-	
 	/** 
 	 * Obtains filename from GUI
 	 * The details of the filename and the type of coding are extracted
@@ -166,7 +177,7 @@ public class CipherGUI extends JFrame implements ActionListener
 	
 	private boolean processFileName()
 	{
-		userFileName = messageField.getText();
+		userFileName = messageField.getText(); //assume text is written correctly
 		
 		/*Check file name. If the last letter is a P, file should be encoded
 		 * If it is a C, needs to be decoded
@@ -177,7 +188,7 @@ public class CipherGUI extends JFrame implements ActionListener
 		int userFileNameLength = userFileName.length();
 		if (userFileName.equals(""))
 		{
-			JOptionPane.showMessageDialog(null, "Cannot Be Empty");
+			JOptionPane.showMessageDialog(null, "File Name Cannot Be Empty");
 		}
 		else if (userFileName.charAt(userFileNameLength-1) == 'P' || userFileName.charAt(userFileNameLength-1) == 'C')
 		{
@@ -197,22 +208,27 @@ public class CipherGUI extends JFrame implements ActionListener
 	 * and written to the output text file
 	 * @param vigenere whether the encoding is Vigenere (true) or Mono (false)
 	 * @return whether the I/O operations were successful
+	 * @throws FileNotFoundException 
 	 */
 	
 
-	private boolean processFile(boolean vigenere)
+	private boolean processFile(boolean vigenere) throws FileNotFoundException
 	{	
-		//File Outputs
-		String encodedFile = userFileName + (userFileNameLength - 1) + "C.txt"; //Encoded file
-		String decodedFile = userFileName + (userFileNameLength - 1) + "D.txt";	//decoded file
-		String frequencyFile = userFileName + (userFileNameLength - 1) + "F.txt"; //frequency file
+		frequentLetters = new LetterFrequencies();
+		char fileToBeWritten; 
+		if(userFileName.charAt(userFileName.length()-1) == 'P')
+		{
+			fileToBeWritten = 'C';
+		}
+		else
+		{
+			fileToBeWritten = 'D';
+		}
 		
 		char fileChar = 0;
 		FileReader userFileReader = null;
-	//	userFreqWriter = new PrintWriter(frequencyFile);
-		//userEncodeWriter = new PrintWriter(encodedFile);
-		frequentLetters = new LetterFrequencies();
-
+		PrintWriter userFileWriter = new PrintWriter(userFileName + fileToBeWritten + ".txt");
+	
 		//file reading
 		try
 		{
@@ -225,6 +241,7 @@ public class CipherGUI extends JFrame implements ActionListener
 				{
 					//keep reading characters until -1 
 					int nextChar = userFileReader.read();
+					userFileWriter.write(String.valueOf(nextChar));
 					
 					// -1 indicates EOF
 					if (nextChar == -1)
@@ -245,15 +262,18 @@ public class CipherGUI extends JFrame implements ActionListener
 						{
 							finalChar = mcipher.encode(fileChar);
 						}
-						System.out.println(fileChar);
-						System.out.println(finalChar);
+						System.out.println(String.valueOf(fileChar));
+						System.out.println((finalChar));
+						
 					}
+					userFileWriter.close();
 				}
 			try
 			{
+				PrintWriter frequentLetterWriter = new PrintWriter(userFileName + "F.txt");
 				System.out.println(frequentLetters.getReport());
-				//userFreqWriter.write(frequentLetters.getReport());
-				//userEncodeWriter.write(finalChar);
+				frequentLetterWriter.write(frequentLetters.getReport());
+				frequentLetterWriter.close();
 			}
 			finally
 			{
@@ -270,12 +290,12 @@ public class CipherGUI extends JFrame implements ActionListener
 					userFileReader.close();
 				}
 			}
-			return true;
 		}
 		catch (IOException noFileFound)
 		{
 			System.err.println("Could not find file: " + noFileFound);
 			return false;
-		}	
+		}
+		return true;
 	}	
 }

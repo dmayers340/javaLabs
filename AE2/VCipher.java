@@ -8,6 +8,7 @@ public class VCipher
 	private final int SIZE = 26;
 	private char[][] vCipher;
 	int holder = 0; 
+	int count;
 	/** 
 	 * The constructor generates the cipher
 	 * @param keyword the cipher keyword
@@ -20,34 +21,30 @@ public class VCipher
 		
 		for(int i = 0; i<SIZE; i++)
 		{
-			alphabet[i] = (char)('Z' - i);
-		}
-		int count = keyword.length();
-		//create cipher from keyword
-		vCipher = new char [keyword.length()][SIZE];
-		//find letters in keyword for cipher
-		for (int i = 0; i<keyword.length(); i++)
-		{
-			vCipher[i][holder] = keyword.charAt(i);
+			alphabet[i] = (char)('A' + i);
 		}
 		
-		boolean inKeyword;
-		for (char currentLetter:alphabet)
-		{
-			inKeyword = false;
-			for(int j = 0; j<keyword.length(); j++)
+		count = keyword.length();
+		
+		//create cipher from keyword
+		vCipher = new char [keyword.length()][SIZE];
+		
+		//find letters in keyword for cipher
+		for (int i = 0; i<keyword.length(); i++)
+		{		
+			vCipher[i][holder] = keyword.charAt(i);
+			for (char currentLetter:alphabet)
 			{
-				if (currentLetter == keyword.charAt(j))
+				for(int j = 1; j<keyword.length(); j++)
 				{
-					inKeyword = true;
-				}
-				if(!inKeyword)
-				{
-					vCipher[count][j] = currentLetter;
-					count ++;
+					if (currentLetter == keyword.charAt(j))
+					{
+						vCipher[i][j] = 'A';
+					}
+					
+					
 				}
 			}
-			
 		}
 	}
 	/**
@@ -58,18 +55,30 @@ public class VCipher
 	public char encode(char ch)
 	{
 		char encodedVLetter = ch;
-		boolean foundVLetter = false;
-		
-		for(int i = 0; i<SIZE && !foundVLetter; i++)
+		int encod = ch-'A';
+		int checkLen = 0;
+		if(checkLen == count)
 		{
-			if(ch ==alphabet[i])
-			{
-				encodedVLetter = vCipher[holder][i];
-				holder ++;
-				foundVLetter = true;
-			}
+			checkLen = 0;
 		}
-	    return encodedVLetter;  
+		if(encod > 0 && encod < SIZE)
+		{
+			ch = vCipher[checkLen][encod];
+		}
+		return ch;
+
+//		boolean foundVLetter = false;
+//		
+//		for(int i = 0; i<SIZE && !foundVLetter; i++)
+//		{
+//			if(ch ==alphabet[i])
+//			{
+//				encodedVLetter = vCipher[holder][i];
+//				holder ++;
+//				foundVLetter = true;
+//			}
+//		}
+//	    return encodedVLetter;  
 	}
 	
 	/**

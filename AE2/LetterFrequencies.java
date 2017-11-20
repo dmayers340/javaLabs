@@ -36,11 +36,10 @@ public class LetterFrequencies
 	{
 		//SET UP array-code from MonoCipher
 		alphabet = new char[SIZE];
-		alphaCounts = new int[SIZE];
 		for (int i = 0; i < SIZE; i++)
 		{
+			alphaCounts = new int[SIZE];
 			alphabet[i] = (char)('A' + i);
-			System.out.println("letterfrequencies " + alphabet[i]);
 		}
 	}
 		
@@ -60,6 +59,7 @@ public class LetterFrequencies
 				foundCharInText = true;
 				alphaCounts[i]++; //increase count of each individual letter
 				totChars++; //increase total numbers
+				System.out.println("Alphabcounts" + alphaCounts);
 			}
 		}
 	}
@@ -68,23 +68,21 @@ public class LetterFrequencies
 	 * Gets the maximum frequency
 	 * @return the maximum frequency
 	 */
+
 	private double getMaxPC()
     {
-		maxCh = 0;
+		int maximum = 0;
 		
 		for(int i =0; i<SIZE; i++)
 		{
-			maxCh = alphabet[i];
-
-			if(maxCh < alphaCounts[i])
+			if(maximum < alphaCounts[i])
 			{
-				maxCh = (char) alphaCounts[i];
+				maximum = alphaCounts[i];
+				maxCh = alphabet[i];
 			}
 		}
-		
-		double max = (double)maxCh/totChars;
-		System.out.println("letterfre" + max);
-		return max;
+		System.out.println("max " + maximum);
+		return (double) maximum/(totChars) * .01;
 	}
 	
 	/**
@@ -97,10 +95,10 @@ public class LetterFrequencies
 		//Structure report with header, then row definition
 		String textReport = "";
 		String header = "Letter Analysis";
-		String headerTwo = String.format("\n%10s, %10s, %10s, %10s, %10s", "Letter", "Freq", 
-				"Freq%", "AvgFreq%", "Diff"); //row definition
+		String headerTwo = String.format("\n%5s, %5s, %5s, %5s, %5s", "Letter", "Freq", "Freq%", "AvgFreq%", "Diff"); //row definition
 		
-		String frequency = String.format("%5s %c %s %.1f", "The most frequent letter is ", maxCh, "at", getMaxPC(), "%."); //LAST line of file
+		String frequency = "The most frequent letter is " + maxCh + "at " + getMaxPC() + "%.";
+; //LAST line of file
 		
 		//Define Grid
 		String colOne;
@@ -115,7 +113,7 @@ public class LetterFrequencies
 			double displayFreqPerc = (double)(alphaCounts[i])/totChars;
 			double difference = displayFreqPerc-avgCounts[i];
 			
-			colOne = String.format("%5s", (char)('A' + i));
+			colOne = String.format("%5s", alphabet[i] + " ");
 			colTwo = String.format("%5s", alphaCounts[i]);
 			colThree = String.format("%5s", displayFreqPerc);
 			colFour = String.format("%5s", avgCounts[i]);
