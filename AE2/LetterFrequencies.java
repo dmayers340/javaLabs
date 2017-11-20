@@ -34,7 +34,7 @@ public class LetterFrequencies
 	 */
 	public LetterFrequencies()
 	{
-		//SET UP array-code from MonoCipher
+		//SET UP alphabet array
 		alphabet = new char[SIZE];
 		for (int i = 0; i < SIZE; i++)
 		{
@@ -52,6 +52,7 @@ public class LetterFrequencies
 		char characterFrequent = ch;
 		boolean foundCharInText = false;
 		
+		//check if the letter is in the textfile
 		for(int i = 0; i<SIZE && !foundCharInText; i++)
 		{
 			if(characterFrequent == alphabet[i])
@@ -71,13 +72,14 @@ public class LetterFrequencies
 
 	private double getMaxPC()
     {
-		int maximum = 0;
+		int maximum = 0; //set maximum to inital 0
 		
 		for(int i =0; i<SIZE; i++)
 		{
+			//check if max is less than the alphacounts
 			if(maximum < alphaCounts[i])
 			{
-				maximum = alphaCounts[i];
+				maximum = alphaCounts[i]; //if alphaCounts greater set to
 				maxCh = alphabet[i];
 			}
 		}

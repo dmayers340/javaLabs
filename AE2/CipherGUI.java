@@ -242,13 +242,16 @@ public class CipherGUI extends JFrame implements ActionListener
 				{
 					//keep reading characters until -1 
 					int nextChar = userFileReader.read();
-					userFileWriter.write(String.valueOf(nextChar));
+					char writeChar = (char) nextChar;
+					
+					userFileWriter.write(writeChar);
 					
 					// -1 indicates EOF
 					if (nextChar == -1)
 					{
 						//if EOF then it is finished
 						finishedReading = true;
+						userFileWriter.close();
 					}
 					else
 					{
