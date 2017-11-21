@@ -112,11 +112,11 @@ public class LetterFrequencies
 		
 		//get Freq%
 		for(int i = 0; i<SIZE; i++)
-		{
+		{	
 			double displayFreqPerc = (double)(alphaCounts[i])/totChars;
 			double difference = displayFreqPerc-avgCounts[i];
 			
-			colOne = String.format("\n%8s",  alphabet[i]);
+			colOne = String.format("\n\n%8s",  alphabet[i]);
 			colTwo = String.format("%8d", alphaCounts[i]);
 			colThree = String.format("%8.1f", displayFreqPerc);
 			colFour = String.format("%8.1f", avgCounts[i]);

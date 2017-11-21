@@ -228,8 +228,7 @@ public class CipherGUI extends JFrame implements ActionListener
 			fileToBeWritten = 'D';
 		}
 		PrintWriter userFileWriter = new PrintWriter(userFileName + fileToBeWritten + ".txt");
-
-		
+	
 		//file reading
 		try
 		{
@@ -242,30 +241,33 @@ public class CipherGUI extends JFrame implements ActionListener
 				{
 					//keep reading characters until -1 
 					int nextChar = userFileReader.read();
-					char writeChar = (char) nextChar;
 					
-					userFileWriter.write(writeChar);
-					
-					// -1 indicates EOF
 					if (nextChar == -1)
 					{
 						//if EOF then it is finished
 						finishedReading = true;
-						userFileWriter.close();
 					}
 					else
 					{
 						//make nextChar into chars
 						fileChar = (char) nextChar;
 				
-						if(vigenere)
+						if(!vigenere)
 						{
-							finalChar = vcipher.encode(fileChar);
+							if(fileToBeWritten == 'C')
+							{
+								finalChar = mcipher.encode(fileChar);
+								userFileWriter.write(finalChar);
+
+							}
 						}
 						else
 						{
-							finalChar = mcipher.encode(fileChar);
+							finalChar = vcipher.encode(fileChar);
+							userFileWriter.write(finalChar);
+
 						}
+						userFileWriter.close();
 						System.out.println(String.valueOf(fileChar));
 						System.out.println((finalChar));
 					}
