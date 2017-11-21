@@ -97,7 +97,7 @@ public class LetterFrequencies
 		//Structure report with header, then row definition
 		String textReport = "";
 		String header = "Letter Analysis";
-		String headerTwo = String.format("\n%5s, %5s, %5s, %5s, %5s", "Letter", "Freq", "Freq%", "AvgFreq%", "Diff"); //row definition
+		String headerTwo = String.format("\n%8s, %8s, %8s, %8s, %8s", "Letter", "Freq", "Freq%", "AvgFreq%", "Diff"); //row definition
 		
 		String frequency = "The most frequent letter is " + maxCh + "at " + getMaxPC() + "%.";
 ; //LAST line of file
@@ -108,6 +108,7 @@ public class LetterFrequencies
 		String colThree;
 		String colFour;
 		String colFive;
+		String finalReport = "";
 		
 		//get Freq%
 		for(int i = 0; i<SIZE; i++)
@@ -115,16 +116,16 @@ public class LetterFrequencies
 			double displayFreqPerc = (double)(alphaCounts[i])/totChars;
 			double difference = displayFreqPerc-avgCounts[i];
 			
-			colOne = String.format("%5s", alphabet[i]);
-			colTwo = String.format("%5d", alphaCounts[i]);
-			colThree = String.format("%5f", displayFreqPerc);
-			colFour = String.format("%5f", avgCounts[i]);
-			colFive = String.format("%5f\n", difference);
+			colOne = String.format("\n%8s",  alphabet[i]);
+			colTwo = String.format("%8d", alphaCounts[i]);
+			colThree = String.format("%8.1f", displayFreqPerc);
+			colFour = String.format("%8.1f", avgCounts[i]);
+			colFive = String.format("%8.1f\n", difference);
 			
 			textReport = colOne + colTwo +colThree + colFour + colFive; 	
+			finalReport = header + headerTwo + textReport + frequency;
 		}
-		
-		String finalReport = header + headerTwo + textReport + frequency;
+	
 		return finalReport;
 	}
 }
