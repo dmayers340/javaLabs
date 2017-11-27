@@ -11,6 +11,7 @@ import java.util.*;
 public class JDBCGUI extends JFrame //implements ActionListener
 {
 	JTabbedPane tabbedPane = new JTabbedPane();
+	JTable table = new JTable();
 	
 	public void showGUI() 
 	{
@@ -44,14 +45,11 @@ public class JDBCGUI extends JFrame //implements ActionListener
 		ArrayList columnName = new ArrayList();
 		ArrayList courseinfo = new ArrayList();
 		ArrayList memberInfo = new ArrayList();
-		
-		
-		
 	
-
-
-		
-	
+	}
+	public JTable setTable()
+	{
+		return table;
 	}
 	
 }
