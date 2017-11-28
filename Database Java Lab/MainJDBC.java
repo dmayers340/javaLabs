@@ -1,31 +1,12 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.table.*;
-
+import java.sql.*;
 
 public class MainJDBC 
 {
-	static String course_name2;
-	static String maxplace;
-	static String instructorid;
-	static String fname;
-	static String bookedpeople;
-	static String sname;
-	static JTable table;
+	//make connection	
+	private static Connection connection = null;
 	
-	JDBCGUI gui = new JDBCGUI();
-
 	public static void main(String[] args)
 	{
-//		String course_name2;
-//		String maxplace;
-//		String instructorid;
-//		String fname;
-//		String bookedpeople;
-//		String sname;
-//		DefaultTableModel model = new DefaultTableModel(new String[] {"Course Name", "Max Places", "Instructor ID", "First Name", "Last Name", "Membership Number"}, 0);
-
 		
 		JDBCGUI gui = new JDBCGUI();
 		gui.showGUI(); 
@@ -36,15 +17,15 @@ public class MainJDBC
 		String userName = "m_17_2067887m";
 		String password = "2067887m";
 		
-		//make connection
-		Connection connection = null;
-		
 		//attempt to connect to database
-		try
+		try 
 		{
-			connection = DriverManager.getConnection("jdbc:postgresql://yacata.dcs.gla.ac.uk:5432/" + databaseName, userName, password);
+			connection =
+			DriverManager.getConnection("jdbc:postgresql://yacata.dcs.gla.ac.uk:5432/" +
+			databaseName,userName, password);
 		}
-		catch(SQLException e)
+		
+		catch (SQLException e) 
 		{
 			System.err.println("Connection Failed!");
 			e.printStackTrace();
@@ -59,61 +40,58 @@ public class MainJDBC
 		{
 			System.err.println("Failed to make connection!");
 		}
-		Statement stmt2 = null;
-		String query2 = "SELECT gym.booking.membershipnumber, gym.course.coursename, gym.course.maxplaces, gym.course.instructorid, gym.instructor.fname, gym.instructor.sname FROM gym.course INNER JOIN gym.instructor ON gym.course.instructorid = gym.instructor.instructorid INNER JOIN gym.booking ON gym.course.courseid = gym.booking.courseid";
-		try
-		{
-			stmt2 = connection.createStatement();
-			ResultSet rs2 = stmt2.executeQuery(query2);
-			while(rs2.next()) 
-			{
-				course_name2 = rs2.getString("coursename");
-				maxplace = rs2.getString("maxplaces");
-				instructorid = rs2.getString("instructorid");
-				fname = rs2.getString("fname");
-				sname = rs2.getString("sname");
-				bookedpeople = rs2.getString("membershipnumber");
-				
-				System.out.println(course_name2);
-				System.out.println(maxplace);
-				System.out.println(instructorid);
-				System.out.println(fname);
-				System.out.println(sname);
-				System.out.println(bookedpeople);
-				
-				//PASS FROM GUI
-				gui.setTable() = new JTable(buildTableModel(rs2));
-
-								
-			}
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-			System.err.println("error executing query " + query2);
-		}
 		
-		System.out.print(table); 
-				
-		
+		//First: View all courses, instructor teaching, capacity of course, no members booked on
 		Statement stmt = null;
-		String query = "SELECT gym.gymmember.membershipnumber, gym.gymmember.fname, gym.gymmember.sname, gym.course.coursename, gym.booking.membershipnumber FROM gym.gymmember INNER JOIN gym.booking ON gym.gymmember.membershipnumber = gym.booking.membershipnumber INNER JOIN gym.course ON gym.course.courseid = gym.booking.courseid";
+		String query = "SELECT gym.course.coursename, gym.course.maxplaces, gym.course.instructorid, gym.instructor.fname, gym.instructor.sname, COUNT(gym.booking.membershipnumber) FROM gym.course LEFT JOIN gym.instructor ON gym.course.instructorid = gym.instructor.instructorid INNER JOIN gym.booking ON gym.course.courseid = gym.booking.courseid GROUP BY gym.course.coursename, gym.course.maxplaces, gym.course.instructorid, gym.instructor.fname, gym.instructor.sname";
 		try
 		{
 			stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while(rs.next()) 
 			{
-				String membernumber = rs.getString("membershipnumber");
-				String memberfname = rs.getString("fname");
-				String membersname = rs.getString("sname");
-				String coursename = rs.getString("coursename");
+				String course_name = rs.getString("coursename");
+				String maxplace = rs.getString("maxplaces");
+				String instructorid = rs.getString("instructorid");
+				String fname = rs.getString("fname");
+				String sname = rs.getString("sname");
+				String bookedpeople = rs.getString("membershipnumber");
+				
+				//get other cols
+				System.out.println(course_name);
+				System.out.println(maxplace);
+				System.out.println(instructorid);
+				System.out.println(fname);
+				System.out.println(sname);
+				System.out.println(bookedpeople);
+				
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+			System.err.println("error executing query " + query);
+		}
+		
+		//second: view all members booked on course (name/id) and name of course
+		Statement stmt2 = null;
+		String query2 = "SELECT gym.gymmember.membershipnumber, gym.gymmember.fname, gym.gymmember.sname, gym.course.coursename, gym.booking.membershipnumber FROM gym.gymmember INNER JOIN gym.booking ON gym.gymmember.membershipnumber = gym.booking.membershipnumber INNER JOIN gym.course ON gym.course.courseid = gym.booking.courseid";
+		try
+		{
+			stmt2 = connection.createStatement();
+			ResultSet rs2 = stmt.executeQuery(query);
+			while(rs2.next()) 
+			{
+				String membernumber = rs2.getString("membershipnumber");
+				String memberfname = rs2.getString("fname");
+				String membersname = rs2.getString("sname");
+				String coursename2 = rs2.getString("coursename");
 				
 				//get other cols
 				System.out.println(membernumber);
 				System.out.println(memberfname);
 				System.out.println(membersname);
-				System.out.println(coursename);
+				System.out.println(coursename2);
 				
 			}
 		}
@@ -122,6 +100,27 @@ public class MainJDBC
 			e.printStackTrace();
 			System.err.println("error executing query " + query2);
 		}
+		
+		//third: book member on course
+//		Statement stmt3 = null;
+//		String query3 = "INSERT";
+//		try
+//		{
+//			stmt3 = connection.createStatement();
+//			ResultSet rs3 = stmt.executeQuery(query);
+//			while(rs.next()) 
+//			{
+//				
+//			
+//				
+//			}
+//		}
+//		catch (SQLException e)
+//		{
+//			e.printStackTrace();
+//			System.err.println("error executing query " + query2);
+//		}
+//		
 		//close out system
 		try 
 		{
@@ -134,8 +133,7 @@ public class MainJDBC
 			System.out.println("Connection could not be closed-SQL exception");
 		}
 		
-	}
-
+		
 		
 	}
 
