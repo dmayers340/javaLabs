@@ -13,8 +13,11 @@ import javax.swing.table.DefaultTableModel;
 
 public class JDBCGUI extends JFrame //implements ActionListener
 {
+	MainJDBC main = new MainJDBC();
 	JTabbedPane tabbedPane = new JTabbedPane();
 	JTable courseTable, memberTable; 
+	String[] columnNames = {"Course Name", "Max Places", "Instructor ID", "Instructor First Name", "Instructor Last Name", "Num Members on Course"};
+	DefaultTableModel model = new DefaultTableModel();
 	JTextField bookingNumber, membershipNumber, coursedate, courseID, courseName, coursecost,  instuctorID, maxPlaces, coursetime;   
 	JButton noButton, okayButton;
 	GridLayout panel3layout = new GridLayout(10, 2);
@@ -32,24 +35,35 @@ public class JDBCGUI extends JFrame //implements ActionListener
 		JPanel panel1 = new JPanel();
 		JPanel panel2 = new JPanel();
 		JPanel panel3 = new JPanel();
+		
 		panel3.setLayout(panel3layout);
-		JTable courseTable = new JTable();
-		JTable memberTable = new JTable();
+		
+		courseTable = new JTable(main.getData(), columnNames);
+		memberTable = new JTable();
 		
 		JLabel label1 = new JLabel();
 		label1.setText("Course");
+		
+		
 		JLabel label2 = new JLabel();
 		label2.setText("Member");
-		JLabel label3 = new JLabel();
-		label3.setText("Booking");
 		
-		panel1.add(label1);
+		//panel1.add(label1);
+		model.setColumnIdentifiers(columnNames);
+		courseTable.setModel(model);
+		courseTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		courseTable.setFillsViewportHeight(true);
+		
+		JScrollPane scroll = new JScrollPane(courseTable);
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);;
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		panel1.add(courseTable);
+		panel1.add(scroll);
+		panel1.setVisible(true);
 		
 		panel2.add(label2);
 		panel2.add(memberTable);
 		
-		panel3.add(label3);
 		int max = 100;
 		int min = 1;
 		Random randomBookingNum = new Random();
@@ -132,9 +146,6 @@ public class JDBCGUI extends JFrame //implements ActionListener
 		panel3.add(okayButton);
 
 		panel3.add(noButton);
-
-	
-		
-		
+			
 	}
 }

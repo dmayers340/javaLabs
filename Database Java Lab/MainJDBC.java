@@ -4,7 +4,6 @@ public class MainJDBC
 {
 	//make connection	
 	private static Connection connection = null;
-	
 	public static void main(String[] args)
 	{
 		
@@ -57,6 +56,8 @@ public class MainJDBC
 				String sname = rs.getString("sname");
 				String bookedpeople = rs.getString("membershipnumber");
 				
+				String[] data = {course_name, maxplace, instructorid, fname, sname, bookedpeople};
+				
 				//get other cols
 				System.out.println(course_name);
 				System.out.println(maxplace);
@@ -87,12 +88,10 @@ public class MainJDBC
 				String membersname = rs2.getString("sname");
 				String coursename2 = rs2.getString("coursename");
 				
-				//get other cols
 				System.out.println(membernumber);
 				System.out.println(memberfname);
 				System.out.println(membersname);
-				System.out.println(coursename2);
-				
+				System.out.println(coursename2);	
 			}
 		}
 		catch (SQLException e)
@@ -133,6 +132,10 @@ public class MainJDBC
 			System.out.println("Connection could not be closed-SQL exception");
 		}
 		
+		public static String[] getData()
+		{
+			return data;
+		}
 		
 		
 	}
