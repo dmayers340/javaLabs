@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 //view members on course-member name and id for each course
 //book given member on course
 
-public class JDBCGUI extends JFrame //implements ActionListener
+public class JDBCGUI extends JFrame implements ActionListener
 {
 	MainJDBC main = new MainJDBC();
 	JTabbedPane tabbedPane = new JTabbedPane();
@@ -21,6 +21,17 @@ public class JDBCGUI extends JFrame //implements ActionListener
 	JTextField bookingNumber, membershipNumber, coursedate, courseID, courseName, coursecost,  instuctorID, maxPlaces, coursetime;   
 	JButton noButton, okayButton;
 	GridLayout panel3layout = new GridLayout(10, 2);
+	String userInputOne;
+	String userInputTwo;
+	String userInputThree;
+	String userInputFour;
+	String userInputFive;
+	String userInputSix;
+	String userInputSeven;
+	String userInputEight;
+	String userInputNine;
+	
+	
 	public void showGUI() 
 	{
 		
@@ -38,28 +49,16 @@ public class JDBCGUI extends JFrame //implements ActionListener
 		
 		panel3.setLayout(panel3layout);
 		
-		courseTable = new JTable(main.getData(), columnNames);
 		memberTable = new JTable();
 		
 		JLabel label1 = new JLabel();
-		label1.setText("Course");
+		label1.setText("Courses");
+		panel1.add(label1);
+		
 		
 		
 		JLabel label2 = new JLabel();
 		label2.setText("Member");
-		
-		//panel1.add(label1);
-		model.setColumnIdentifiers(columnNames);
-		courseTable.setModel(model);
-		courseTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		courseTable.setFillsViewportHeight(true);
-		
-		JScrollPane scroll = new JScrollPane(courseTable);
-		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);;
-		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		panel1.add(courseTable);
-		panel1.add(scroll);
-		panel1.setVisible(true);
 		
 		panel2.add(label2);
 		panel2.add(memberTable);
@@ -68,13 +67,15 @@ public class JDBCGUI extends JFrame //implements ActionListener
 		int min = 1;
 		Random randomBookingNum = new Random();
 		int bookingNum = min + randomBookingNum.nextInt(max);
+		String rand = Integer.toString(bookingNum);
 		
 		//book member on course: book num, memNum, courseID from Booking table
 		//From course table: courseID, courseName, instructor id, maxplaces, coursetime, coursedate, coursecost
 		JLabel bookNum = new JLabel();
 		bookNum.setText("Booking Number");
 		bookingNumber = new JTextField();
-		
+		bookingNumber.setText(rand);
+				
 		JLabel memNum = new JLabel();
 		memNum.setText("Membership Number");
 		membershipNumber = new JTextField();
@@ -108,8 +109,10 @@ public class JDBCGUI extends JFrame //implements ActionListener
 		coursecost = new JTextField();
 		
 		okayButton = new JButton("Okay");
+		okayButton.addActionListener(this);
 
-		JButton noButton = new JButton("Quit");
+		noButton = new JButton("Quit");
+		noButton.addActionListener(this);
 		
 
 		tabbedPane.addTab("Course", panel1);
@@ -148,4 +151,77 @@ public class JDBCGUI extends JFrame //implements ActionListener
 		panel3.add(noButton);
 			
 	}
+	
+	public void actionPerformed(ActionEvent e)
+	{
+
+		if (e.getSource() == okayButton)
+		{
+			userInputOne = bookingNumber.getText();
+			userInputTwo = membershipNumber.getText();
+			userInputThree = courseID.getText();
+			userInputFour = courseName.getText();
+			userInputFive = instuctorID.getText();
+			userInputSix = maxPlaces.getText();
+			userInputSeven = coursetime.getText();
+			userInputEight = coursedate.getText();
+			userInputNine = coursecost.getText();
+			
+			System.out.println(userInputOne);
+			System.out.println(userInputTwo);
+			System.out.println(userInputThree);
+			System.out.println(userInputFour);
+			System.out.println(userInputFive);
+			System.out.println(userInputSix);
+			System.out.println(userInputSeven);
+			System.out.println(userInputEight);
+			System.out.println(userInputNine);
+
+				//push all to database
+
+		}
+		
+		else if(e.getSource() == noButton)
+		{
+			System.exit(0);
+		}
+	}
+	
+	public String getUserInput1() 
+	{
+		return userInputOne;
+	}
+	public String getUserInput2()
+	{
+		return userInputTwo;
+	}
+	public String getUserInput3()
+	{
+		return userInputThree;
+	}
+	public String getUserInput4()
+	{
+		return userInputFour;
+	}
+	public String getUserInput5()
+	{
+		return userInputFive;
+	}
+	public String getUserInput6()
+	{
+		return userInputSix;
+	}
+	public String getUserInput7()
+	{
+		return userInputSeven;
+	}
+	public String getUserInput8()
+	{
+		return userInputEight;
+	}
+	public String getUserInput9()
+	{
+		return userInputNine;
+	}
+	
 }
