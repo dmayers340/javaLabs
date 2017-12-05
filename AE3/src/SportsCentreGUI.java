@@ -64,10 +64,11 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 		try
 		{
 			reader = new BufferedReader(new FileReader(classesInFile));
-			
 			while((line = reader.readLine()) != null)
 			{
-				lineSplit.add(line);
+				String[] contents = line.split(" ");
+				ArrayList<String> contentList = new ArrayList<String>(Arrays.asList(contents));
+				lineSplit.addAll(contentList);
 			}
 		}
 		catch (IOException e)
