@@ -1,5 +1,4 @@
 import java.awt.*;
-
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.*;
@@ -14,6 +13,9 @@ import javax.swing.table.DefaultTableModel;
 public class JDBCGUI extends JFrame implements ActionListener
 {
 	MainJDBC main = new MainJDBC();
+	DatabaseStuff db = new DatabaseStuff();
+	
+	
 	JTabbedPane tabbedPane = new JTabbedPane();
 	JTable courseTable, memberTable; 
 	String[] columnNames = {"Course Name", "Max Places", "Instructor ID", "Instructor First Name", "Instructor Last Name", "Num Members on Course"};
@@ -55,6 +57,13 @@ public class JDBCGUI extends JFrame implements ActionListener
 		label1.setText("Courses");
 		panel1.add(label1);
 		
+		JTextArea courseTextArea = new JTextArea(10,50);
+		courseTextArea.setEditable(false);
+		courseTextArea.setText(" ");
+		courseTextArea.append(db.returnCourses());
+		JScrollPane scrollPane = new JScrollPane(courseTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		panel1.add(scrollPane);
+		panel1.add(courseTextArea);
 		
 		
 		JLabel label2 = new JLabel();
@@ -62,6 +71,15 @@ public class JDBCGUI extends JFrame implements ActionListener
 		
 		panel2.add(label2);
 		panel2.add(memberTable);
+		
+		JTextArea memberTextArea = new JTextArea(10,50);
+		memberTextArea.setEditable(false);
+		memberTextArea.setText(" ");
+		memberTextArea.append(db.members());
+		
+		JScrollPane secondScrollPane = new JScrollPane(memberTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		panel2.add(secondScrollPane);
+		panel2.add(memberTextArea);
 		
 		int max = 100;
 		int min = 1;
