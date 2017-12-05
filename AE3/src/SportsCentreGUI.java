@@ -53,6 +53,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 		initLadiesDay();
 		initAttendances();
 		fClass = new FitnessClass();
+		fClass.averageAttendance();
 	
 		// more code needed here
 	}

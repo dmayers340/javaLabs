@@ -15,8 +15,8 @@ public class FitnessClass implements Comparable<FitnessClass>
 	private String tutorName = "";
 	private int timeStart; //9-15:00
 	final private int CLASSWEEKS = 5;
-	private int[] attendance; //set of 5 int represent attendance
-	
+	private int[] attendance = {1, 2, 3, 4, 5}; //set of 5 int represent attendance
+
 	//optional default constructor
 	public FitnessClass()
 	{
@@ -33,7 +33,7 @@ public class FitnessClass implements Comparable<FitnessClass>
 		timeStart = Integer.parseInt(individualPieces[3]);		
 	}
 	
-	//compare average
+	//compare average from lecture 10--sorting in dec order
 	public int compareTo(FitnessClass other) 
     {
 		double average = averageAttendance();
@@ -53,18 +53,19 @@ public class FitnessClass implements Comparable<FitnessClass>
 	//get the average attendance for each class
 	public double averageAttendance()
 	{
+		int total = 0;
 		double average = 0;
-		double totalAverage = 0;
+	
 		//for each # in attendance array
-		for(int i : attendance)
+		for(int i = 0; i<attendance.length; i++) 
 		{
-			average = average + attendance[i];
+			total = total + attendance[i];
 		}
 		
-		totalAverage = average/CLASSWEEKS;
-		System.out.println("Total Average" + totalAverage);
-		
-		return totalAverage;
+		average = total/attendance.length;
+		System.out.println("Total Average " + average);
+		System.out.println("Total " + total);
+		return average;
 		
 	}
 	
