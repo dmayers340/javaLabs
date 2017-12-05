@@ -55,7 +55,6 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 		fClass = new FitnessClass();
 		fClass.averageAttendance();
 	
-		// more code needed here
 	}
 
 	/**
@@ -66,15 +65,25 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	{
 		BufferedReader reader = null;
 		String line;
-		ArrayList<String> lineSplit = new ArrayList<String>();
+		String[] newLine;
+		//ArrayList<String> lineSplit = new ArrayList<String>();
 		try
 		{
 			reader = new BufferedReader(new FileReader(classesInFile));
 			while((line = reader.readLine()) != null)
 			{
-				String[] contents = line.split(" ");
-				ArrayList<String> contentList = new ArrayList<String>(Arrays.asList(contents));
-				lineSplit.addAll(contentList);
+				newLine = line.split(" ");
+				FitnessClass fclass = new FitnessClass(line);
+
+				System.out.println(newLine +  "sdaf");
+				//String[] contents = line.split(" ");
+				//ArrayList<String> contentList = new ArrayList<String>(Arrays.asList(contents));
+				//lineSplit.addAll(contentList);
+				//lineSplit.add(line);
+				// create new fitnessclass object based on line
+				// store new fitnessclass object in array
+//				fprogram.fclassArray[]
+				
 			}
 		}
 		catch (IOException e)
@@ -94,7 +103,6 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 				System.err.println("Cannot Close File");
 			}
 		}
-		System.out.println("ClassFile " + lineSplit);
 	}
 
 	/**
@@ -258,11 +266,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 		{
 			processDeletion();
 			
-		}
-		
-		
-		// your code here	
-		
+		}		
 	}
 
 }

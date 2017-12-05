@@ -18,23 +18,28 @@ import java.util.*;
  * method return overall avg attendance
  */
 public class FitnessProgram 
-{
-	Object[] fitnessClassObj;
-	int currentNumOfObj;
-    // your code here
+{	
+	FitnessClass[] fclassArray;
+	int MAXIMUM = 7;
+	//fclassArray = new FitnessClass[MAXIMUM];
+//	FitnessClass [] fclassArray;
+//	final int MAXIMUM = 7;
+//	fclassArray = new FitnessClass[MAXIMUM];
+
 	
 	public void FitnessProgram() //default constructor to initalize array
 	{
-		fitnessClassObj = this.fitnessClassObj;
+		
 	}
 	
 	public void attendance()//attendanceIn)//given String of single line of attendances as parameter
 	{
 		//populat attendance list for fitness class in array
+		//done at every 5th index of attendance arry from F.Class
 	}
-	
-	public Object[] getObjArray()
-	{
-		return fitnessClassObj;
-	}
+//	
+//	public Object[] getObjArray()
+//	{
+////		return fclassArray;
+//	}
 }

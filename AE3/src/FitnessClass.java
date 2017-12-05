@@ -10,12 +10,12 @@
 public class FitnessClass implements Comparable<FitnessClass> 
 {
 	
-	private String id = ""; //UNIQUE
+	private String id = ""; 
 	private String className = "";
 	private String tutorName = "";
 	private int timeStart; //9-15:00
-	final private int CLASSWEEKS = 5;
 	private int[] attendance = {1, 2, 3, 4, 5}; //set of 5 int represent attendance
+	final private int CLASSWEEKS = 5;
 
 	//optional default constructor
 	public FitnessClass()
@@ -23,14 +23,19 @@ public class FitnessClass implements Comparable<FitnessClass>
 		
 	}
 	
-	//one non-default constructor
-	public FitnessClass(String randomStuff) //String contans id, name, tname, start time
+	//one non-default constructor to set instance vars from a string--need to break apart all info
+	public FitnessClass(String randomStuff) //String contains id, name, tutor name, start time
 	{
 		String[] individualPieces = randomStuff.split(" ");
 		id = individualPieces[0];
 		className = individualPieces[1];
 		tutorName = individualPieces[2];
-		timeStart = Integer.parseInt(individualPieces[3]);		
+		timeStart = Integer.parseInt(individualPieces[3]);	
+		
+		System.out.println("from fitnessclass method id: " + id);
+		System.out.println("from fitnessclass method name: " + className);
+		System.out.println("from fitnessclass method tutor: " + tutorName);
+		System.out.println("from fitnessclass method time: " + timeStart);
 	}
 	
 	//compare average from lecture 10--sorting in dec order
