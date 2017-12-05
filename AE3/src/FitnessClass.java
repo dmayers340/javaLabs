@@ -15,41 +15,39 @@ public class FitnessClass implements Comparable<FitnessClass>
 	private String tutorName = "";
 	private int timeStart; //9-15:00
 	final private int CLASSWEEKS = 5;
-	private int[] attendance = new int[5]; //set of 5 int represent attendance
+	private int[] attendance; //set of 5 int represent attendance
 	
-	//set max classes here??????
-	// int maxClasses = 7;
-
 	//optional default constructor
 	public FitnessClass()
 	{
-		id = "this is the id";
-		className = "className";
-		timeStart = 9;
-	//	attendance = {9, 10, 11, 12, 13};
 		
 	}
 	
 	//one non-default constructor
-	public FitnessClass(String idString, String nameClass, String nameTutor, int startTime, int[] attendanceArray)
+	public FitnessClass(String randomStuff) //String contans id, name, tname, start time
 	{
-		setID();
-		System.out.println(setID());
-		setClassName();
-		System.out.println(setClassName());
-		setTutorName();
-		setTimeStart();
-		setAttendance();
-	
-		System.out.println("from fitness class " + idString + nameClass + nameTutor + startTime);
+		String[] individualPieces = randomStuff.split(" ");
+		id = individualPieces[0];
+		className = individualPieces[1];
+		tutorName = individualPieces[2];
+		timeStart = Integer.parseInt(individualPieces[3]);		
 	}
 	
-	
-   
-	
+	//compare average
 	public int compareTo(FitnessClass other) 
     {
-	  return 0; // replace with your code
+		double average = averageAttendance();
+		
+		if(average < other.averageAttendance())
+		{
+			return -1;
+		}
+		else if (average == other.averageAttendance())
+		{
+			return 0;
+		}
+		else
+			return 1;
     }
 	
 	//get the average attendance for each class
@@ -58,41 +56,38 @@ public class FitnessClass implements Comparable<FitnessClass>
 		double average = 0;
 		double totalAverage = 0;
 		//for each # in attendance array
-		for(int i = 0; i<CLASSWEEKS; i++)
+		for(int i : attendance)
 		{
 			average = average + attendance[i];
 		}
+		
 		totalAverage = average/CLASSWEEKS;
 		System.out.println("Total Average" + totalAverage);
+		
 		return totalAverage;
 		
 	}
 	
 	//MUTATORS
-	public String setID()
+	public void setID(String id)
 	{
-		String id = this.id;
-		return id;
+		this.id = id;
 	}
-	public String setClassName()
+	public void setClassName(String className)
 	{
-		String className = this.className;
-		return className;
+		this.className = className;
 	}
-	public String setTutorName()
+	public void setTutorName(String tutorName)
 	{
-		String tutorName = this.tutorName;
-		return tutorName;
+		this.tutorName = tutorName;
 	}
-	public int setTimeStart()
+	public void setTimeStart(int timeStart)
 	{
-		int timeStart = this.timeStart;
-		return timeStart;
+		this.timeStart = timeStart;
 	}
-	public int[] setAttendance()
+	public void setAttendance(int[] attendance)
 	{
-		int[] attendance = this.attendance;
-		return attendance;
+		this.attendance = attendance;
 	}
 	
 	//accessors

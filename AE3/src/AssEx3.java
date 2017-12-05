@@ -11,5 +11,7 @@ public class AssEx3 {
 	{
 		SportsCentreGUI display = new SportsCentreGUI();
 		display.setVisible(true);
+		
+		FitnessClass fclass = new FitnessClass();
 	}
 }
