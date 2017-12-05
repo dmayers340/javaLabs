@@ -32,6 +32,8 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	//Fitness Program Obj
 	FitnessProgram fprogram = new FitnessProgram();
 	
+	FitnessClass fClass;
+	
 	/**
 	 * Constructor for AssEx3GUI class
 	 */
@@ -49,6 +51,9 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 		layoutBottom();
 		
 		initLadiesDay();
+		initAttendances();
+		fClass = new FitnessClass();
+	
 		// more code needed here
 	}
 
@@ -88,7 +93,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 				System.err.println("Cannot Close File");
 			}
 		}
-		System.out.println(lineSplit);
+		System.out.println("ClassFile " + lineSplit);
 	}
 
 	/**
@@ -97,7 +102,37 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	 */
 	public void initAttendances() 
 	{
-	    // your code here attendancesFile
+		BufferedReader reader = null;
+		String line;
+		ArrayList<String> lineSplit = new ArrayList<String>();
+		try
+		{
+			reader = new BufferedReader(new FileReader(attendancesFile));
+			while((line = reader.readLine()) != null)
+			{
+				String[] contents = line.split(" ");
+				ArrayList<String> contentList = new ArrayList<String>(Arrays.asList(contents));
+				lineSplit.addAll(contentList);
+			}
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+			System.err.println("Cannot read file");
+		}	
+		finally
+		{
+			try
+			{
+				reader.close();
+			}
+			catch(IOException cannotClose)
+			{
+				cannotClose.printStackTrace();
+				System.err.println("Cannot Close File");
+			}
+		}
+		System.out.println("Attendances" + lineSplit);
 	}
 
 	/**

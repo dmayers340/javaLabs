@@ -1,11 +1,5 @@
 /** Defines an object representing a single fitness class
  * define fitness class obj
- * class constant rep num of weeks which recorded: 5 weeks
- * class id
- * class name
- * tutor name
- * start time
- * set attendance records
  * 
  * default constructor and optional default constructor, 
  * accessor and mutator calling instance vars
@@ -20,20 +14,37 @@ public class FitnessClass implements Comparable<FitnessClass>
 	private String className = "";
 	private String tutorName = "";
 	private int timeStart; //9-15:00
+	final private int CLASSWEEKS = 5;
 	private int[] attendance = new int[5]; //set of 5 int represent attendance
 	
-	//default constructor
-	public void FitnessClass()
+	//set max classes here??????
+	// int maxClasses = 7;
+
+	//optional default constructor
+	public FitnessClass()
 	{
-		setID();
-		String className = this.className;
-		String tutorName = this.tutorName;
-		int timeStart = this.timeStart;
-		int[] attendance = this.attendance;
+		id = "this is the id";
+		className = "className";
+		timeStart = 9;
+	//	attendance = {9, 10, 11, 12, 13};
 		
 	}
 	
-	//constructor to set instance var from string w/ Id nu, name, tutor name, start time
+	//one non-default constructor
+	public FitnessClass(String idString, String nameClass, String nameTutor, int startTime, int[] attendanceArray)
+	{
+		setID();
+		System.out.println(setID());
+		setClassName();
+		System.out.println(setClassName());
+		setTutorName();
+		setTimeStart();
+		setAttendance();
+	
+		System.out.println("from fitness class " + idString + nameClass + nameTutor + startTime);
+	}
+	
+	
    
 	
 	public int compareTo(FitnessClass other) 
@@ -41,7 +52,23 @@ public class FitnessClass implements Comparable<FitnessClass>
 	  return 0; // replace with your code
     }
 	
-	//setters
+	//get the average attendance for each class
+	public double averageAttendance()
+	{
+		double average = 0;
+		double totalAverage = 0;
+		//for each # in attendance array
+		for(int i = 0; i<CLASSWEEKS; i++)
+		{
+			average = average + attendance[i];
+		}
+		totalAverage = average/CLASSWEEKS;
+		System.out.println("Total Average" + totalAverage);
+		return totalAverage;
+		
+	}
+	
+	//MUTATORS
 	public String setID()
 	{
 		String id = this.id;
@@ -68,7 +95,7 @@ public class FitnessClass implements Comparable<FitnessClass>
 		return attendance;
 	}
 	
-	//getters
+	//accessors
 	public String getID()
 	{
 		return id;
