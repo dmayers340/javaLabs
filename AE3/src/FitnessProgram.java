@@ -19,27 +19,101 @@ import java.util.*;
  */
 public class FitnessProgram 
 {	
-	FitnessClass[] fclassArray;
 	int MAXIMUM = 7;
-	//fclassArray = new FitnessClass[MAXIMUM];
-//	FitnessClass [] fclassArray;
-//	final int MAXIMUM = 7;
-//	fclassArray = new FitnessClass[MAXIMUM];
-
+	FitnessClass[] fclassArray;
+	int currentNumberOfClasses;
 	
+
 	public void FitnessProgram() //default constructor to initalize array
+	{
+		fclassArray = new FitnessClass[MAXIMUM];
+		
+	}
+//	public FitnessProgram(String attendanceLine) 
+//	{
+//		String[] attendace = attendanceLine.split(" ");
+//		String id = attendace[0];
+//		int week1 = Integer.parseInt(attendace[1]);
+//		int week2 = Integer.parseInt(attendace[2]);
+//		int week3 = Integer.parseInt(attendace[3]);
+//		int week4 = Integer.parseInt(attendace[4]);
+//		int week5 = Integer.parseInt(attendace[5]);
+//		
+//		System.out.println("Attendace Array from Fitness Program at ind 1: " + id);
+//		System.out.println("Attendace Array from Fitness Program at ind 2: " + week1);
+//		System.out.println("Attendace Array from Fitness Program at ind 3: " + week2);
+//		System.out.println("Attendace Array from Fitness Program at ind 3: " + week3);
+//
+//
+//
+//		
+//		// TODO Auto-generated constructor stub
+//	}
+	//get the Fitness Class Object Array
+	public FitnessClass[] getObjArray()
+	{
+		return fclassArray;
+	}
+	
+	//get the time classes start
+	//entry x should contain class starting at time 9 + x or null if free
+	public void classStartTime(FitnessClass fitnessClass)
+	{
+		
+	}
+	//method to return list sorted in non-increasing order on av attendance using arrays.sort
+	public void sortArray()
+	{
+		Arrays.sort(fclassArray);
+		System.out.println("fclassarray program" + Arrays.asList(fclassArray));
+	}
+	//populate attendance list for fitness class in array
+	public void attendance(String attendances)//given String of single line of attendances from attendancesIn as parameter
+	{
+		//done at every 5th index of attendance arry from F.Class
+	}
+	
+	//get fitness class obj with ID number in array or null
+	public FitnessClass getClassWithID(int i)
+	{
+		return fclassArray[i];
+	}
+	
+	//get fitness class from time 
+	public FitnessClass getStartTime(int i)
+	{
+		return fclassArray[i];
+	}
+	
+	public FitnessClass firstStartTime(int i)
+	{
+		return fclassArray[i];
+		//get first time avaliable
+	}
+	
+	//return fitness class obj at index x
+	public FitnessClass retrunFitnessClassObj(int x)
+	{
+		return fclassArray[x];
+	}
+	
+	//insert a class into array
+	public void insert()
 	{
 		
 	}
 	
-	public void attendance()//attendanceIn)//given String of single line of attendances as parameter
+	//remove class from array
+	public void delete()
 	{
-		//populat attendance list for fitness class in array
-		//done at every 5th index of attendance arry from F.Class
+		
 	}
-//	
-//	public Object[] getObjArray()
-//	{
-////		return fclassArray;
-//	}
+	
+	//method to return overall average attendance
+	public double overallAverage()
+	{
+		double n = 0.0;
+		return n;
+		
+	}
 }

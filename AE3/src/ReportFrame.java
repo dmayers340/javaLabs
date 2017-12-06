@@ -14,5 +14,21 @@ import javax.swing.*;
  */
 public class ReportFrame extends JFrame 
 {
+	FitnessProgram fprogramFrame = new FitnessProgram();
+	private JTextArea frameArea;
+	
+	public ReportFrame() //needs fitness program parameter
+	{
+		frameArea = new JTextArea();
+		frameArea.setFont(new Font("Courier", Font.PLAIN, 14));
+		add(frameArea, BorderLayout.CENTER);
+		
+	}
+	
+	//build report for display on JTextArea
+	public void buildReport()
+	{
+		
+	}
         // your code here
 }

@@ -32,14 +32,18 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	//Fitness Program Obj
 	FitnessProgram fprogram = new FitnessProgram();
 	
-	FitnessClass fClass;
+	private String line;
+	private String attendanceline;
+	
+	FitnessClass fclass = new FitnessClass(line, attendanceline);
+
 	
 	/**
 	 * Constructor for AssEx3GUI class
+	 * Set up GUI and File INputs
 	 */
 	public SportsCentreGUI() 
 	{
-		//constructor set up GUI and call file inputs
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Boyd-Orr Sports Centre");
@@ -52,38 +56,26 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 		
 		initLadiesDay();
 		initAttendances();
-		fClass = new FitnessClass();
-		fClass.averageAttendance();
-	
+//		fClass = new FitnessClass();
+//		fClass.averageAttendance();	
 	}
 
 	/**
 	 * Creates the FitnessProgram list ordered by start time
 	 * using data from the file ClassesIn.txt
 	 */
-	public void initLadiesDay() //read ClassesIn file--initally 5 classes
+	public void initLadiesDay() 
 	{
 		BufferedReader reader = null;
-		String line;
-		String[] newLine;
-		//ArrayList<String> lineSplit = new ArrayList<String>();
+		//String line;
+
 		try
 		{
 			reader = new BufferedReader(new FileReader(classesInFile));
 			while((line = reader.readLine()) != null)
 			{
-				newLine = line.split(" ");
-				FitnessClass fclass = new FitnessClass(line);
-
-				System.out.println(newLine +  "sdaf");
-				//String[] contents = line.split(" ");
-				//ArrayList<String> contentList = new ArrayList<String>(Arrays.asList(contents));
-				//lineSplit.addAll(contentList);
-				//lineSplit.add(line);
-				// create new fitnessclass object based on line
-				// store new fitnessclass object in array
-//				fprogram.fclassArray[]
-				
+				String[] newLine = line.split(" ");
+				//FitnessClass fclass = new FitnessClass(line, attendanceline);
 			}
 		}
 		catch (IOException e)
@@ -111,19 +103,22 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	 */
 	public void initAttendances() 
 	{
+		
 		BufferedReader reader = null;
-		String line;
-		ArrayList<String> lineSplit = new ArrayList<String>();
+		String attendanceLine;
+
 		try
 		{
 			reader = new BufferedReader(new FileReader(attendancesFile));
-			while((line = reader.readLine()) != null)
+			while((attendanceLine = reader.readLine()) != null)
 			{
-				String[] contents = line.split(" ");
-				ArrayList<String> contentList = new ArrayList<String>(Arrays.asList(contents));
-				lineSplit.addAll(contentList);
+				String[] lineSplit = attendanceLine.split(" ");
+			//	FitnessClass attend = new FitnessClass(attendanceLine);
+				System.out.println("From GUI" + attendanceLine);
+				
 			}
 		}
+
 		catch (IOException e)
 		{
 			e.printStackTrace();
@@ -141,7 +136,6 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 				System.err.println("Cannot Close File");
 			}
 		}
-		System.out.println("Attendances" + lineSplit);
 	}
 
 	/**
