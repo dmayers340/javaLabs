@@ -2,8 +2,6 @@ import java.awt.*;
 
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-
 import java.util.*;
 import java.io.*;
 
@@ -23,6 +21,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 
 	/** Display of class timetable */
 	private JTextArea display;
+	
 
 	/** Display of attendance information */
 	private ReportFrame report;
@@ -32,10 +31,9 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	private final String classesOutFile = "ClassesOut.txt";
 	private final String attendancesFile = "AttendancesIn.txt";
 	
-	private JTable table;
 	
 	private String line;
-	private String attendanceline;
+	private String attendanceLine;
 	
 	FitnessClass fclass;
 	FitnessProgram fprogram;
@@ -49,7 +47,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Boyd-Orr Sports Centre");
-		setSize(700, 300);
+		setSize(700, 475);
 		display = new JTextArea();
 		display.setFont(new Font("Courier", Font.PLAIN, 14));
 		add(display, BorderLayout.CENTER);
@@ -112,7 +110,6 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	{
 		
 		BufferedReader reader = null;
-		String attendanceLine;
 
 		try
 		{
@@ -121,6 +118,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 			{
 				String[] lineSplit = attendanceLine.split(" ");
 				String attendanceid = lineSplit[0];
+				
 				int weekOne = Integer.parseInt(lineSplit[1]);
 				int weekTwo = Integer.parseInt(lineSplit[2]);
 				int weekThree = Integer.parseInt(lineSplit[3]);
@@ -129,7 +127,9 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 				int[] attendanceArray = {weekOne, weekTwo, weekThree, weekFour, weekFive};
 				System.out.println("\nFrom GUI: " + attendanceLine);
 				fclass.setAttendance(attendanceArray);
-			}
+				
+				fprogram.setAttendances(attendanceid, attendanceArray);
+			} 
 		}
 
 		catch (IOException e)
@@ -157,18 +157,24 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	public void updateDisplay() 
 	{
 		display.setText("");
+		String[] columnNames = {"Time      		", "Course Name    		", "  Tutor Name    "};
 		
 		String[] timeInfo = {"9:00-10:00", "10:00-11:00", "11:00-12:00", "12:00-13:00", "13:00-14:00", "14:00-15:00", "15:00-16:00"};
-		for(int i = 0; i<7; i++)
+		
+		for(int i = 0; i<columnNames.length; i++)
 		{
-			display.append(String.format("%10s  ", timeInfo[i]));
+			display.append(String.format("%10s ", columnNames[i]));
 		}
 		
 		display.append("\n");
+		
 		for(int i = 0; i<7; i++)
 		{
-			display.append(String.format("%10s", fprogram.getClassWithID(i)));
+			display.append(String.format("\n%10s \n ", timeInfo[i]));
 		}
+		
+		display.append("\n");
+	
 		
 	}
 
@@ -233,7 +239,30 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	 */
 	public void processAdding() 
 	{
-	    // your code here
+		String gotID = idIn.getText();
+		String gotName = classIn.getText();
+		String gotTutor = tutorIn.getText();
+		
+		int firstTimeSlot = fprogram.getOpenTime();
+		
+		if(firstTimeSlot == -1)
+		{
+			JOptionPane.showMessageDialog(null, "Cannot Add Classes");
+			
+			clearTextFields();
+		}
+//		else if (program exists)
+//		{
+//			JOptionPane.showMessageDialog(null, "Class Exists");
+//		}
+		else 
+		{
+			//add class to FProgram
+		//	fprogram add Class(gotID, gotName, gotTutor);
+			
+			JOptionPane.showMessageDialog(null, "Added Class");
+		}
+		clearTextFields();
 	}
 
 	/**
@@ -241,7 +270,18 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	 */
 	public void processDeletion() 
 	{
-	    // your code here
+	    String gotID = idIn.getText();
+		if(gotID.isEmpty())
+		{
+			JOptionPane.showMessageDialog(null, "Enter ID");
+		}
+		else 
+		{
+			JOptionPane.showMessageDialog(null, "Delted Class " + gotID);
+			
+			clearTextFields();
+			updateDisplay();
+		} 
 	}
 
 	/**
@@ -249,7 +289,20 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	 */
 	public void displayReport() 
 	{
-	    // your code here
+		report = new ReportFrame();
+		JTextArea reportTextArea;
+		//reportTextArea = report.buildReport();
+		
+		//reportTextArea.setText(); set text to fitness program
+		report.setVisible(true);
+	}
+	
+	public void clearTextFields()
+	{
+		idIn.setText("");
+		classIn.setText("");
+		tutorIn.setText("");
+		
 	}
 
 	/**
@@ -258,7 +311,18 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	 */
 	public void processSaveAndClose() 
 	{
-	    // your code here
+		PrintWriter classOut = null;
+		try 
+		{
+			classOut = new PrintWriter(classesOutFile);
+			classOut.println(display.getText());
+		}
+		catch(FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		classOut.close();
+		System.exit(0);
 	}
 
 	/**
@@ -279,12 +343,14 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 		}
 		else if (ae.getSource() == addButton)
 		{
-			//processAdding();
+			
+			processAdding();
 			updateDisplay();
 			
 		}
 		else if (ae.getSource() == deleteButton)
 		{
+			
 			processDeletion();
 			updateDisplay();
 			

@@ -114,7 +114,7 @@ public class FitnessClass implements Comparable<FitnessClass>
 	public String getID()
 	{
 		return id;
-	}
+	} 
 	public String getClassName()
 	{
 		return className;

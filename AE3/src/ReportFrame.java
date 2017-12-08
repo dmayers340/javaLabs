@@ -16,7 +16,7 @@ public class ReportFrame extends JFrame
 {
 	FitnessProgram fprogramFrame = new FitnessProgram();
 	private JTextArea frameArea;
-	
+	 
 	
 	
 	public ReportFrame() //needs fitness program parameter
