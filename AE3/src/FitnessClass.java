@@ -10,49 +10,37 @@
 public class FitnessClass implements Comparable<FitnessClass> 
 {
 	final private int CLASSWEEKS = 5;
-
+	
+	//Instance vars for id, class name, tutor name, start time, and attendance array
 	private String id = ""; 
-	private String attendanceID = "";
 	private String className = "";
 	private String tutorName = "";
 	private int timeStart; //9-15:00
-	private int[] attendance = {1, 2, 3, 4, 5}; //set of 5 int represent attendance COMING from GUI file
-
-	//optional default constructor--WHAT IS THE PURPOSE OF THIS?
-	public FitnessClass()
+	private int[] attendance = new int[CLASSWEEKS]; //set of 5 int represent attendance COMING from GUI file
+		
+	//optional default constructor
+	public FitnessClass()//attendance array as parameter? but then wouldn't be same obj--move code to gui?
 	{
+		//TODO move attendance array as current parameter to GUI
 		
 	}
 	
 	//Non-default constructor to set instance vars from a string containing id, name, tutor name, start time)--need to break apart all info
 	//this splits both Class info and Attendance info
-	public FitnessClass(String randomStuff, String attendances) 
+	public FitnessClass(String randomStuff) 
 	{
+		//gets two strings
 		String[] individualPieces = randomStuff.split(" ");
 		id = individualPieces[0];
 		className = individualPieces[1];
 		tutorName = individualPieces[2];
 		timeStart = Integer.parseInt(individualPieces[3]);	
 		
-		String[] attendanceFile = attendances.split(" ");
-		attendanceID = attendanceFile[0];
-		int weekOne = Integer.parseInt(attendanceFile[1]);
-		int weekTwo = Integer.parseInt(attendanceFile[2]);
-		int weekThree = Integer.parseInt(attendanceFile[3]);
-		int weekFour = Integer.parseInt(attendanceFile[4]);
-		int weekFive = Integer.parseInt(attendanceFile[5]);
 		
-		System.out.println("from fitnessclass method id: " + id);
+		System.out.println("\nfrom fitnessclass method id: " + id);
 		System.out.println("from fitnessclass method name: " + className);
 		System.out.println("from fitnessclass method tutor: " + tutorName);
 		System.out.println("from fitnessclass method time: " + timeStart);
-		
-		System.out.println("from fitnessclass method attendanceid: " + attendanceID);
-		System.out.println("from fitnessclass method weekOne: " + weekOne);
-		System.out.println("from fitnessclass method 2: " + weekTwo);
-		System.out.println("from fitnessclass method 3: " + weekThree);
-		System.out.println("from fitnessclass method 4: " + weekFour);
-		System.out.println("from fitnessclass method 5: " + weekFive);
 
 	}
 	
@@ -76,6 +64,7 @@ public class FitnessClass implements Comparable<FitnessClass>
 	//get the average attendance for each class
 	public double averageAttendance()
 	{
+		System.out.println("Attendance");
 		int total = 0;
 		double average = 0;
 	
@@ -97,6 +86,7 @@ public class FitnessClass implements Comparable<FitnessClass>
 		String asd = "ASD";
 		return asd;
 	}
+
 	//MUTATORS
 	public void setID(String id)
 	{
@@ -117,6 +107,7 @@ public class FitnessClass implements Comparable<FitnessClass>
 	public void setAttendance(int[] attendance)
 	{
 		this.attendance = attendance;
+		System.out.println("Set Attendance" + attendance[0]);
 	}
 	
 	//Accessors
@@ -140,4 +131,5 @@ public class FitnessClass implements Comparable<FitnessClass>
 	{
 		return attendance;
 	}
+
 }

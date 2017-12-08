@@ -1,6 +1,9 @@
 import java.awt.*;
+
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import java.util.*;
 import java.io.*;
 
@@ -29,13 +32,13 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	private final String classesOutFile = "ClassesOut.txt";
 	private final String attendancesFile = "AttendancesIn.txt";
 	
-	//Fitness Program Obj
-	FitnessProgram fprogram = new FitnessProgram();
+	private JTable table;
 	
 	private String line;
 	private String attendanceline;
 	
-	FitnessClass fclass = new FitnessClass(line, attendanceline);
+	FitnessClass fclass;
+	FitnessProgram fprogram;
 
 	
 	/**
@@ -44,7 +47,6 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	 */
 	public SportsCentreGUI() 
 	{
-		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Boyd-Orr Sports Centre");
 		setSize(700, 300);
@@ -56,8 +58,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 		
 		initLadiesDay();
 		initAttendances();
-//		fClass = new FitnessClass();
-//		fClass.averageAttendance();	
+		updateDisplay();
 	}
 
 	/**
@@ -67,15 +68,21 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	public void initLadiesDay() 
 	{
 		BufferedReader reader = null;
-		//String line;
 
 		try
 		{
 			reader = new BufferedReader(new FileReader(classesInFile));
+			
 			while((line = reader.readLine()) != null)
 			{
+				// create new fitnessclass object based on line
 				String[] newLine = line.split(" ");
-				//FitnessClass fclass = new FitnessClass(line, attendanceline);
+				fclass = new FitnessClass(line);//GIVE LINE INFORMATION--SHOULD ONLY BE ONE STRING
+				
+				// store new fitnessclass object in array
+				fprogram = new FitnessProgram();
+				
+				//fprogram.fclassArray[];
 			}
 		}
 		catch (IOException e)
@@ -113,9 +120,15 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 			while((attendanceLine = reader.readLine()) != null)
 			{
 				String[] lineSplit = attendanceLine.split(" ");
-			//	FitnessClass attend = new FitnessClass(attendanceLine);
-				System.out.println("From GUI" + attendanceLine);
-				
+				String attendanceid = lineSplit[0];
+				int weekOne = Integer.parseInt(lineSplit[1]);
+				int weekTwo = Integer.parseInt(lineSplit[2]);
+				int weekThree = Integer.parseInt(lineSplit[3]);
+				int weekFour = Integer.parseInt(lineSplit[4]);
+				int weekFive = Integer.parseInt(lineSplit[5]);
+				int[] attendanceArray = {weekOne, weekTwo, weekThree, weekFour, weekFive};
+				System.out.println("\nFrom GUI: " + attendanceLine);
+				fclass.setAttendance(attendanceArray);
 			}
 		}
 
@@ -143,7 +156,20 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	 */
 	public void updateDisplay() 
 	{
-	    // your code here
+		display.setText("");
+		
+		String[] timeInfo = {"9:00-10:00", "10:00-11:00", "11:00-12:00", "12:00-13:00", "13:00-14:00", "14:00-15:00", "15:00-16:00"};
+		for(int i = 0; i<7; i++)
+		{
+			display.append(String.format("%10s  ", timeInfo[i]));
+		}
+		
+		display.append("\n");
+		for(int i = 0; i<7; i++)
+		{
+			display.append(String.format("%10s", fprogram.getClassWithID(i)));
+		}
+		
 	}
 
 	/**
@@ -253,14 +279,17 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 		}
 		else if (ae.getSource() == addButton)
 		{
-			processAdding();
+			//processAdding();
+			updateDisplay();
 			
 		}
 		else if (ae.getSource() == deleteButton)
 		{
 			processDeletion();
+			updateDisplay();
 			
 		}		
 	}
 
 }
+	

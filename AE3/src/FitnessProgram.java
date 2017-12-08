@@ -21,34 +21,16 @@ public class FitnessProgram
 {	
 	int MAXIMUM = 7;
 	FitnessClass[] fclassArray;
+	
+	String className;
 	int currentNumberOfClasses;
 	
 
-	public void FitnessProgram() //default constructor to initalize array
+	public FitnessProgram() //default constructor to initalize array
 	{
 		fclassArray = new FitnessClass[MAXIMUM];
-		
 	}
-//	public FitnessProgram(String attendanceLine) 
-//	{
-//		String[] attendace = attendanceLine.split(" ");
-//		String id = attendace[0];
-//		int week1 = Integer.parseInt(attendace[1]);
-//		int week2 = Integer.parseInt(attendace[2]);
-//		int week3 = Integer.parseInt(attendace[3]);
-//		int week4 = Integer.parseInt(attendace[4]);
-//		int week5 = Integer.parseInt(attendace[5]);
-//		
-//		System.out.println("Attendace Array from Fitness Program at ind 1: " + id);
-//		System.out.println("Attendace Array from Fitness Program at ind 2: " + week1);
-//		System.out.println("Attendace Array from Fitness Program at ind 3: " + week2);
-//		System.out.println("Attendace Array from Fitness Program at ind 3: " + week3);
-//
-//
-//
-//		
-//		// TODO Auto-generated constructor stub
-//	}
+
 	//get the Fitness Class Object Array
 	public FitnessClass[] getObjArray()
 	{
@@ -85,7 +67,7 @@ public class FitnessProgram
 		return fclassArray[i];
 	}
 	
-	public FitnessClass firstStartTime(int i)
+	public FitnessClass getFirstStartTime(int i)
 	{
 		return fclassArray[i];
 		//get first time avaliable
@@ -113,7 +95,6 @@ public class FitnessProgram
 	public double overallAverage()
 	{
 		double n = 0.0;
-		return n;
-		
+		return n;	
 	}
 }
