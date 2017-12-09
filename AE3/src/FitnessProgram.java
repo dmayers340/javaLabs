@@ -20,7 +20,7 @@ import java.util.*;
 public class FitnessProgram 
 {	
 	int MAXIMUM = 7;
-	private FitnessClass[] fclassArray = new FitnessClass[MAXIMUM];
+	private FitnessClass[] fclassArray;
 	
 	String className;
 	int currentNumberOfClasses;
@@ -29,6 +29,7 @@ public class FitnessProgram
 	public FitnessProgram() //default constructor to initalize array
 	{			
 		fclassArray = new FitnessClass[MAXIMUM];
+		
 	}
 
 	//get the Fitness Class Object Array
@@ -36,19 +37,34 @@ public class FitnessProgram
 	{
 		return fclassArray;
 	}
+	
+
 	public void getObjTime(FitnessClass[] obj)
 	{
-		for(int i=0; i<obj.length; i++)
+		for(int i = 0; i<obj.length; i++)
 		{
-			if(fclassArray[i] == null)
+			fclassArray[obj[i].getTimeStart()-9] = obj[i];
+		}
+		
+		for(int i=0; i<MAXIMUM; i++)
+		{
+			if(fclassArray[i]==null)
 			{
 				fclassArray[i] = new FitnessClass();
 			}
-			else
-			{
-				fclassArray[fclassArray[i].getTimeStart()-9] = fclassArray[i];
-			}
 		}
+		
+//		for(int i=0; i<obj.length; i++)
+//		{
+//			if(fclassArray[i] == null)
+//			{
+//				fclassArray[i] = new FitnessClass();
+//			}
+//			else
+//			{
+//				fclassArray[fclassArray[i].getTimeStart()-9] = fclassArray[i];
+//			}
+//		}
 	}
 	
 	public String getClassLists(int timeStart)

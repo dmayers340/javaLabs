@@ -66,6 +66,9 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	public void initLadiesDay() 
 	{
 		BufferedReader reader = null;
+		
+		// store new fitnessclass object in array
+		fprogram = new FitnessProgram();
 
 		try
 		{
@@ -76,11 +79,8 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 				// create new fitnessclass object based on line
 				String[] newLine = line.split(" ");
 				fclass = new FitnessClass(line);//GIVE LINE INFORMATION--SHOULD ONLY BE ONE STRING
-				
-				// store new fitnessclass object in array
-				fprogram = new FitnessProgram();
-				
-				//fprogram.fclassArray[];
+//				fprogram.getObjTime();
+				fprogram.getObjArray()[fclass.getTimeStart()-9] = fclass;
 			}
 		}
 		catch (IOException e)
@@ -108,9 +108,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	 */
 	public void initAttendances() 
 	{
-		
 		BufferedReader reader = null;
-
 		try
 		{
 			reader = new BufferedReader(new FileReader(attendancesFile));
