@@ -47,8 +47,9 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Boyd-Orr Sports Centre");
-		setSize(700, 475);
+		setSize(600, 550);
 		display = new JTextArea();
+		display.setEditable(false);
 		display.setFont(new Font("Courier", Font.PLAIN, 14));
 		add(display, BorderLayout.CENTER);
 		layoutTop();
@@ -120,6 +121,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 			{
 				String[] lineSplit = attendanceLine.split(" ");
 				String attendanceid = lineSplit[0];
+				fclass.setAttendanceID(attendanceid);
 				
 				int weekOne = Integer.parseInt(lineSplit[1]);
 				int weekTwo = Integer.parseInt(lineSplit[2]);
@@ -130,7 +132,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 				System.out.println("\nFrom GUI: " + attendanceLine);
 				fclass.setAttendance(attendanceArray);
 				
-				fprogram.setAttendances(attendanceid, attendanceArray);
+				fprogram.setAttendances(lineSplit); //also need to add id
 			} 
 		}
 
@@ -172,6 +174,8 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 		
 		for(int i = 0; i<7; i++)
 		{
+			display.append("\n");
+
 			display.append(String.format("%10s", timeInfo[i]));
 			display.append(String.format("\t\t%10s", fprogram.getClassLists(i)));
 			display.append(String.format("\t\t%10s", fprogram.getTutor(i)));
@@ -180,18 +184,6 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 		}
 		
 		display.append("\n");
-		
-//		for(int i = 0; i<7; i++)
-//		{
-//			display.append(String.format("%10s", fprogram.getClassLists(i)));
-//		}
-//		
-//		display.append("\n");
-//		
-//		for(int i =0; i<7; i++)
-//		{
-//			display.append(String.format("%10s", fprogram.getTutor(i)));
-//		}
 		
 	}
 
@@ -306,11 +298,8 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	 */
 	public void displayReport() 
 	{
-		report = new ReportFrame();
-		JTextArea reportTextArea;
-		//reportTextArea = report.buildReport();
-		
-		//reportTextArea.setText(); set text to fitness program
+		report = new ReportFrame(fprogram);
+		report.buildReport();
 		report.setVisible(true);
 	}
 	

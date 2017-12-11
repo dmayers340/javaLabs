@@ -16,6 +16,7 @@ public class FitnessClass implements Comparable<FitnessClass>
 	private String className = "";
 	private String tutorName = "";
 	private int timeStart; //9-15:00
+	private String attendaceID;
 	private int[] attendance = new int[CLASSWEEKS]; //set of 5 int represent attendance COMING from GUI file
 		
 	//optional default constructor
@@ -110,6 +111,10 @@ public class FitnessClass implements Comparable<FitnessClass>
 	{
 		this.attendance = attendanceArray;
 	}
+	public void setAttendanceID(String attendaceID)
+	{
+		this.attendaceID = attendaceID;
+	}
 	
 	//Accessors
 	public String getID()
@@ -132,7 +137,10 @@ public class FitnessClass implements Comparable<FitnessClass>
 	{
 		return attendance;
 	}
-	
+	public String getAttendanceID()
+	{
+		return attendaceID;
+	}
 	public String returnAsString()
 	{
 		String infoForDisplay = String.format("%10s %10s %10s %10s %10s",  getID(), getClassName(), getTutorName(), getAttendance());

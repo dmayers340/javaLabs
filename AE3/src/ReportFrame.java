@@ -14,38 +14,51 @@ import javax.swing.*;
  */
 public class ReportFrame extends JFrame 
 {
-//	FitnessProgram fprogramFrame = new FitnessProgram();
 	private JTextArea frameArea;
-	 
-	
-	
-	public ReportFrame() //needs fitness program parameter
+	FitnessProgram fprogram = new FitnessProgram();
+ 
+	public ReportFrame(FitnessProgram initFProgram) //needs fitness program parameter
 	{
+		fprogram = initFProgram;
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		setTitle("Attendance Display");
-		setSize(700, 300);	
+		setSize(1500, 400);	
+
 		
 		frameArea = new JTextArea();
 		frameArea.setFont(new Font("Courier", Font.PLAIN, 14));
 		add(frameArea, BorderLayout.CENTER);
+		
 	}
 	
 	//build report for display on JTextArea
-	public void buildReport(FitnessProgram fprogram)
+	public void buildReport()
 	{
-		String id = "ID";
-		String className = "Class Name";
-		String tutorName = "Tutor Name";
-		String attendanceTotals = "Attendance Totals";
-		String averageAttendace = "Average Class Attendance";
+		String[] columnNames = {"ID", "\t\tClass Name","\t\tTutor Name", "\t\tAttendance Totals", "\t\tAverage Class Attendance"};
+		
 		String overallAttendance = "Overall Attendnace: ";
 		
-		frameArea.setText("");
+		for(int i=0; i<columnNames.length; i++)
+		{
+			frameArea.append(String.format("%10s ", columnNames[i]));
+		}
+		frameArea.append("\n");
+
+
+		for(int i = 0; i<7; i++)
+		{
+			frameArea.append("\n");
+			frameArea.append(String.format("%10s", fprogram.getID(i)));
+			frameArea.append(String.format("\t\t%10s", fprogram.getClassLists(i)));
+			frameArea.append(String.format("\t\t%10s", fprogram.getTutor(i)));
+			//get attendance array
+			//get average attendance
+			frameArea.append("\n");
+
+		}
 		
-		frameArea.append(String.format("%10s, %10s, %10s, %10s, %10s", id, className, tutorName, attendanceTotals, averageAttendace));
 		//get the order of the array and place here based on attendance
 		
 	}
 	
-        // your code here
 }

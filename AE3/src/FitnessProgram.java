@@ -24,6 +24,9 @@ public class FitnessProgram
 	
 	String className;
 	String tutorName;
+	ArrayList<Integer> attendnaceArray = new ArrayList<Integer>();
+	//int[] attendanceArray = new int[5];
+	String id;
 	int currentNumberOfClasses;
 	
 
@@ -63,7 +66,7 @@ public class FitnessProgram
 				FitnessClass fclass = this.getFitnessClasses()[i];
 				if( fclass == null)
 				{
-					className = "Open";
+					className = "\"OPEN\"";
 				}
 				
 				else if (timeStart + 9 == (fclass.getTimeStart())) 
@@ -75,16 +78,44 @@ public class FitnessProgram
 			return className;
 	}
 	
-	
+	public String getID(int idNum)
+	{
+			for (int i=0; i<MAXIMUM; i++)
+			{
+				FitnessClass fclass = this.getFitnessClasses()[i];
+				if( fclass == null)
+				{
+					id = "\"OPEN\"";
+				}
+				
+				else if (idNum + 9 == (fclass.getTimeStart())) 
+				{
+					id = fclass.getID();
+					return id;
+				}
+			}
+			return id;
+	}
 	public String getTutor(int number)
 	{
 		for (int i = 0; i<MAXIMUM; i++)
 		{
 			FitnessClass fclass = this.getFitnessClasses()[i];
+			if(fclass == null)
+			{
+				tutorName = "\"OPEN\"";
+			}
+			else if(number + 9 == (fclass.getTimeStart()))
+			{
+				tutorName = fclass.getTutorName();
+				return tutorName;
+			}
 		}
 		
 		return tutorName;
 	}
+	
+	
 	//get the time classes start
 	//entry x should contain class starting at time 9 + x or null if free
 	public void classStartTime(FitnessClass fitnessClass)
@@ -97,14 +128,40 @@ public class FitnessProgram
 	{
 		return 1;
 	}
-	public void setAttendances(String attendaceID, int[] attendances)
+	
+	//Easier as a String array w/ id? then can say 
+	//for(int i=0; i<MAXIMUM; i++){
+	//if(attendances[i].getAttednaceID.equals(attendances[0]
+	//fclassArray[i].setAttendace(attendances)
+	public ArrayList<Integer> setAttendances(String[] attendances)
 	{
-		for (int i = 0; i<MAXIMUM; i++)
+		for (int i=0; i<MAXIMUM; i++)
 		{
+			if(fclassArray[i].getAttendanceID().equals(attendances[0]))
+			{	
+				int weekOne = Integer.parseInt(attendances[1]);
+				attendnaceArray.add(weekOne);
+				int weekTwo = Integer.parseInt(attendances[2]);
+				attendnaceArray.add(weekTwo);
+				int weekThree = Integer.parseInt(attendances[3]);
+				attendnaceArray.add(weekThree);
+				int weekFour = Integer.parseInt(attendances[4]);
+				attendnaceArray.add(weekFour);
+				int weekFive = Integer.parseInt(attendances[5]);
+				attendnaceArray.add(weekFive);
+
+				return attendnaceArray;
+			}
+			else
+			{
+				i++;
+			}
+			//for each attendnace set, loop through check if id matches
+		}
+		return attendnaceArray;
+	}
 			//loop through array to see if it matches attendance id
 			//
-		}
-	}
 	//method to return list sorted in non-increasing order on av attendance using arrays.sort
 	public void sortArray()
 	{
