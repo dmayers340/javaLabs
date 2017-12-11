@@ -20,9 +20,10 @@ import java.util.*;
 public class FitnessProgram 
 {	
 	int MAXIMUM = 7;
-	private FitnessClass[] fclassArray;
+	private FitnessClass[] fclassArray; // = new FitnessClass[MAXIMUM];
 	
 	String className;
+	String tutorName;
 	int currentNumberOfClasses;
 	
 
@@ -33,13 +34,13 @@ public class FitnessProgram
 	}
 
 	//get the Fitness Class Object Array
-	public FitnessClass[] getObjArray()
+	public FitnessClass[] getFitnessClasses()
 	{
 		return fclassArray;
 	}
 	
 
-	public void getObjTime(FitnessClass[] obj)
+	public void getTime(FitnessClass[] obj)
 	{
 		for(int i = 0; i<obj.length; i++)
 		{
@@ -52,26 +53,14 @@ public class FitnessProgram
 			{
 				fclassArray[i] = new FitnessClass();
 			}
-		}
-		
-//		for(int i=0; i<obj.length; i++)
-//		{
-//			if(fclassArray[i] == null)
-//			{
-//				fclassArray[i] = new FitnessClass();
-//			}
-//			else
-//			{
-//				fclassArray[fclassArray[i].getTimeStart()-9] = fclassArray[i];
-//			}
-//		}
+		}		
 	}
 	
 	public String getClassLists(int timeStart)
 	{
 			for (int i=0; i<MAXIMUM; i++)
 			{
-				FitnessClass fclass = this.getObjArray()[i];
+				FitnessClass fclass = this.getFitnessClasses()[i];
 				if( fclass == null)
 				{
 					className = "Open";
@@ -86,6 +75,16 @@ public class FitnessProgram
 			return className;
 	}
 	
+	
+	public String getTutor(int number)
+	{
+		for (int i = 0; i<MAXIMUM; i++)
+		{
+			FitnessClass fclass = this.getFitnessClasses()[i];
+		}
+		
+		return tutorName;
+	}
 	//get the time classes start
 	//entry x should contain class starting at time 9 + x or null if free
 	public void classStartTime(FitnessClass fitnessClass)

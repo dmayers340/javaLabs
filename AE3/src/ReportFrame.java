@@ -14,7 +14,7 @@ import javax.swing.*;
  */
 public class ReportFrame extends JFrame 
 {
-	FitnessProgram fprogramFrame = new FitnessProgram();
+//	FitnessProgram fprogramFrame = new FitnessProgram();
 	private JTextArea frameArea;
 	 
 	

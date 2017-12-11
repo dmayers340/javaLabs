@@ -31,12 +31,14 @@ public class FitnessClass implements Comparable<FitnessClass>
 	{
 		//gets two strings
 		String[] individualPieces = randomStuff.split(" ");
+		
 		id = individualPieces[0];
 		className = individualPieces[1];
 		tutorName = individualPieces[2];
 		timeStart = Integer.parseInt(individualPieces[3]);	
 		
 		
+		//for each individual
 		System.out.println("\nfrom fitnessclass method id: " + id);
 		System.out.println("from fitnessclass method name: " + className);
 		System.out.println("from fitnessclass method tutor: " + tutorName);
@@ -104,10 +106,9 @@ public class FitnessClass implements Comparable<FitnessClass>
 	{
 		this.timeStart = timeStart;
 	}
-	public void setAttendance(int[] attendance)
+	public void setAttendance(int[] attendanceArray)
 	{
-		this.attendance = attendance;
-		System.out.println("Set Attendance" + attendance[0]);
+		this.attendance = attendanceArray;
 	}
 	
 	//Accessors
@@ -130,6 +131,12 @@ public class FitnessClass implements Comparable<FitnessClass>
 	public int[] getAttendance()
 	{
 		return attendance;
+	}
+	
+	public String returnAsString()
+	{
+		String infoForDisplay = String.format("%10s %10s %10s %10s %10s",  getID(), getClassName(), getTutorName(), getAttendance());
+		return infoForDisplay;
 	}
 
 }

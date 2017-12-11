@@ -78,9 +78,13 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 			{
 				// create new fitnessclass object based on line
 				String[] newLine = line.split(" ");
+				//doesn't have anything
 				fclass = new FitnessClass(line);//GIVE LINE INFORMATION--SHOULD ONLY BE ONE STRING
-//				fprogram.getObjTime();
-				fprogram.getObjArray()[fclass.getTimeStart()-9] = fclass;
+				System.out.println("FCLASS GUI " + fclass);
+				
+				//doesn't have anyting
+				fprogram.getFitnessClasses()[fclass.getTimeStart()-9] = fclass;
+				System.out.println("Fprog array from GUI " + fprogram);
 			}
 		}
 		catch (IOException e)
@@ -155,24 +159,39 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	public void updateDisplay() 
 	{
 		display.setText("");
-		String[] columnNames = {"Time      		", "Course Name    		", "  Tutor Name    "};
+		String[] columnNames = {"Time", "\t\tCourse Name", "\t\tTutor Name"};
 		
-		String[] timeInfo = {"9:00-10:00", "10:00-11:00", "11:00-12:00", "12:00-13:00", "13:00-14:00", "14:00-15:00", "15:00-16:00"};
+		String[] timeInfo = {"9-10 ", " 10-11 ", " 11-12 ", " 12-13 ", " 13-14 ", " 14-15 ", " 15-16 "};
 		
 		for(int i = 0; i<columnNames.length; i++)
 		{
 			display.append(String.format("%10s ", columnNames[i]));
 		}
-		
+		display.append("\n");
 		display.append("\n");
 		
 		for(int i = 0; i<7; i++)
 		{
-			display.append(String.format("\n%10s \n ", timeInfo[i]));
+			display.append(String.format("%10s", timeInfo[i]));
+			display.append(String.format("\t\t%10s", fprogram.getClassLists(i)));
+			display.append(String.format("\t\t%10s", fprogram.getTutor(i)));
+			display.append("\n");
+
 		}
 		
 		display.append("\n");
-	
+		
+//		for(int i = 0; i<7; i++)
+//		{
+//			display.append(String.format("%10s", fprogram.getClassLists(i)));
+//		}
+//		
+//		display.append("\n");
+//		
+//		for(int i =0; i<7; i++)
+//		{
+//			display.append(String.format("%10s", fprogram.getTutor(i)));
+//		}
 		
 	}
 
