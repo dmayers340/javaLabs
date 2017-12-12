@@ -53,7 +53,7 @@ public class ReportFrame extends JFrame
 			frameArea.append(String.format("%10s", fprogram.getID(i)));
 			frameArea.append(String.format("\t\t%10s", fprogram.getClassLists(i)));
 			frameArea.append(String.format("\t\t%10s", fprogram.getTutor(i)));
-			//frameArea.append(String.format("\t\t%10s", fprogram.getAttendnaces(attendanceLine)));			
+		//	frameArea.append(String.format("\t\t%10s", fprogram.getAttendnaces(attendanceLine)));			
 			frameArea.append(String.format("\t\t%10s", fprogram.getAverage(i)));	//returns 12 for all.I assume bc last class is all 12? 		
 			frameArea.append("\n");
 		}			

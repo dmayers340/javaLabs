@@ -139,5 +139,4 @@ public class FitnessClass implements Comparable<FitnessClass>
 		String averageString = Double.toString(averageAttendance());
 		return averageString;
 	}
-
 }

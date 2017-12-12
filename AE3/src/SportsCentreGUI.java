@@ -37,7 +37,6 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	
 	FitnessClass fclass;
 	FitnessProgram fprogram;
-
 	
 	/**
 	 * Constructor for AssEx3GUI class
@@ -159,22 +158,18 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 		{
 			display.append(String.format("%10s ", columnNames[i]));
 		}
-		display.append("\n");
-		display.append("\n");
+		display.append("\n\n");
 		
 		for(int i = 0; i<7; i++)
 		{
 			display.append("\n");
-
 			display.append(String.format("%10s", timeInfo[i]));
 			display.append(String.format("\t\t%10s", fprogram.getClassLists(i)));
 			display.append(String.format("\t\t%10s", fprogram.getTutor(i)));
 			display.append("\n");
-
 		}
 		
 		display.append("\n");
-		
 	}
 
 	/**
@@ -235,20 +230,20 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 
 	/**
 	 * Processes adding a class
-	 */
+	 * 
+	 * Display warning message if list is full
+	 * If class w/ ID exists display warning and cancle
+	 * 	 */
 	public void processAdding() 
-	{
-		//check to see if they added ID, Class Name, and tutor
-		//if one hasn't been entered show dialog box saying error
-		//check to find an empty time. If no empty times display error
-		//if none of the above
-		//then STORE as a new class set id, name, tutotor, time, and give an array
+	{	
 		String gotID = idIn.getText();
 		String gotName = classIn.getText();
 		String gotTutor = tutorIn.getText();
 		int firstTimeSlot = fprogram.getOpenTime();
 		int[] initAttendnace = {0,0,0,0,0};
 		
+		//if ID is already there display 
+		//JOptionPane.showMessageDialog(null, "Error. Class Already Exists");
 		if(gotID.isEmpty())
 		{
 			JOptionPane.showMessageDialog(null, "Cannot Process Request. Please Enter an ID.");
@@ -261,11 +256,11 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 		{
 			JOptionPane.showMessageDialog(null, "Cannot Process Request. Please Enter a Tutor Name");
 		}
-		else 
+		else //Otherwise create fclass w/ ID, clas name and tutor and put it in earliest av time slot
 		{
 			fclass = fprogram.getClassWithID(gotID);
 			if(fclass == null)
-			{//then STORE as a new class set id, name, tutotor, time, and give an array
+			{
 				FitnessClass addFClass = new FitnessClass();
 				addFClass.setID(gotID);
 				addFClass.setClassName(gotName);
@@ -281,25 +276,32 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 			{
 				JOptionPane.showMessageDialog(null, "Cannot Add Classes");
 			}
-			
 			clearTextFields();
+			updateDisplay();
 		}
 	}
 
 	/**
 	 * Processes deleting a class
+	 * Delete based on ID number
 	 */
 	public void processDeletion() 
 	{
-	    String gotID = idIn.getText();
+		String gotID = idIn.getText();
+
+		
 		if(gotID.isEmpty())
 		{
 			JOptionPane.showMessageDialog(null, "Enter ID");
 		}
+		//else if ID doesn't match previous ID
+		// JOptionPane.showMessageDialog(null, "Cannot Delete Class, No Class Found");
 		else 
 		{
+			FitnessClass deleteFClass = new FitnessClass();
+			//if gotID == class
+			fprogram.deleteClass(deleteFClass);
 			JOptionPane.showMessageDialog(null, "Delted Class " + gotID);
-			
 			clearTextFields();
 			updateDisplay();
 		} 
@@ -319,8 +321,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	{
 		idIn.setText("");
 		classIn.setText("");
-		tutorIn.setText("");
-		
+		tutorIn.setText("");	
 	}
 
 	/**
@@ -352,26 +353,20 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 		if (ae.getSource() == closeButton)
 		{
 			processSaveAndClose();
-			
 		}
 		else if (ae.getSource() == attendanceButton)
 		{
-			displayReport();
-			
+			displayReport();	
 		}
 		else if (ae.getSource() == addButton)
 		{
-			
 			processAdding();
 			updateDisplay();
-			
 		}
 		else if (ae.getSource() == deleteButton)
-		{
-			
+		{	
 			processDeletion();
-			updateDisplay();
-			
+			updateDisplay();	
 		}		
 	}
 

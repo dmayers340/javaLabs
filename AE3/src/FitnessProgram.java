@@ -28,8 +28,6 @@ public class FitnessProgram
 	private int currentNumberOfClasses;
 	private FitnessClass fclass = new FitnessClass();
 
-	
-
 	public FitnessProgram() //default constructor to initalize array
 	{			
 		fclassArray = new FitnessClass[MAXIMUM];
@@ -59,6 +57,31 @@ public class FitnessProgram
 		}		
 	}
 	
+	//get the time classes start
+		//entry x should contain class starting at time 9 + x or null if free
+		public void classStartTime(FitnessClass fitnessClass)
+		{
+			
+			
+		}
+		
+		//returns the first open time for a class
+		public int getOpenTime()
+		{
+			int x;
+			for(x=0; x<MAXIMUM; x++)
+			{
+				//loop through fclass array, if the time is null, return
+				if(fclassArray[x] == null)
+				{
+					x = x+9;
+					return x;
+				}
+			}
+			System.out.println("Open time " + x);
+			return x;
+		}
+		
 	//Gets the list of Class Name for display in GUI
 	public String getClassLists(int timeStart)
 	{
@@ -116,104 +139,6 @@ public class FitnessProgram
 		return tutorName;
 	}
 	
-	
-	//get the time classes start
-	//entry x should contain class starting at time 9 + x or null if free
-	public void classStartTime(FitnessClass fitnessClass)
-	{
-		
-		
-	}
-	
-	//returns the first open time for a class
-	public int getOpenTime()
-	{
-		int x;
-		for(x=0; x<MAXIMUM; x++)
-		{
-			//loop through fclass array, if the time is null, return
-			if(fclassArray[x] == null)
-			{
-				x = x+9;
-				return x;
-			}
-		}
-		System.out.println("Open time " + x);
-		return x;
-	}
-//	There should also be a method to populate the attendance lists for a given Fitness Class in the array, 
-//	given a String representing a single line of AttendancesIn.txt as a parameter.
-	public String getAttendnaces(String attendanceLine) //this is also being done in gui in initAttendance
-	{
-		String[] lineSplit = attendanceLine.split(" ");
-		String attendanceid = lineSplit[0];
-		
-		int weekOne = Integer.parseInt(lineSplit[1]);
-		int weekTwo = Integer.parseInt(lineSplit[2]);
-		int weekThree = Integer.parseInt(lineSplit[3]);
-		int weekFour = Integer.parseInt(lineSplit[4]);
-		int weekFive = Integer.parseInt(lineSplit[5]);
-		int[] attendanceArray = {weekOne, weekTwo, weekThree, weekFour, weekFive};
-		System.out.println("\nFrom prog: " + attendanceLine);
-		
-		fclass.setAttendance(attendanceArray);
-
-		String array = attendanceArray.toString();
-		System.out.println("FProgram " + array); //array is empty
-		return array;
-		//return attendanceArray.toString();
-		
-	}
-//	public int[] setAttendances(String attendnaceID, int[] attendances)
-//	{
-//		
-//		for(int i = 0; i<MAXIMUM; i++)
-//		{
-//			if(attendnaceID.equals())
-//			{
-//				attendances
-//			}
-//		}
-//		for (int i=0; i<MAXIMUM; i++)
-//		//for each attendnace set, loop through check if id matches
-//		return attendances;
-//		public ArrayList<Integer> setAttendances(String[] attendances)
-//		{			//loop through array to see if it matches attendance id
-//
-//			for (int i=0; i<MAXIMUM; i++)
-//			{
-//				if(fclassArray[i].getAttendanceID().equals(attendances[0]))
-//				{	
-//					int weekOne = Integer.parseInt(attendances[1]);
-//					attendnaceArray.add(weekOne);
-//					int weekTwo = Integer.parseInt(attendances[2]);
-//					attendnaceArray.add(weekTwo);
-//					int weekThree = Integer.parseInt(attendances[3]);
-//					attendnaceArray.add(weekThree);
-//					int weekFour = Integer.parseInt(attendances[4]);
-//					attendnaceArray.add(weekFour);
-//					int weekFive = Integer.parseInt(attendances[5]);
-//					attendnaceArray.add(weekFive);
-//
-//					return attendnaceArray;
-//				}
-//				else
-//				{
-//					i++;
-//				}
-//		return attendances;
-//	}
-			//loop through array to see if it matches attendance id
-			//
-	
-	//method to return list sorted in non-increasing order on av attendance using arrays.sort
-	public String sortArray()
-	{
-		Arrays.sort(sorted);
-		System.out.println("fclassarray program" + Arrays.asList(sorted));
-		return Arrays.toString(sorted);
-	}
-	
 	//get fitness class obj with ID number in array or null
 	public FitnessClass getClassWithID(String idOfClass)
 	{
@@ -231,6 +156,35 @@ public class FitnessProgram
 		}
 		return null;
 	}
+	
+//	There should also be a method to populate the attendance lists for a given Fitness Class in the array, 
+//	given a String representing a single line of AttendancesIn.txt as a parameter.
+	public String getAttendnaces(String attendanceLine) 
+	{
+		String[] lineSplit = attendanceLine.split(" ");
+		String attendanceid = lineSplit[0];
+		int weekOne = Integer.parseInt(lineSplit[1]);
+		int weekTwo = Integer.parseInt(lineSplit[2]);
+		int weekThree = Integer.parseInt(lineSplit[3]);
+		int weekFour = Integer.parseInt(lineSplit[4]);
+		int weekFive = Integer.parseInt(lineSplit[5]);
+		int[] attendanceArray = {weekOne, weekTwo, weekThree, weekFour, weekFive};
+				
+		fclass.setAttendance(attendanceArray);
+		String array = Arrays.toString(attendanceArray);
+		System.out.println("FProgram " + array); 
+		System.out.println("\nFrom prog: " + attendanceLine);
+		return array;		
+	}
+	
+	//method to return list sorted in non-increasing order on av attendance using arrays.sort
+	public String sortArray()
+	{
+		Arrays.sort(sorted);
+		System.out.println("fclassarray program" + Arrays.asList(sorted));
+		return Arrays.toString(sorted);
+	}
+	
 	public String getAverage(int num)
 	{
 		String avgString = "";
@@ -288,7 +242,7 @@ public class FitnessProgram
 		
 	}
 	
-	public void deleteClass()
+	public void deleteClass(FitnessClass deleteFClass)
 	{
 		
 	}
