@@ -281,6 +281,15 @@ public class FitnessProgram
 		System.out.println("Total Average " + finalAverage);
 		System.out.println("Total " + total);
 		return finalAverage;
+	}
+	
+	public void addClass(FitnessClass newFClass)
+	{
+		
+	}
+	
+	public void deleteClass()
+	{
 		
 	}
 }

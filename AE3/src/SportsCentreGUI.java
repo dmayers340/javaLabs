@@ -238,30 +238,52 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	 */
 	public void processAdding() 
 	{
+		//check to see if they added ID, Class Name, and tutor
+		//if one hasn't been entered show dialog box saying error
+		//check to find an empty time. If no empty times display error
+		//if none of the above
+		//then STORE as a new class set id, name, tutotor, time, and give an array
 		String gotID = idIn.getText();
 		String gotName = classIn.getText();
 		String gotTutor = tutorIn.getText();
-		
 		int firstTimeSlot = fprogram.getOpenTime();
+		int[] initAttendnace = {0,0,0,0,0};
 		
-		if(firstTimeSlot == -1)
+		if(gotID.isEmpty())
 		{
-			JOptionPane.showMessageDialog(null, "Cannot Add Classes");
+			JOptionPane.showMessageDialog(null, "Cannot Process Request. Please Enter an ID.");
+		}
+		else if (gotName.isEmpty())
+		{
+			JOptionPane.showMessageDialog(null, "Cannot Process Request. Please Enter a Class Name");
+		}
+		else if (gotTutor.isEmpty())
+		{
+			JOptionPane.showMessageDialog(null, "Cannot Process Request. Please Enter a Tutor Name");
+		}
+		else 
+		{
+			fclass = fprogram.getClassWithID(gotID);
+			if(fclass == null)
+			{//then STORE as a new class set id, name, tutotor, time, and give an array
+				FitnessClass addFClass = new FitnessClass();
+				addFClass.setID(gotID);
+				addFClass.setClassName(gotName);
+				addFClass.setTutorName(gotTutor);
+				addFClass.setTimeStart(firstTimeSlot);
+				addFClass.setAttendance(initAttendnace);
+				
+				//add to fitness program
+				fprogram.addClass(addFClass);
+				JOptionPane.showMessageDialog(null, "Added Class");
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Cannot Add Classes");
+			}
 			
 			clearTextFields();
 		}
-//		else if (program exists)
-//		{
-//			JOptionPane.showMessageDialog(null, "Class Exists");
-//		}
-		else 
-		{
-			//add class to FProgram
-		//	fprogram add Class(gotID, gotName, gotTutor);
-			
-			JOptionPane.showMessageDialog(null, "Added Class");
-		}
-		clearTextFields();
 	}
 
 	/**
