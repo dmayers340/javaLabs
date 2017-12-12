@@ -19,10 +19,10 @@ public class FitnessClass implements Comparable<FitnessClass>
 	private String attendaceID;
 	private int[] attendance = new int[CLASSWEEKS]; //set of 5 int represent attendance COMING from GUI file
 		
+	private double averageAttendnace;
 	//optional default constructor
-	public FitnessClass()//attendance array as parameter? but then wouldn't be same obj--move code to gui?
+	public FitnessClass()
 	{
-		//TODO move attendance array as current parameter to GUI
 		
 	}
 	
@@ -109,6 +109,11 @@ public class FitnessClass implements Comparable<FitnessClass>
 		this.attendaceID = attendaceID;
 	}
 	
+	public void setAverageAttendance(double avg)
+	{
+		this.averageAttendnace = avg;
+	}
+	
 	//Accessors
 	public String getID()
 	{
@@ -136,7 +141,7 @@ public class FitnessClass implements Comparable<FitnessClass>
 	}
 	public String getAverageAttendnace()
 	{
-		String averageString = Double.toString(averageAttendance());
+		String averageString = Double.toString(averageAttendnace);
 		return averageString;
 	}
 }

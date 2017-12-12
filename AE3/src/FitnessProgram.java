@@ -31,7 +31,6 @@ public class FitnessProgram
 	public FitnessProgram() //default constructor to initalize array
 	{			
 		fclassArray = new FitnessClass[MAXIMUM];
-		
 	}
 
 	//get the Fitness Class Object Array
@@ -185,6 +184,8 @@ public class FitnessProgram
 		return Arrays.toString(sorted);
 	}
 	
+	//loop through each fclass attendnace array, get avg attendnace
+	//return average
 	public String getAverage(int num)
 	{
 		String avgString = "";
@@ -204,9 +205,10 @@ public class FitnessProgram
 				}
 				else if(num + 9 == (fclass.getTimeStart()))
 				{
-					double avg = fclass.averageAttendance();
-					System.out.println("average from fprog " + avg);
-					avgString = Double.toString(avg);
+					avgString = fclass.getAverageAttendnace();
+					//double avg = fclass.averageAttendance();
+					System.out.println("average from fprog " + avgString);
+				//	avgString = Double.toString(avg);
 					return avgString;
 				}
 			}
