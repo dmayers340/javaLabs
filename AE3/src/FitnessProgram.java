@@ -20,12 +20,14 @@ import java.util.*;
 public class FitnessProgram 
 {	
 	int MAXIMUM = 7;
-	private FitnessClass[] fclassArray; // = new FitnessClass[MAXIMUM];
+	private FitnessClass[] fclassArray; 
 	private FitnessClass[] sorted;
 	private String className;
 	private String tutorName;
 	private String id;
 	private int currentNumberOfClasses;
+	private FitnessClass fclass = new FitnessClass();
+
 	
 
 	public FitnessProgram() //default constructor to initalize array
@@ -154,7 +156,6 @@ public class FitnessProgram
 		int[] attendanceArray = {weekOne, weekTwo, weekThree, weekFour, weekFive};
 		System.out.println("\nFrom prog: " + attendanceLine);
 		
-		FitnessClass fclass = new FitnessClass();
 		fclass.setAttendance(attendanceArray);
 
 		String array = attendanceArray.toString();
@@ -219,15 +220,67 @@ public class FitnessProgram
 		//if text box is equal to id number, return that class ID otherwise return nothing
 		for(int i = 0; i< MAXIMUM; i++)
 		{
-			if(fclassArray[i] == null)
-			{
-				i++;
-			}
-			else if(fclassArray[i].getID().equals(idOfClass))
+			if(fclassArray[i].getID().equals(idOfClass))
 			{
 				return fclassArray[i];
 			}
+			else if(fclassArray[i] == null)
+			{
+				i++;
+			}
 		}
 		return null;
+	}
+	public String getAverage(int num)
+	{
+		String avgString = "";
+		//THIS BIT RETURNS 12
+//		double avg = fclass.averageAttendance();
+//		System.out.println("average from fprog " + avg);
+//		String avgString = Double.toString(avg);
+//		return avgString;
+		
+		//THIS BIT RETURNS 0 AND 'OPEN'			
+			for (int i = 0; i<MAXIMUM; i++)
+			{
+				FitnessClass fclass = this.getFitnessClasses()[i];
+				if(fclass == null)
+				{
+					avgString = "\"OPEN\"";
+				}
+				else if(num + 9 == (fclass.getTimeStart()))
+				{
+					double avg = fclass.averageAttendance();
+					System.out.println("average from fprog " + avg);
+					avgString = Double.toString(avg);
+					return avgString;
+				}
+			}
+			return avgString;		
+	}
+
+	//get attendnace averages from fitnessclass, IS 0 because not getting averages
+	public double finalAvAttendance()
+	{
+		double total = 0;
+		double average = 0;
+		double finalAverage = 0;
+	
+		//for each Fitness Class attendnace
+		for(int i = 0; i<7; i++) 
+		{
+			//get the average of single class
+			average = fclass.averageAttendance();
+			//add to the total
+			total = total + average;
+		}
+		
+		//get overall average
+		finalAverage = total/7; 
+		
+		System.out.println("Total Average " + finalAverage);
+		System.out.println("Total " + total);
+		return finalAverage;
+		
 	}
 }

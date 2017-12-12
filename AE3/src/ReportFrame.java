@@ -18,8 +18,10 @@ public class ReportFrame extends JFrame
 	FitnessProgram fprogram = new FitnessProgram();
 	FitnessClass fclass = new FitnessClass();
 	String attendanceLine;
+	
+	private JLabel overallAttendnaceLabel;
  
-	public ReportFrame(FitnessProgram initFProgram) //needs fitness program parameter
+	public ReportFrame(FitnessProgram initFProgram) 
 	{
 		fprogram = initFProgram;
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -37,9 +39,7 @@ public class ReportFrame extends JFrame
 	public void buildReport()
 	{
 		String[] columnNames = {"ID", "\t\tClass Name","\t\tTutor Name", "\t\tAttendance Totals", "\t\tAverage Class Attendance"};
-		
-		String overallAttendance = "Overall Attendnace: ";
-		
+				
 		for(int i=0; i<columnNames.length; i++)
 		{
 			frameArea.append(String.format("%10s ", columnNames[i]));
@@ -53,12 +53,12 @@ public class ReportFrame extends JFrame
 			frameArea.append(String.format("%10s", fprogram.getID(i)));
 			frameArea.append(String.format("\t\t%10s", fprogram.getClassLists(i)));
 			frameArea.append(String.format("\t\t%10s", fprogram.getTutor(i)));
-			//frameArea.append(String.format("\t\t%10s", fprogram.getAttendnaces(attendanceLine)));
-			frameArea.append(String.format("\t\t%10s", fclass.averageAttendance()));			
+			//frameArea.append(String.format("\t\t%10s", fprogram.getAttendnaces(attendanceLine)));			
+			frameArea.append(String.format("\t\t%10s", fprogram.getAverage(i)));	//returns 12 for all.I assume bc last class is all 12? 		
 			frameArea.append("\n");
-			
-
-		}		
+		}			
+		frameArea.append("\n");
+		frameArea.append(String.format("\n\t\t\t\t\t\t\t\t\t\t%10s %10s", "Overall Attendnace: ", Double.toString(fprogram.finalAvAttendance())));
 	}
 	
 }

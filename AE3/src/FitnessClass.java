@@ -67,7 +67,7 @@ public class FitnessClass implements Comparable<FitnessClass>
 	//get the average attendance for each class
 	public double averageAttendance()
 	{
-		System.out.println("attendnace array from av attendnace() " + attendance.toString());
+		//returns 12-last class
 		int total = 0;
 		double average = 0;
 	
@@ -81,9 +81,8 @@ public class FitnessClass implements Comparable<FitnessClass>
 		System.out.println("Total Average " + average);
 		System.out.println("Total " + total);
 		return average;
-	
 	}
-
+	
 	//MUTATORS
 	public void setID(String id)
 	{
@@ -135,4 +134,10 @@ public class FitnessClass implements Comparable<FitnessClass>
 	{
 		return attendaceID;
 	}
+	public String getAverageAttendnace()
+	{
+		String averageString = Double.toString(averageAttendance());
+		return averageString;
+	}
+
 }
