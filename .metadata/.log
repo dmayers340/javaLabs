@@ -6408,3 +6408,9 @@ Caused by: java.security.cert.CertificateException: No subject alternative DNS n
 	at sun.security.ssl.X509TrustManagerImpl.checkTrusted(Unknown Source)
 	at sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(Unknown Source)
 	... 25 more
+
+!ENTRY org.eclipse.jface.text 2 0 2017-12-11 15:05:12.626
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.number'
+
+!ENTRY org.eclipse.jface.text 2 0 2017-12-11 15:05:12.682
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.round'

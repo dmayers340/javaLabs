@@ -67,25 +67,17 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	public void initLadiesDay() 
 	{
 		BufferedReader reader = null;
-		
-		// store new fitnessclass object in array
 		fprogram = new FitnessProgram();
 
 		try
 		{
 			reader = new BufferedReader(new FileReader(classesInFile));
-			
 			while((line = reader.readLine()) != null)
 			{
 				// create new fitnessclass object based on line
 				String[] newLine = line.split(" ");
-				//doesn't have anything
-				fclass = new FitnessClass(line);//GIVE LINE INFORMATION--SHOULD ONLY BE ONE STRING
-				System.out.println("FCLASS GUI " + fclass);
-				
-				//doesn't have anyting
+				fclass = new FitnessClass(line);
 				fprogram.getFitnessClasses()[fclass.getTimeStart()-9] = fclass;
-				System.out.println("Fprog array from GUI " + fprogram);
 			}
 		}
 		catch (IOException e)
@@ -111,7 +103,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	 * Initialises the attendances using data
 	 * from the file AttendancesIn.txt
 	 */
-	public void initAttendances() 
+	public void initAttendances() //also being done in fitnessprogram
 	{
 		BufferedReader reader = null;
 		try
@@ -123,19 +115,17 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 				String attendanceid = lineSplit[0];
 				fclass.setAttendanceID(attendanceid);
 				
-				int weekOne = Integer.parseInt(lineSplit[1]);
-				int weekTwo = Integer.parseInt(lineSplit[2]);
-				int weekThree = Integer.parseInt(lineSplit[3]);
-				int weekFour = Integer.parseInt(lineSplit[4]);
-				int weekFive = Integer.parseInt(lineSplit[5]);
-				int[] attendanceArray = {weekOne, weekTwo, weekThree, weekFour, weekFive};
-				System.out.println("\nFrom GUI: " + attendanceLine);
-				fclass.setAttendance(attendanceArray);
-				
-				fprogram.setAttendances(lineSplit); //also need to add id
+//				int weekOne = Integer.parseInt(lineSplit[1]);
+//				int weekTwo = Integer.parseInt(lineSplit[2]);
+//				int weekThree = Integer.parseInt(lineSplit[3]);
+//				int weekFour = Integer.parseInt(lineSplit[4]);
+//				int weekFive = Integer.parseInt(lineSplit[5]);
+//				int[] attendanceArray = {weekOne, weekTwo, weekThree, weekFour, weekFive};
+//				System.out.println("\nFrom GUI: " + attendanceLine);
+//				fclass.setAttendance(attendanceArray);
+				fprogram.getAttendnaces(attendanceLine); 
 			} 
 		}
-
 		catch (IOException e)
 		{
 			e.printStackTrace();

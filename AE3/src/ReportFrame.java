@@ -16,6 +16,8 @@ public class ReportFrame extends JFrame
 {
 	private JTextArea frameArea;
 	FitnessProgram fprogram = new FitnessProgram();
+	FitnessClass fclass = new FitnessClass();
+	String attendanceLine;
  
 	public ReportFrame(FitnessProgram initFProgram) //needs fitness program parameter
 	{
@@ -51,14 +53,12 @@ public class ReportFrame extends JFrame
 			frameArea.append(String.format("%10s", fprogram.getID(i)));
 			frameArea.append(String.format("\t\t%10s", fprogram.getClassLists(i)));
 			frameArea.append(String.format("\t\t%10s", fprogram.getTutor(i)));
-			//get attendance array
-			//get average attendance
+			//frameArea.append(String.format("\t\t%10s", fprogram.getAttendnaces(attendanceLine)));
+			frameArea.append(String.format("\t\t%10s", fclass.averageAttendance()));			
 			frameArea.append("\n");
+			
 
-		}
-		
-		//get the order of the array and place here based on attendance
-		
+		}		
 	}
 	
 }
