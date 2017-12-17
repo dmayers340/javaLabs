@@ -25,6 +25,7 @@ public class FitnessProgram
 	private String className;
 	private String tutorName;
 	private String id;
+	private String attendnace;
 	private int currentNumberOfClasses;
 	private FitnessClass fclass = new FitnessClass();
 
@@ -158,7 +159,7 @@ public class FitnessProgram
 	
 //	There should also be a method to populate the attendance lists for a given Fitness Class in the array, 
 //	given a String representing a single line of AttendancesIn.txt as a parameter.
-	public String getAttendnaces(String attendanceLine) 
+	public String attendnaces(String attendanceLine) 
 	{
 		String[] lineSplit = attendanceLine.split(" ");
 		String attendanceid = lineSplit[0];
@@ -176,9 +177,46 @@ public class FitnessProgram
 		return array;		
 	}
 	
+	public String getAttendnaces(int number)
+	{
+		for (int i = 0; i<MAXIMUM; i++)
+		{
+			FitnessClass fclass = this.getFitnessClasses()[i];
+			if(fclass == null)
+			{
+				attendnace = "\"OPEN\"";
+			}
+			else if(number + 9 == (fclass.getTimeStart()))
+			{
+				attendnace = Arrays.toString(fclass.getAttendance());
+				return attendnace;
+			}
+		}
+		return attendnace;
+	}
+	
 	//method to return list sorted in non-increasing order on av attendance using arrays.sort
 	public String sortArray()
 	{
+		int classes = 0;
+		if(classes == MAXIMUM)
+		{
+			sorted = (FitnessClass[]) fclassArray.clone();
+		}
+		else
+		{
+			sorted = new FitnessClass[classes];
+			
+			for (int i = 0; i< MAXIMUM; i++)
+			{
+				FitnessClass fclass = fclassArray[i];
+				
+				if( fclass != null)
+				{
+					sorted[i] = fclass;
+				}
+			}
+		}
 		Arrays.sort(sorted);
 		System.out.println("fclassarray program" + Arrays.asList(sorted));
 		return Arrays.toString(sorted);

@@ -19,16 +19,13 @@ public class ReportFrame extends JFrame
 	FitnessClass fclass = new FitnessClass();
 	String attendanceLine;
 	
-	private JLabel overallAttendnaceLabel;
- 
 	public ReportFrame(FitnessProgram initFProgram) 
 	{
 		fprogram = initFProgram;
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		setTitle("Attendance Display");
-		setSize(1500, 400);	
+		setSize(1500, 425);	
 
-		
 		frameArea = new JTextArea();
 		frameArea.setFont(new Font("Courier", Font.PLAIN, 14));
 		add(frameArea, BorderLayout.CENTER);
@@ -53,7 +50,7 @@ public class ReportFrame extends JFrame
 			frameArea.append(String.format("%10s", fprogram.getID(i)));
 			frameArea.append(String.format("\t\t%10s", fprogram.getClassLists(i)));
 			frameArea.append(String.format("\t\t%10s", fprogram.getTutor(i)));
-		//	frameArea.append(String.format("\t\t%10s", fprogram.getAttendnaces(attendanceLine)));			
+			frameArea.append(String.format("\t\t%10s", fprogram.getAttendnaces(i)));			
 			frameArea.append(String.format("\t\t%10s", fprogram.getAverage(i)));	//returns 12 for all.I assume bc last class is all 12? 		
 			frameArea.append("\n");
 		}			

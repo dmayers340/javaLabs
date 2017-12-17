@@ -82,6 +82,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 		catch (IOException e)
 		{
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Cannot Read Classes In File");
 			System.err.println("Cannot read file");
 		}	
 		finally
@@ -93,6 +94,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 			catch(IOException cannotClose)
 			{
 				cannotClose.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Cannot Close File");
 				System.err.println("Cannot Close File");
 			}
 		}
@@ -112,22 +114,16 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 			{
 				String[] lineSplit = attendanceLine.split(" ");
 				String attendanceid = lineSplit[0];
-				fclass.setAttendanceID(attendanceid);
 				
-//				int weekOne = Integer.parseInt(lineSplit[1]);
-//				int weekTwo = Integer.parseInt(lineSplit[2]);
-//				int weekThree = Integer.parseInt(lineSplit[3]);
-//				int weekFour = Integer.parseInt(lineSplit[4]);
-//				int weekFive = Integer.parseInt(lineSplit[5]);
-//				int[] attendanceArray = {weekOne, weekTwo, weekThree, weekFour, weekFive};
-//				System.out.println("\nFrom GUI: " + attendanceLine);
-//				fclass.setAttendance(attendanceArray);
-				fprogram.getAttendnaces(attendanceLine); 
+				fprogram.attendnaces(attendanceLine); 
+
+				fclass.setAttendanceID(attendanceid);
 			} 
 		}
 		catch (IOException e)
 		{
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Cannot Read Attendance File");
 			System.err.println("Cannot read file");
 		}	
 		finally
@@ -139,6 +135,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 			catch(IOException cannotClose)
 			{
 				cannotClose.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Cannot Close Attendance File");
 				System.err.println("Cannot Close File");
 			}
 		}
