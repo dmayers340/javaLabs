@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /** Defines an object representing a single fitness class
  * define fitness class obj
  * 
@@ -44,6 +46,7 @@ public class FitnessClass implements Comparable<FitnessClass>
 		System.out.println("from fitnessclass method name: " + className);
 		System.out.println("from fitnessclass method tutor: " + tutorName);
 		System.out.println("from fitnessclass method time: " + timeStart);
+		System.out.println("from fitnessclass method time: " + Arrays.toString(getAttendance()));
 
 	}
 	
@@ -103,6 +106,7 @@ public class FitnessClass implements Comparable<FitnessClass>
 	public void setAttendance(int[] attendanceArray)
 	{
 		this.attendance = attendanceArray;
+		System.out.println("Set attendnace " + Arrays.toString(attendance));
 	}
 	public void setAttendanceID(String attendaceID)
 	{
@@ -114,7 +118,7 @@ public class FitnessClass implements Comparable<FitnessClass>
 		this.averageAttendnace = avg;
 	}
 	
-	//Accessors
+	//Accessors for instance variables 
 	public String getID()
 	{
 		return id;
@@ -131,9 +135,10 @@ public class FitnessClass implements Comparable<FitnessClass>
 	{
 		return timeStart;
 	}
-	public int[] getAttendance()
+	public int[] getAttendance() //this is empty
 	{
-		return attendance;
+		System.out.println("Attendnace from get Attendnace " + Arrays.toString(attendance));
+		return this.attendance;
 	}
 	public String getAttendanceID()
 	{
