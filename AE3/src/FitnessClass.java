@@ -17,22 +17,28 @@ public class FitnessClass implements Comparable<FitnessClass>
 	private String id = ""; 
 	private String className = "";
 	private String tutorName = "";
-	private int timeStart; //9-15:00
+	private int timeStart; 
 	private String attendaceID;
-	private int[] attendance = new int[CLASSWEEKS]; //set of 5 int represent attendance COMING from GUI file
-		
+	private int[] attendance; 
 	private double averageAttendnace;
+	
 	//optional default constructor
+	public FitnessClass(String id, String name, String tutorName)
+	{
+		this.id = id;
+		this.className = name;
+		this.tutorName = tutorName;
+		attendance = new int[CLASSWEEKS];
+	}
+	
 	public FitnessClass()
 	{
 		
 	}
-	
 	//Non-default constructor to set instance vars from a string containing id, name, tutor name, start time)--need to break apart all info
 	//this splits both Class info and Attendance info
 	public FitnessClass(String randomStuff) 
 	{
-		//gets two strings
 		String[] individualPieces = randomStuff.split(" ");
 		
 		id = individualPieces[0];
@@ -40,7 +46,7 @@ public class FitnessClass implements Comparable<FitnessClass>
 		tutorName = individualPieces[2];
 		timeStart = Integer.parseInt(individualPieces[3]);	
 		
-		
+		attendance = new int[CLASSWEEKS];
 		//for each individual
 		System.out.println("\nfrom fitnessclass method id: " + id);
 		System.out.println("from fitnessclass method name: " + className);
@@ -50,6 +56,7 @@ public class FitnessClass implements Comparable<FitnessClass>
 
 	}
 	
+	//TODO compareAvgs to sort in FProg
 	//compare average attendances of each class 
 	public int compareTo(FitnessClass other) 
     {
@@ -57,22 +64,24 @@ public class FitnessClass implements Comparable<FitnessClass>
 		
 		if(average < other.averageAttendance())
 		{
-			return -1;
+			return 1;
 		}
 		else if (average == other.averageAttendance())
 		{
 			return 0;
 		}
 		else
-			return 1;
+			return -1;
     }
 	
 	//get the average attendance for each class
 	public double averageAttendance()
-	{
+	{ 
 		//returns 12-last class
 		int total = 0;
 		double average = 0;
+		
+		System.out.println("Attendnace array from avgAttendnace " + Arrays.toString(attendance)); //only returns last class
 	
 		//for each # in attendance array
 		for(int i = 0; i<attendance.length; i++) 
@@ -105,8 +114,11 @@ public class FitnessClass implements Comparable<FitnessClass>
 	}
 	public void setAttendance(int[] attendanceArray)
 	{
-		this.attendance = attendanceArray;
-		System.out.println("Set attendnace " + Arrays.toString(attendance));
+		for (int i = 0; i<7; i++)
+		{
+			this.attendance = attendanceArray;
+		}
+		System.out.println("\nSet attendnace " + Arrays.toString(attendance));
 	}
 	public void setAttendanceID(String attendaceID)
 	{
@@ -116,6 +128,21 @@ public class FitnessClass implements Comparable<FitnessClass>
 	public void setAverageAttendance(double avg)
 	{
 		this.averageAttendnace = avg;
+	}
+	public String formatReport()
+	{
+		//put in attendnace array as String
+		StringBuilder attendnacesString = new StringBuilder();
+		for (int i=0; i<CLASSWEEKS; i++)
+		{
+			int attendnaceNum = this.attendance[i];
+			attendnacesString.append(String.format("%10d", attendnaceNum));
+		}
+		double formatAverage = averageAttendance();
+		
+		String formattedReport = String.format("%10s %10s %10s %10s %10.2f %\n", id, className,
+				tutorName, attendnacesString, formatAverage);
+		return formattedReport;
 	}
 	
 	//Accessors for instance variables 

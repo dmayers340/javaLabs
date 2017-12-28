@@ -1,5 +1,7 @@
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
 /**
  * Maintains a list of Fitness Class objects
  * The list is initialised in order of start time
@@ -19,19 +21,21 @@ import java.util.*;
  */
 public class FitnessProgram 
 {	
-	int MAXIMUM = 7;
+	final int MAXIMUM = 7;
+	private int currentNumberOfClasses;
+	
 	private FitnessClass[] fclassArray; 
 	private FitnessClass[] sorted;
-	private String className;
-	private String tutorName;
-	private String id;
-	private String attendnace;
-	private int currentNumberOfClasses;
+	
 	private FitnessClass fclass = new FitnessClass();
+	private String attendanceid;
+	
+	int[] attendanceArray;
 
 	public FitnessProgram() //default constructor to initalize array
 	{			
 		fclassArray = new FitnessClass[MAXIMUM];
+		currentNumberOfClasses = 0;
 	}
 
 	//get the Fitness Class Object Array
@@ -85,6 +89,7 @@ public class FitnessProgram
 	//Gets the list of Class Name for display in GUI
 	public String getClassLists(int timeStart)
 	{
+		String className = "";
 		for (int i=0; i<MAXIMUM; i++)
 		{
 			FitnessClass fclass = this.getFitnessClasses()[i];
@@ -104,6 +109,7 @@ public class FitnessProgram
 	//Gets the list of Class ID for display in GUI
 	public String getID(int idNum)
 	{
+		String id = "";
 		for (int i=0; i<MAXIMUM; i++)
 		{
 			FitnessClass fclass = this.getFitnessClasses()[i];
@@ -123,6 +129,8 @@ public class FitnessProgram
 	//Gets the list of Class Tutor for display in GUI
 	public String getTutor(int number)
 	{
+		String tutorName = "";
+
 		for (int i = 0; i<MAXIMUM; i++)
 		{
 			FitnessClass fclass = this.getFitnessClasses()[i];
@@ -157,28 +165,35 @@ public class FitnessProgram
 		return null;
 	}
 	
-//	There should also be a method to populate the attendance lists for a given Fitness Class in the array, 
-//	given a String representing a single line of AttendancesIn.txt as a parameter.
+	//Method to populate attendnace lists, given String representing single line of AtendancesIn.txt as a parameter 
 	public String attendnaces(String attendanceLine) 
 	{
 		String[] lineSplit = attendanceLine.split(" ");
 		String attendanceid = lineSplit[0];
+		
 		int weekOne = Integer.parseInt(lineSplit[1]);
 		int weekTwo = Integer.parseInt(lineSplit[2]);
 		int weekThree = Integer.parseInt(lineSplit[3]);
 		int weekFour = Integer.parseInt(lineSplit[4]);
 		int weekFive = Integer.parseInt(lineSplit[5]);
 		int[] attendanceArray = {weekOne, weekTwo, weekThree, weekFour, weekFive};
+		this.attendanceArray = attendanceArray;
 				
 		fclass.setAttendance(attendanceArray);
 		String array = Arrays.toString(attendanceArray);
-		System.out.println("FProgram " + array); 
-		System.out.println("\nFrom prog: " + attendanceLine);
-		return array;		
+		System.out.println("this attendnace arry " + Arrays.toString(this.attendanceArray));
+		return array; //is returning attendnaces
 	}
 	
-	public String getAttendnaces(int number)
+	public String getAttendnaceInID()
 	{
+		return attendanceid;
+	}
+
+	//TODO fix attendnaces
+	public String getAttendnaces(int number) //returns 0
+	{
+		String attendnace = "";
 		for (int i = 0; i<MAXIMUM; i++)
 		{
 			FitnessClass fclass = this.getFitnessClasses()[i];
@@ -195,17 +210,20 @@ public class FitnessProgram
 		return attendnace;
 	}
 	
+	//TODO sort array based on attendnace
 	//method to return list sorted in non-increasing order on av attendance using arrays.sort
-	public String sortArray()
+	public FitnessClass[] sortArray()
 	{
+		FitnessClass[] arraySorted;
 		int classes = 0;
-		if(classes == MAXIMUM)
+		
+		if(currentNumberOfClasses == MAXIMUM)
 		{
-			sorted = (FitnessClass[]) fclassArray.clone();
+			arraySorted = (FitnessClass[]) fclassArray.clone();
 		}
 		else
 		{
-			sorted = new FitnessClass[classes];
+			arraySorted = new FitnessClass[currentNumberOfClasses];
 			
 			for (int i = 0; i< MAXIMUM; i++)
 			{
@@ -213,13 +231,14 @@ public class FitnessProgram
 				
 				if( fclass != null)
 				{
-					sorted[i] = fclass;
+					arraySorted[classes] = fclass;
+					classes++;
 				}
 			}
 		}
-		Arrays.sort(sorted);
+		Arrays.sort(arraySorted);
 		System.out.println("fclassarray program" + Arrays.asList(sorted));
-		return Arrays.toString(sorted);
+		return arraySorted;
 	}
 	
 	//loop through each fclass attendnace array, get avg attendnace
@@ -277,13 +296,85 @@ public class FitnessProgram
 		return finalAverage;
 	}
 	
-	public void addClass(FitnessClass newFClass)
+	public void addClass(String newClassID, String newClassName, String newClassTutor)
 	{
+		int[] attendnaceInital = {0,0,0,0,0};
+		
+		FitnessClass fclass = new FitnessClass(newClassID, newClassName, newClassTutor);
+		int startTimeForNewClass = fclass.getTimeStart();
+		fclass.setTimeStart(startTimeForNewClass);
+		
+		fclassArray[startTimeForNewClass] = fclass;
+		//fclassArray[startTimeForNewClass].setAttendance(attendnaceInital);
+		currentNumberOfClasses ++;
+	}
+//	//TODO make the add process
+//	public void addClass(FitnessClass newFClass)
+//	{
+//		int[] attendnaceInitial = {0,0,0,0,0};
+//		
+//		for (int i=0; i<MAXIMUM; i++)
+//		{
+//		//FitnessClass newFClass = new FitnessClass(fclass);
+//			if(fclassArray[i] == null)
+//			{
+//				fclassArray[i] = newFClass;
+//				
+//				fclassArray[i].setAttendance(attendnaceInitial);
+//				currentNumberOfClasses ++;
+//				return;
+//			}
+//		}
+//	}
+	
+	public void deleteClass(String classID)
+	{
+		if(classID == null)
+		{
+			JOptionPane.showMessageDialog(null, "Please Enter a Class ID");
+		}
+		else if(classID != fclass.getID())
+		{
+			JOptionPane.showMessageDialog(null, "Class does not exist");
+
+		}
+		else
+		{
+			FitnessClass fclass = new FitnessClass();
+		
+			int startTimeForNewClass = fclass.getTimeStart();
+			fclassArray[startTimeForNewClass] = null;
+			currentNumberOfClasses --;
+		}
 		
 	}
-	
-	public void deleteClass(FitnessClass deleteFClass)
+	//TODO make the delete process
+//	public void deleteClass(FitnessClass deleteFClass)
+//	{
+//		for(int i=0; i<MAXIMUM; i++)
+//		{
+//			if(fclassArray[i] != null)
+//			{
+//				if(fclassArray[i].getID().equals(deleteFClass.getID()))
+//				{
+//					fclassArray[i] = null;
+//					currentNumberOfClasses --;
+//					return;
+//				}
+//				else
+//				{
+//					JOptionPane.showMessageDialog(null, "Class does not exist");
+//				}
+//			}
+//			else
+//			{
+//				JOptionPane.showMessageDialog(null, "Please Enter a Class ID");
+//			}
+//		}
+//	}
+//	
+	public int getCurrentNumberOfClasses()
 	{
-		
+		return currentNumberOfClasses;
 	}
 }

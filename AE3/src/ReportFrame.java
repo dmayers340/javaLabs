@@ -24,8 +24,8 @@ public class ReportFrame extends JFrame
 		fprogram = initFProgram;
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		setTitle("Attendance Display");
-		setSize(1500, 425);	
-
+		setSize(1200, 425);	
+		setLocation(0,0);
 		frameArea = new JTextArea();
 		frameArea.setFont(new Font("Courier", Font.PLAIN, 14));
 		add(frameArea, BorderLayout.CENTER);
@@ -35,27 +35,36 @@ public class ReportFrame extends JFrame
 	//build report for display on JTextArea
 	public void buildReport()
 	{
-		String[] columnNames = {"ID", "\t\tClass Name","\t\tTutor Name", "\t\tAttendance Totals", "\t\tAverage Class Attendance"};
-				
+		String[] columnNames = {"ID", "\t\tClass Name","\t\tTutor Name", "\t\tAttendance Totals", "\t\tAverage Class Attendance"};		
+		
 		for(int i=0; i<columnNames.length; i++)
 		{
 			frameArea.append(String.format("%10s ", columnNames[i]));
 		}
 		frameArea.append("\n");
-
-
-		for(int i = 0; i<7; i++)
+		
+		StringBuilder reportBuild = new StringBuilder();
+		FitnessClass [] reportClasses = fprogram.sortArray();
+		for (int i = 0; i<reportClasses.length; i++)
 		{
-			frameArea.append("\n");
-			frameArea.append(String.format("%10s", fprogram.getID(i)));
-			frameArea.append(String.format("\t\t%10s", fprogram.getClassLists(i)));
-			frameArea.append(String.format("\t\t%10s", fprogram.getTutor(i)));
-			frameArea.append(String.format("\t\t%10s", fprogram.getAttendnaces(i)));			
-			frameArea.append(String.format("\t\t%10s", fprogram.getAverage(i)));	//returns 12 for all.I assume bc last class is all 12? 		
-			frameArea.append("\n");
-		}			
-		frameArea.append("\n");
-		frameArea.append(String.format("\n\t\t\t\t\t\t\t\t\t\t%10s %10s", "Overall Attendnace: ", Double.toString(fprogram.finalAvAttendance())));
+			FitnessClass fclass = reportClasses[i];
+			String report = fclass.formatReport();
+			reportBuild.append(report);
+		}
 	}
+		
+//		for(int i = 0; i<7; i++)
+//		{
+//			frameArea.append("\n");
+//			frameArea.append(String.format("%10s", fprogram.getID(i)));
+//			frameArea.append(String.format("\t\t%10s", fprogram.getClassLists(i)));
+//			frameArea.append(String.format("\t\t%10s", fprogram.getTutor(i)));
+//			frameArea.append(String.format("\t\t%10s", fprogram.getAttendnaces(i)));			
+//			frameArea.append(String.format("\t\t%10s", fprogram.getAverage(i)));	//returns only last class 		
+//			frameArea.append("\n");
+//		}			
+//		frameArea.append("\n");
+//		frameArea.append(String.format("\n\t\t\t\t\t\t\t\t\t\t\t\t\t%10s %10s", "Overall Attendnace: ", Double.toString(fprogram.finalAvAttendance())));
+//	}
 	
 }
