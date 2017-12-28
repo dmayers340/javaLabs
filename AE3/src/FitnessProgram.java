@@ -7,23 +7,11 @@ import javax.swing.JOptionPane;
  * The list is initialised in order of start time
  * The methods allow objects to be added and deleted from the list
  * In addition an array can be returned in order of average attendance
- * 
- * entry x: fitness class start at 9+x
- *  * 
- * return instance vars plus method to return Fitness class obj at index x
- * 
- * method return fitness class at particul time
- * method return first start time avaliable
- * return fitness class obj w/ given ID num in array
- * Method to insert/delete fitness class to/from list
- * method to return list sorted in non-increasing order on av attendance each class using arrays.sort
- * method return overall avg attendance
  */
 public class FitnessProgram 
 {	
 	final int MAXIMUM = 7;
 	private int currentNumberOfClasses;
-	
 	private FitnessClass[] fclassArray; 
 	private FitnessClass[] sorted;
 	
@@ -212,33 +200,61 @@ public class FitnessProgram
 	
 	//TODO sort array based on attendnace
 	//method to return list sorted in non-increasing order on av attendance using arrays.sort
-	public FitnessClass[] sortArray()
+	//public FitnessClass[] sortArray()
+	public String sortArray()
 	{
-		FitnessClass[] arraySorted;
 		int classes = 0;
 		
-		if(currentNumberOfClasses == MAXIMUM)
+		//see how many classes are in
+		for (int i=0; i<fclassArray.length; i++)
 		{
-			arraySorted = (FitnessClass[]) fclassArray.clone();
-		}
-		else
-		{
-			arraySorted = new FitnessClass[currentNumberOfClasses];
-			
-			for (int i = 0; i< MAXIMUM; i++)
+			if (fclassArray[i] != null)
 			{
-				FitnessClass fclass = fclassArray[i];
-				
-				if( fclass != null)
-				{
-					arraySorted[classes] = fclass;
-					classes++;
-				}
+				classes ++;
 			}
 		}
-		Arrays.sort(arraySorted);
-		System.out.println("fclassarray program" + Arrays.asList(sorted));
-		return arraySorted;
+		
+		//make array of sorted fclasses to put stuff in
+		sorted = new FitnessClass[classes];
+		
+		int classIndex = 0;
+		for(int i=0; i<fclassArray.length; i++)
+		{
+			if (fclassArray[i] != null)
+			{
+				sorted[classIndex] = fclassArray[i];
+				classIndex ++;
+			}
+		}
+		Arrays.sort(sorted);
+		String sortedString = Arrays.toString(sorted);
+		return sortedString;
+		
+		
+		
+//		if(currentNumberOfClasses == MAXIMUM)
+//		{
+//			arraySorted = (FitnessClass[]) fclassArray.clone();
+//		}
+//		else
+//		{
+//			arraySorted = new FitnessClass[currentNumberOfClasses];
+//			
+//			for (int i = 0; i< MAXIMUM; i++)
+//			{
+//				FitnessClass fclass = fclassArray[i];
+//				
+//				if( fclass != null)
+//				{
+//					arraySorted[classes] = fclass;
+//					System.out.println(classes + "current num classes fprogram");
+//					classes++;
+//				}
+//			}
+//		}
+//		Arrays.sort(arraySorted);
+//		System.out.println("fclassarray program" + Arrays.asList(sorted));
+//		return arraySorted;
 	}
 	
 	//loop through each fclass attendnace array, get avg attendnace
@@ -375,6 +391,8 @@ public class FitnessProgram
 //	
 	public int getCurrentNumberOfClasses()
 	{
+		this.currentNumberOfClasses = fclassArray.length;
+		System.out.println("Current Num Classes " + currentNumberOfClasses);
 		return currentNumberOfClasses;
 	}
 }

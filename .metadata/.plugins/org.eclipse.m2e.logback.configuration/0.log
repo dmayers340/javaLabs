@@ -296,3 +296,4 @@ Caused by: org.eclipse.aether.transfer.ArtifactNotFoundException: Failure to fin
 2017-12-23 22:24:23,054 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
 2017-12-25 21:14:30,687 [Worker-5] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
 2017-12-26 03:07:05,989 [Worker-4] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2017-12-28 16:39:08,789 [Worker-3] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.

@@ -43,28 +43,28 @@ public class ReportFrame extends JFrame
 		}
 		frameArea.append("\n");
 		
-		StringBuilder reportBuild = new StringBuilder();
-		FitnessClass [] reportClasses = fprogram.sortArray();
-		for (int i = 0; i<reportClasses.length; i++)
-		{
-			FitnessClass fclass = reportClasses[i];
-			String report = fclass.formatReport();
-			reportBuild.append(report);
-		}
-	}
-		
-//		for(int i = 0; i<7; i++)
+		//StringBuilder reportBuild = new StringBuilder();
+//		FitnessClass [] reportClasses = fprogram.sortArray();
+//		for (int i = 0; i<reportClasses.length; i++)
 //		{
-//			frameArea.append("\n");
-//			frameArea.append(String.format("%10s", fprogram.getID(i)));
-//			frameArea.append(String.format("\t\t%10s", fprogram.getClassLists(i)));
-//			frameArea.append(String.format("\t\t%10s", fprogram.getTutor(i)));
-//			frameArea.append(String.format("\t\t%10s", fprogram.getAttendnaces(i)));			
-//			frameArea.append(String.format("\t\t%10s", fprogram.getAverage(i)));	//returns only last class 		
-//			frameArea.append("\n");
-//		}			
-//		frameArea.append("\n");
-//		frameArea.append(String.format("\n\t\t\t\t\t\t\t\t\t\t\t\t\t%10s %10s", "Overall Attendnace: ", Double.toString(fprogram.finalAvAttendance())));
-//	}
+//			FitnessClass fclass = reportClasses[i];
+//			String report = fclass.formatReport();
+//			reportBuild.append(report);
+//		}
+		frameArea.append("\n " +fprogram.sortArray());
+		
+		for(int i = 0; i<7; i++)
+		{
+			frameArea.append("\n");
+			frameArea.append(String.format("%10s", fprogram.getID(i)));
+			frameArea.append(String.format("\t\t%10s", fprogram.getClassLists(i)));
+			frameArea.append(String.format("\t\t%10s", fprogram.getTutor(i)));
+			frameArea.append(String.format("\t\t%10s", fprogram.getAttendnaces(i)));			
+			frameArea.append(String.format("\t\t%10s", fprogram.getAverage(i)));	//returns only last class 		
+			frameArea.append("\n");
+		}			
+		frameArea.append("\n");
+		frameArea.append(String.format("\n\t\t\t\t\t\t\t\t\t\t\t\t\t%10s %10s", "Overall Attendnace: ", Double.toString(fprogram.finalAvAttendance())));
+	}
 	
 }
