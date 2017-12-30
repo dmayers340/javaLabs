@@ -13,8 +13,8 @@ public class FitnessProgram
 	final int MAXIMUM = 7;
 	private int currentNumberOfClasses;
 	private FitnessClass[] fclassArray; 
-	private FitnessClass[] sorted;
 	
+	//probably don't need these
 	private FitnessClass fclass = new FitnessClass();
 	private String attendanceid;
 	
@@ -198,64 +198,6 @@ public class FitnessProgram
 		return attendnace;
 	}
 	
-	//TODO sort array based on attendnace
-	//method to return list sorted in non-increasing order on av attendance using arrays.sort
-	//public FitnessClass[] sortArray()
-	public String sortArray()
-	{
-		int classes = 0;
-		
-		//see how many classes are in
-		for (int i=0; i<fclassArray.length; i++)
-		{
-			if (fclassArray[i] != null)
-			{
-				classes ++;
-			}
-		}
-		
-		//make array of sorted fclasses to put stuff in
-		sorted = new FitnessClass[classes];
-		
-		int classIndex = 0;
-		for(int i=0; i<fclassArray.length; i++)
-		{
-			if (fclassArray[i] != null)
-			{
-				sorted[classIndex] = fclassArray[i];
-				classIndex ++;
-			}
-		}
-		Arrays.sort(sorted);
-		String sortedString = Arrays.toString(sorted);
-		return sortedString;
-		
-		
-		
-//		if(currentNumberOfClasses == MAXIMUM)
-//		{
-//			arraySorted = (FitnessClass[]) fclassArray.clone();
-//		}
-//		else
-//		{
-//			arraySorted = new FitnessClass[currentNumberOfClasses];
-//			
-//			for (int i = 0; i< MAXIMUM; i++)
-//			{
-//				FitnessClass fclass = fclassArray[i];
-//				
-//				if( fclass != null)
-//				{
-//					arraySorted[classes] = fclass;
-//					System.out.println(classes + "current num classes fprogram");
-//					classes++;
-//				}
-//			}
-//		}
-//		Arrays.sort(arraySorted);
-//		System.out.println("fclassarray program" + Arrays.asList(sorted));
-//		return arraySorted;
-	}
 	
 	//loop through each fclass attendnace array, get avg attendnace
 	//return average
@@ -394,5 +336,65 @@ public class FitnessProgram
 		this.currentNumberOfClasses = fclassArray.length;
 		System.out.println("Current Num Classes " + currentNumberOfClasses);
 		return currentNumberOfClasses;
+	}
+	
+	//TODO sort array based on attendnace
+	//method to return list sorted in non-increasing order on av attendance using arrays.sort
+	//public FitnessClass[] sortArray()
+	public String sortArray()
+	{
+		int classIndex = 0;
+		
+		//see how many classes are in
+		for (int i=0; i<fclassArray.length; i++)
+		{
+			if (fclassArray[i] != null)
+			{
+//				sorted[classIndex] = fclassArray[i];
+				classIndex ++;
+			}
+		}
+		FitnessClass[] sorted = new FitnessClass[classIndex];
+		
+		int ne = 0;
+		for (int i=0; i<fclassArray.length; i++)
+		{
+			if (fclassArray[i] != null)
+			{
+				sorted[ne ++] = fclassArray[i];
+				//classIndex ++;
+			}
+		}
+		Arrays.sort(sorted);
+//		return sorted;
+		String sortedString = Arrays.toString(sorted);
+		System.out.println(sortedString + "sorted string from fprog");
+		return sortedString;
+		
+		
+		
+//		if(currentNumberOfClasses == MAXIMUM)
+//		{
+//			arraySorted = (FitnessClass[]) fclassArray.clone();
+//		}
+//		else
+//		{
+//			arraySorted = new FitnessClass[currentNumberOfClasses];
+//			
+//			for (int i = 0; i< MAXIMUM; i++)
+//			{
+//				FitnessClass fclass = fclassArray[i];
+//				
+//				if( fclass != null)
+//				{
+//					arraySorted[classes] = fclass;
+//					System.out.println(classes + "current num classes fprogram");
+//					classes++;
+//				}
+//			}
+//		}
+//		Arrays.sort(arraySorted);
+//		System.out.println("fclassarray program" + Arrays.asList(sorted));
+//		return arraySorted;
 	}
 }

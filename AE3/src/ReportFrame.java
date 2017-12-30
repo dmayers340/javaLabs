@@ -56,7 +56,7 @@ public class ReportFrame extends JFrame
 		for(int i = 0; i<7; i++)
 		{
 			frameArea.append("\n");
-			frameArea.append(String.format("%10s", fprogram.getID(i)));
+			frameArea.append(String.format("%10s", fprogram.getID(i))); //doesn't show up
 			frameArea.append(String.format("\t\t%10s", fprogram.getClassLists(i)));
 			frameArea.append(String.format("\t\t%10s", fprogram.getTutor(i)));
 			frameArea.append(String.format("\t\t%10s", fprogram.getAttendnaces(i)));			
