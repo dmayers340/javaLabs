@@ -6,8 +6,6 @@ import java.util.Arrays;
 public class FitnessClass implements Comparable<FitnessClass> 
 {
 	final private int CLASSWEEKS = 5;
-	
-	//Instance vars for id, class name, tutor name, start time, and attendance array
 	private String id = ""; 
 	private String className = "";
 	private String tutorName = "";
@@ -15,11 +13,12 @@ public class FitnessClass implements Comparable<FitnessClass>
 	private int[] attendance; 
 	
 	//optional default constructor
-	public FitnessClass(String id, String name, String tutorName)
+	public FitnessClass(String id, String name, String tutorName, int time)
 	{
 		this.id = id;
 		this.className = name;
 		this.tutorName = tutorName;
+		this.timeStart = time;
 	}
 	
 	public FitnessClass()
@@ -140,9 +139,10 @@ public class FitnessClass implements Comparable<FitnessClass>
 		return timeStart;
 	}
 	
+	//TODO get AttendnaceString working
 	public String getAttendnaceString()
-	{ //CURRENTLY 0
-		//this.attendnace is 0
+	{ //returning 0,1,2,3,4
+		
 		StringBuilder attendanceString = new StringBuilder();
 		for (int i = 0; i<attendance.length; i++)
 		{
@@ -152,6 +152,8 @@ public class FitnessClass implements Comparable<FitnessClass>
 		String attendnaceStringFinal = attendanceString.toString();
 		return attendnaceStringFinal;
 	}
+	
+
 	public String getAverageAttendnace()
 	{
 		String averageString = Double.toString(averageAttendance());
@@ -159,7 +161,7 @@ public class FitnessClass implements Comparable<FitnessClass>
 	}
 	
 	public String formatReport()
-	{		
+	{				
 		String formattedReport = String.format("%10s %\t\t10s %\t\t10s %\t\t10s %\t\t10.2f %\n", getID(), getClassName(), getTutorName(), getAttendnaceString(), averageAttendance());
 		return formattedReport;
 	}

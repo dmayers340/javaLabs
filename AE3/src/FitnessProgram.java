@@ -42,7 +42,6 @@ public class FitnessProgram
 		return fclassArray[i-9];
 	}
 
-		
 	//returns the first open time for a class
 	public int getOpenTime()
 	{
@@ -184,53 +183,59 @@ public class FitnessProgram
 	//get attendnace averages from fitnessclass, IS 0 because not getting averages
 	public String finalAvAttendance()
 	{
-		double total = 0;
+		double total = 0; 
 		double average = 0;
-	
-		for (int i=0; i<MAXIMUM; i++)
+		
+		for(int i=0; i<MAXIMUM; i++)
 		{
-			total = total + sorted[i].averageAttendance();
+			if(fclassArray[i] != null)
+			{
+				total = total + fclassArray[i].averageAttendance();
+			}
 		}
-		
-		average = total/sorted.length;
-		
-		String finalAverageString = String.format("%10.2f", average);
-		return finalAverageString; 
+		average = (double) total/fclassArray.length;
+		return String.format("%.2f", average);
 
 	}
 	
+	//TODO Doesn't work without a Try/Catch--Should be a better way to write this
 	public void addClass(String newClassID, String newClassName, String newClassTutor)
 	{
 		int[] attendnaceInital = {0,0,0,0,0};
 		
-		FitnessClass fclass = new FitnessClass(newClassID, newClassName, newClassTutor);
-		int startTimeForNewClass = fclass.getTimeStart();
-		fclass.setTimeStart(startTimeForNewClass);
-		
-		fclassArray[startTimeForNewClass] = fclass;
-		//fclassArray[startTimeForNewClass].setAttendance(attendnaceInital);
-		currentNumberOfClasses ++;
+		for(int i=0; i<MAXIMUM; i++)
+		{
+			try
+			{
+				fclassArray[i].getID();
+			}
+			catch(Exception cannotAdd)
+			{
+				int newTime = getOpenTime();
+				FitnessClass fclass = new FitnessClass(newClassID, newClassName, newClassTutor, newTime);
+				fclass.setAttendance(attendnaceInital);
+				fclassArray[i] = fclass;
+				currentNumberOfClasses ++;
+				return;
+			}
+		}
 	}
 	
-	public void deleteClass(String classID)
+	public void deleteClass(FitnessClass classToDelete)
 	{
-		FitnessClass fclass = new FitnessClass();
-		if(classID == null)
+		for(int i=0; i < MAXIMUM; i++)
 		{
-			JOptionPane.showMessageDialog(null, "Please Enter a Class ID");
-		}
-		else if(classID != fclass.getID())
-		{
-			JOptionPane.showMessageDialog(null, "Class does not exist");
+			if(fclassArray[i] != null)
+			{
+				if(fclassArray[i].getID().equals(classToDelete.getID()))
+				{
+					fclassArray[i] = null;
 
+					currentNumberOfClasses--;
+					return;	
+				}
+			}
 		}
-		else
-		{
-			int startTimeForNewClass = fclass.getTimeStart();
-			fclassArray[startTimeForNewClass] = null;
-			currentNumberOfClasses --;
-		}
-		
 	}
 
 	//Gets the current number of classes
@@ -268,6 +273,7 @@ public class FitnessProgram
 			}
 			return avgString;		
 	}
+	
 	//TODO sort array based on attendnace
 	//method to return list sorted in non-increasing order on av attendance using arrays.sort
 	public String sortArray()
@@ -297,5 +303,22 @@ public class FitnessProgram
 		Arrays.sort(sorted);
 		String sortedString = Arrays.toString(sorted);
 		return sortedString;
+	}
+
+	public FitnessClass[] sortedClasses() 
+	{
+		FitnessClass[] sort = new FitnessClass[MAXIMUM];
+		int x = 0;
+
+		for(int i=0; i<MAXIMUM; i++)
+		{
+			if(fclassArray[i] != null)
+			{
+				sort[x] = fclassArray[i];
+				x++;
+			}
+		}
+		Arrays.sort(sort);
+		return sort;
 	}
 }

@@ -113,11 +113,9 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 			while((attendanceLine = reader.readLine()) != null)
 			{
 				String[] lineSplit = attendanceLine.split(" ");
-				String attendanceid = lineSplit[0];
 				
 				fprogram.attendnaces(attendanceLine); 
 
-//				fclass.setAttendanceID(attendanceid);
 			} 
 		}
 		catch (IOException e)
@@ -234,53 +232,43 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	 * 	 */
 	public void processAdding() 
 	{	
+		
 		String gotID = idIn.getText();
 		String gotName = classIn.getText();
 		String gotTutor = tutorIn.getText();
-		int firstTimeSlot = fprogram.getOpenTime();
-		int[] initAttendnace = {0,0,0,0,0};
 		
-		fprogram.addClass(gotID, gotName, gotTutor);
+		//TODO 1. Check if list is full and display an error message. 2.If class exists display error message 
+		if(gotID.isEmpty())
+		{
+			JOptionPane.showMessageDialog(null, "Cannot Process Request. Please Enter an ID.");
+		}
+		else if (gotName.isEmpty())
+		{
+			JOptionPane.showMessageDialog(null, "Cannot Process Request. Please Enter a Class Name");
+		}
+		else if (gotTutor.isEmpty())
+		{
+			JOptionPane.showMessageDialog(null, "Cannot Process Request. Please Enter a Tutor Name");
+		}
+		//TODO 1. ELSE if the list is full display error message
+//		else if(fprogram.getCurrentNumberOfClasses()==7) //displays right away
+//		{
+//
+//			JOptionPane.showMessageDialog(null, "List is full. Cannot Add Class");
+//		}
+		//TODO 2. else if gotID == fitnessclass with same ID 
+
+//		{
+//			JOptionPane.showMessageDialog(null, "Error. Class Already Exists");
+//		}
 		
-//		
-//		//if ID is already there display 
-//		//JOptionPane.showMessageDialog(null, "Error. Class Already Exists");
-//		if(gotID.isEmpty())
-//		{
-//			JOptionPane.showMessageDialog(null, "Cannot Process Request. Please Enter an ID.");
-//		}
-//		else if (gotName.isEmpty())
-//		{
-//			JOptionPane.showMessageDialog(null, "Cannot Process Request. Please Enter a Class Name");
-//		}
-//		else if (gotTutor.isEmpty())
-//		{
-//			JOptionPane.showMessageDialog(null, "Cannot Process Request. Please Enter a Tutor Name");
-//		}
-//		
-//		else //Otherwise create fclass w/ ID, clas name and tutor and put it in earliest av time slot
-//		{
-//			fclass = fprogram.getClassWithID(gotID);
-//			if(fclass == null)
-//			{
-//				FitnessClass addFClass = new FitnessClass();
-//				addFClass.setID(gotID);
-//				addFClass.setClassName(gotName);
-//				addFClass.setTutorName(gotTutor);
-//				addFClass.setTimeStart(firstTimeSlot);
-//				addFClass.setAttendance(initAttendnace);
-//				
-//				//add to fitness program
-//				fprogram.addClass(addFClass);
-//				JOptionPane.showMessageDialog(null, "Added Class");
-//			}
-//			else
-//			{
-//				JOptionPane.showMessageDialog(null, "Cannot Add Classes");
-//			}
-//			clear();
-//			updateDisplay();
-//		}
+		else 
+		{
+			fprogram.addClass(gotID, gotName, gotTutor);
+
+			clear();
+			updateDisplay();
+		}
 	}
 
 	/**
@@ -291,40 +279,27 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	public void processDeletion() 
 	{
 		String deleteID = idIn.getText();
+		
+		//if ID doesn't exsit show error
 		if(deleteID.isEmpty())
 		{
 			JOptionPane.showMessageDialog(null, "Enter ID");
 		}
-		this.fclass = fprogram.getClassWithID(deleteID);
-
-		if(fclass == null)
+		
+		//if it isn't empty check if it matches an id then delete it
+		else if (fprogram.getClassWithID(deleteID) != null)
+		{
+			fprogram.deleteClass(fprogram.getClassWithID(deleteID));
+		}
+		
+		//Otherwise say cannot delete class because id doesn't exist
+		else
 		{
 			JOptionPane.showMessageDialog(null, "Cannot Delete Class, No Class Found");
-		}
-		/*if there is a class to delete need to:
-		 * 1.) delete class by:
-		 * 	a.) Find Start Time
-		 * 	b.) Give it an 'Open' name
-		 * 	c.) Give it an 'Open' tutor
-		 * 	d.) then add the new stuff into the class
-		 */
-		
-		else 
-		{
-			fprogram.deleteClass(deleteID);
-			updateDisplay();
-//			int deltedStartTime = fclass.getTimeStart();
-//			FitnessClass classAfterDeletion = new FitnessClass();
-//			
-//			classAfterDeletion.setTimeStart(deltedStartTime);
-//			classAfterDeletion.setID("\"OPEN\"");
-//			classAfterDeletion.setClassName("\"OPEN\"");
-//			classAfterDeletion.setTutorName("\"OPEN\"");
-//			fprogram.addClass(newClassID, newClassName, newClassTutor);
-//			JOptionPane.showMessageDialog(null, "Delted Class " + deleteID);
-//			clearTextFields();
+
 		} 
 		clear();
+		updateDisplay();
 	}
 
 	/**
@@ -389,5 +364,4 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 			updateDisplay();	
 		}		
 	}
-}
-	
+}	

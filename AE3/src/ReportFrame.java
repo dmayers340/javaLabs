@@ -43,20 +43,18 @@ public class ReportFrame extends JFrame
 		}
 		frameArea.append("\n");
 		
-//		frameArea.append(fprogram.);
-		
 		for(int i = 0; i<7; i++)
-		{
+		{			
 			frameArea.append("\n");
 			frameArea.append(String.format("%10s", fprogram.getID(i))); //doesn't show up
 			frameArea.append(String.format("\t\t%10s", fprogram.getClassLists(i)));
 			frameArea.append(String.format("\t\t%10s", fprogram.getTutor(i)));
-			frameArea.append(String.format("\t\t%10s", fprogram.getAttendnaces(i)));			
+			frameArea.append(String.format("\t\t%10s", fprogram.getAttendnaces(i))); //works with string(except wrong attendnace array)			
 			frameArea.append(String.format("\t\t%10s", fprogram.getAverage(i)));	//returns only last class 		
 			frameArea.append("\n");
 		}			
 		frameArea.append("\n");
-//		frameArea.append(String.format("\n\t\t\t\t\t\t\t\t\t\t\t\t\t%10s %10s", "Overall Attendnace: ", Double.toString(fprogram.finalAvAttendance())));
+		frameArea.append(String.format("\n%10s %10s", "Overall Attendnace: ", fprogram.finalAvAttendance()));
 	}
 	
 }
