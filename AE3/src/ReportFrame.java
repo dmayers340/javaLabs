@@ -26,10 +26,10 @@ public class ReportFrame extends JFrame
 		setTitle("Attendance Display");
 		setSize(1200, 425);	
 		setLocation(0,0);
+		
 		frameArea = new JTextArea();
 		frameArea.setFont(new Font("Courier", Font.PLAIN, 14));
 		add(frameArea, BorderLayout.CENTER);
-		
 	}
 	
 	//build report for display on JTextArea
@@ -43,15 +43,7 @@ public class ReportFrame extends JFrame
 		}
 		frameArea.append("\n");
 		
-		//StringBuilder reportBuild = new StringBuilder();
-//		FitnessClass [] reportClasses = fprogram.sortArray();
-//		for (int i = 0; i<reportClasses.length; i++)
-//		{
-//			FitnessClass fclass = reportClasses[i];
-//			String report = fclass.formatReport();
-//			reportBuild.append(report);
-//		}
-		frameArea.append("\n " +fprogram.sortArray());
+//		frameArea.append(fprogram.);
 		
 		for(int i = 0; i<7; i++)
 		{
@@ -64,7 +56,7 @@ public class ReportFrame extends JFrame
 			frameArea.append("\n");
 		}			
 		frameArea.append("\n");
-		frameArea.append(String.format("\n\t\t\t\t\t\t\t\t\t\t\t\t\t%10s %10s", "Overall Attendnace: ", Double.toString(fprogram.finalAvAttendance())));
+//		frameArea.append(String.format("\n\t\t\t\t\t\t\t\t\t\t\t\t\t%10s %10s", "Overall Attendnace: ", Double.toString(fprogram.finalAvAttendance())));
 	}
 	
 }

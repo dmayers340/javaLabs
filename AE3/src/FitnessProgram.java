@@ -12,17 +12,14 @@ public class FitnessProgram
 {	
 	final int MAXIMUM = 7;
 	private int currentNumberOfClasses;
-	private FitnessClass[] fclassArray; 
+	private FitnessClass[] fclassArray = new FitnessClass[MAXIMUM]; 
+	private FitnessClass[] sorted;
 	
-	//probably don't need these
-	private FitnessClass fclass = new FitnessClass();
-	private String attendanceid;
-	
-	int[] attendanceArray;
 
-	public FitnessProgram() //default constructor to initalize array
+	//Default constructor to initalize array 
+	public FitnessProgram() 
 	{			
-		fclassArray = new FitnessClass[MAXIMUM];
+	//	fclassArray = new FitnessClass[MAXIMUM];
 		currentNumberOfClasses = 0;
 	}
 
@@ -32,47 +29,36 @@ public class FitnessProgram
 		return fclassArray;
 	}
 	
-	//get the starting time
-	public void getTime(FitnessClass[] obj)
+	//gets class at index
+	public FitnessClass getClassAtIndex(int i)
 	{
-		for(int i = 0; i<obj.length; i++)
-		{
-			fclassArray[obj[i].getTimeStart()-9] = obj[i];
-		}
-		
-		for(int i=0; i<MAXIMUM; i++)
-		{
-			if(fclassArray[i]==null)
-			{
-				fclassArray[i] = new FitnessClass();
-			}
-		}		
+		return fclassArray[i];
 	}
 	
-	//get the time classes start
-		//entry x should contain class starting at time 9 + x or null if free
-		public void classStartTime(FitnessClass fitnessClass)
-		{
-			
-			
-		}
+	//get the time of a class
+	public FitnessClass getTimeOfClass(int i)
+	{
+		//return fclassArray[i+9];
+		return fclassArray[i-9];
+	}
+
 		
-		//returns the first open time for a class
-		public int getOpenTime()
+	//returns the first open time for a class
+	public int getOpenTime()
+	{
+		int open;
+		for(open=0; open<MAXIMUM; open++)
 		{
-			int x;
-			for(x=0; x<MAXIMUM; x++)
+			//loop through fclass array, if the time is null, return
+			if(fclassArray[open] == null)
 			{
-				//loop through fclass array, if the time is null, return
-				if(fclassArray[x] == null)
-				{
-					x = x+9;
-					return x;
-				}
+				open = open+9;
+				return open;
 			}
-			System.out.println("Open time " + x);
-			return x;
 		}
+		return 1;
+		//return open;
+	}
 		
 	//Gets the list of Class Name for display in GUI
 	public String getClassLists(int timeStart)
@@ -137,17 +123,20 @@ public class FitnessProgram
 	
 	//get fitness class obj with ID number in array or null
 	public FitnessClass getClassWithID(String idOfClass)
-	{
-		//if text box is equal to id number, return that class ID otherwise return nothing
-		for(int i = 0; i< MAXIMUM; i++)
+	{		
+		for(int i=0; i<MAXIMUM; i++)
 		{
-			if(fclassArray[i].getID().equals(idOfClass))
-			{
-				return fclassArray[i];
-			}
-			else if(fclassArray[i] == null)
+			if (fclassArray[i]== null)
 			{
 				i++;
+			}
+			else
+			{
+				String thisID = fclassArray[i].getID();
+				if (thisID.equals(idOfClass))
+				{
+					return fclassArray[i];
+				}
 			}
 		}
 		return null;
@@ -157,7 +146,7 @@ public class FitnessProgram
 	public String attendnaces(String attendanceLine) 
 	{
 		String[] lineSplit = attendanceLine.split(" ");
-		String attendanceid = lineSplit[0];
+		FitnessClass fclass = new FitnessClass();
 		
 		int weekOne = Integer.parseInt(lineSplit[1]);
 		int weekTwo = Integer.parseInt(lineSplit[2]);
@@ -165,19 +154,13 @@ public class FitnessProgram
 		int weekFour = Integer.parseInt(lineSplit[4]);
 		int weekFive = Integer.parseInt(lineSplit[5]);
 		int[] attendanceArray = {weekOne, weekTwo, weekThree, weekFour, weekFive};
-		this.attendanceArray = attendanceArray;
 				
 		fclass.setAttendance(attendanceArray);
 		String array = Arrays.toString(attendanceArray);
-		System.out.println("this attendnace arry " + Arrays.toString(this.attendanceArray));
+		System.out.println("this attendnace arry " + Arrays.toString(attendanceArray));
 		return array; //is returning attendnaces
 	}
 	
-	public String getAttendnaceInID()
-	{
-		return attendanceid;
-	}
-
 	//TODO fix attendnaces
 	public String getAttendnaces(int number) //returns 0
 	{
@@ -191,16 +174,72 @@ public class FitnessProgram
 			}
 			else if(number + 9 == (fclass.getTimeStart()))
 			{
-				attendnace = Arrays.toString(fclass.getAttendance());
+				attendnace = fclass.getAttendnaceString(); //Arrays.toString(fclass.getAttendanceString());
 				return attendnace;
 			}
 		}
 		return attendnace;
 	}
 	
+	//get attendnace averages from fitnessclass, IS 0 because not getting averages
+	public String finalAvAttendance()
+	{
+		double total = 0;
+		double average = 0;
 	
-	//loop through each fclass attendnace array, get avg attendnace
-	//return average
+		for (int i=0; i<MAXIMUM; i++)
+		{
+			total = total + sorted[i].averageAttendance();
+		}
+		
+		average = total/sorted.length;
+		
+		String finalAverageString = String.format("%10.2f", average);
+		return finalAverageString; 
+
+	}
+	
+	public void addClass(String newClassID, String newClassName, String newClassTutor)
+	{
+		int[] attendnaceInital = {0,0,0,0,0};
+		
+		FitnessClass fclass = new FitnessClass(newClassID, newClassName, newClassTutor);
+		int startTimeForNewClass = fclass.getTimeStart();
+		fclass.setTimeStart(startTimeForNewClass);
+		
+		fclassArray[startTimeForNewClass] = fclass;
+		//fclassArray[startTimeForNewClass].setAttendance(attendnaceInital);
+		currentNumberOfClasses ++;
+	}
+	
+	public void deleteClass(String classID)
+	{
+		FitnessClass fclass = new FitnessClass();
+		if(classID == null)
+		{
+			JOptionPane.showMessageDialog(null, "Please Enter a Class ID");
+		}
+		else if(classID != fclass.getID())
+		{
+			JOptionPane.showMessageDialog(null, "Class does not exist");
+
+		}
+		else
+		{
+			int startTimeForNewClass = fclass.getTimeStart();
+			fclassArray[startTimeForNewClass] = null;
+			currentNumberOfClasses --;
+		}
+		
+	}
+
+	//Gets the current number of classes
+	public int getCurrentNumberOfClasses()
+	{
+		this.currentNumberOfClasses = fclassArray.length;
+		return currentNumberOfClasses;
+	}
+	
 	public String getAverage(int num)
 	{
 		String avgString = "";
@@ -229,172 +268,34 @@ public class FitnessProgram
 			}
 			return avgString;		
 	}
-
-	//get attendnace averages from fitnessclass, IS 0 because not getting averages
-	public double finalAvAttendance()
-	{
-		double total = 0;
-		double average = 0;
-		double finalAverage = 0;
-	
-		//for each Fitness Class attendnace
-		for(int i = 0; i<7; i++) 
-		{
-			//get the average of single class
-			average = fclass.averageAttendance();
-			//add to the total
-			total = total + average;
-		}
-		
-		//get overall average
-		finalAverage = total/7; 
-		
-		System.out.println("Total Average " + finalAverage);
-		System.out.println("Total " + total);
-		return finalAverage;
-	}
-	
-	public void addClass(String newClassID, String newClassName, String newClassTutor)
-	{
-		int[] attendnaceInital = {0,0,0,0,0};
-		
-		FitnessClass fclass = new FitnessClass(newClassID, newClassName, newClassTutor);
-		int startTimeForNewClass = fclass.getTimeStart();
-		fclass.setTimeStart(startTimeForNewClass);
-		
-		fclassArray[startTimeForNewClass] = fclass;
-		//fclassArray[startTimeForNewClass].setAttendance(attendnaceInital);
-		currentNumberOfClasses ++;
-	}
-//	//TODO make the add process
-//	public void addClass(FitnessClass newFClass)
-//	{
-//		int[] attendnaceInitial = {0,0,0,0,0};
-//		
-//		for (int i=0; i<MAXIMUM; i++)
-//		{
-//		//FitnessClass newFClass = new FitnessClass(fclass);
-//			if(fclassArray[i] == null)
-//			{
-//				fclassArray[i] = newFClass;
-//				
-//				fclassArray[i].setAttendance(attendnaceInitial);
-//				currentNumberOfClasses ++;
-//				return;
-//			}
-//		}
-//	}
-	
-	public void deleteClass(String classID)
-	{
-		if(classID == null)
-		{
-			JOptionPane.showMessageDialog(null, "Please Enter a Class ID");
-		}
-		else if(classID != fclass.getID())
-		{
-			JOptionPane.showMessageDialog(null, "Class does not exist");
-
-		}
-		else
-		{
-			FitnessClass fclass = new FitnessClass();
-		
-			int startTimeForNewClass = fclass.getTimeStart();
-			fclassArray[startTimeForNewClass] = null;
-			currentNumberOfClasses --;
-		}
-		
-	}
-	//TODO make the delete process
-//	public void deleteClass(FitnessClass deleteFClass)
-//	{
-//		for(int i=0; i<MAXIMUM; i++)
-//		{
-//			if(fclassArray[i] != null)
-//			{
-//				if(fclassArray[i].getID().equals(deleteFClass.getID()))
-//				{
-//					fclassArray[i] = null;
-//					currentNumberOfClasses --;
-//					return;
-//				}
-//				else
-//				{
-//					JOptionPane.showMessageDialog(null, "Class does not exist");
-//				}
-//			}
-//			else
-//			{
-//				JOptionPane.showMessageDialog(null, "Please Enter a Class ID");
-//			}
-//		}
-//	}
-//	
-	public int getCurrentNumberOfClasses()
-	{
-		this.currentNumberOfClasses = fclassArray.length;
-		System.out.println("Current Num Classes " + currentNumberOfClasses);
-		return currentNumberOfClasses;
-	}
-	
 	//TODO sort array based on attendnace
 	//method to return list sorted in non-increasing order on av attendance using arrays.sort
-	//public FitnessClass[] sortArray()
 	public String sortArray()
 	{
-		int classIndex = 0;
+		int array = 0;
 		
-		//see how many classes are in
-		for (int i=0; i<fclassArray.length; i++)
+		for(int i=0; i<MAXIMUM; i++)
 		{
-			if (fclassArray[i] != null)
+			if(fclassArray[i] != null)
 			{
-//				sorted[classIndex] = fclassArray[i];
-				classIndex ++;
+				array ++;
 			}
 		}
-		FitnessClass[] sorted = new FitnessClass[classIndex];
 		
-		int ne = 0;
-		for (int i=0; i<fclassArray.length; i++)
+		sorted = new FitnessClass[array];
+		
+		int count = 0;
+		
+		for (int i = 0; i<MAXIMUM; i++)
 		{
-			if (fclassArray[i] != null)
+			if(fclassArray[i] != null)
 			{
-				sorted[ne ++] = fclassArray[i];
-				//classIndex ++;
+				sorted[count++] = fclassArray[i];
 			}
 		}
+		
 		Arrays.sort(sorted);
-//		return sorted;
 		String sortedString = Arrays.toString(sorted);
-		System.out.println(sortedString + "sorted string from fprog");
 		return sortedString;
-		
-		
-		
-//		if(currentNumberOfClasses == MAXIMUM)
-//		{
-//			arraySorted = (FitnessClass[]) fclassArray.clone();
-//		}
-//		else
-//		{
-//			arraySorted = new FitnessClass[currentNumberOfClasses];
-//			
-//			for (int i = 0; i< MAXIMUM; i++)
-//			{
-//				FitnessClass fclass = fclassArray[i];
-//				
-//				if( fclass != null)
-//				{
-//					arraySorted[classes] = fclass;
-//					System.out.println(classes + "current num classes fprogram");
-//					classes++;
-//				}
-//			}
-//		}
-//		Arrays.sort(arraySorted);
-//		System.out.println("fclassarray program" + Arrays.asList(sorted));
-//		return arraySorted;
 	}
 }

@@ -117,7 +117,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 				
 				fprogram.attendnaces(attendanceLine); 
 
-				fclass.setAttendanceID(attendanceid);
+//				fclass.setAttendanceID(attendanceid);
 			} 
 		}
 		catch (IOException e)
@@ -278,7 +278,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 //			{
 //				JOptionPane.showMessageDialog(null, "Cannot Add Classes");
 //			}
-//			clearTextFields();
+//			clear();
 //			updateDisplay();
 //		}
 	}
@@ -291,28 +291,40 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	public void processDeletion() 
 	{
 		String deleteID = idIn.getText();
-
 		if(deleteID.isEmpty())
 		{
 			JOptionPane.showMessageDialog(null, "Enter ID");
 		}
-		else if(fprogram.getID(0) == null)
+		this.fclass = fprogram.getClassWithID(deleteID);
+
+		if(fclass == null)
 		{
 			JOptionPane.showMessageDialog(null, "Cannot Delete Class, No Class Found");
 		}
-		//else if ID doesn't match previous ID
-		//else if(fprogram.getID().equals(deleteID)
-		// JOptionPane.showMessageDialog(null, "Cannot Delete Class, No Class Found");
+		/*if there is a class to delete need to:
+		 * 1.) delete class by:
+		 * 	a.) Find Start Time
+		 * 	b.) Give it an 'Open' name
+		 * 	c.) Give it an 'Open' tutor
+		 * 	d.) then add the new stuff into the class
+		 */
+		
 		else 
 		{
 			fprogram.deleteClass(deleteID);
 			updateDisplay();
-			//FitnessClass deleteFClass = new FitnessClass();
-			//if gotID == class
-		//	fprogram.deleteClass(deleteFClass);
-			JOptionPane.showMessageDialog(null, "Delted Class " + deleteID);
-			clearTextFields();
+//			int deltedStartTime = fclass.getTimeStart();
+//			FitnessClass classAfterDeletion = new FitnessClass();
+//			
+//			classAfterDeletion.setTimeStart(deltedStartTime);
+//			classAfterDeletion.setID("\"OPEN\"");
+//			classAfterDeletion.setClassName("\"OPEN\"");
+//			classAfterDeletion.setTutorName("\"OPEN\"");
+//			fprogram.addClass(newClassID, newClassName, newClassTutor);
+//			JOptionPane.showMessageDialog(null, "Delted Class " + deleteID);
+//			clearTextFields();
 		} 
+		clear();
 	}
 
 	/**
@@ -325,7 +337,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 		report.setVisible(true);
 	}
 	
-	public void clearTextFields()
+	public void clear()
 	{
 		idIn.setText("");
 		classIn.setText("");
