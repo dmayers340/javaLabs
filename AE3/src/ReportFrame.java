@@ -14,10 +14,14 @@ import javax.swing.*;
  */
 public class ReportFrame extends JFrame 
 {
+	JFrame frame = new JFrame();
 	private JTextArea frameArea;
+	private JLabel label1, label2, label3, label4, label5; 
 	FitnessProgram fprogram = new FitnessProgram();
 	FitnessClass fclass = new FitnessClass();
 	String attendanceLine;
+	
+
 	
 	public ReportFrame(FitnessProgram initFProgram) 
 	{
@@ -35,8 +39,9 @@ public class ReportFrame extends JFrame
 	//build report for display on JTextArea
 	public void buildReport()
 	{
-		String[] columnNames = {"ID", "\t\tClass Name","\t\tTutor Name", "\t\tAttendance Totals", "\t\tAverage Class Attendance"};		
-		
+		//Should be bolded-
+		String[] columnNames = {"ID", "\t\tClass Name","\t\tTutor Name", "\t\tAttendance Totals", "\t\tAverage Class Attendance"};
+	
 		for(int i=0; i<columnNames.length; i++)
 		{
 			frameArea.append(String.format("%10s ", columnNames[i]));

@@ -27,7 +27,6 @@ public class FitnessClass implements Comparable<FitnessClass>
 	}
 	
 	//Non-default constructor to set instance vars from a string containing id, name, tutor name, start time)--need to break apart all info
-	//this splits both Class info and Attendance info
 	public FitnessClass(String classInfo) 
 	{
 		String[] individualPieces = classInfo.split(" ");
@@ -117,7 +116,12 @@ public class FitnessClass implements Comparable<FitnessClass>
 		this.attendance = attendanceArray;
 	}
 
-	
+	public int[] getAtt()
+	{
+		int[] returnArray = attendance;
+		System.out.println(returnArray);
+		return attendance; 
+	}
 	//Accessors for instance variables 
 	public String getID()
 	{

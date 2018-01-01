@@ -247,31 +247,24 @@ public class FitnessProgram
 	
 	public String getAverage(int num)
 	{
-		String avgString = "";
-		//THIS BIT RETURNS 12
-//		double avg = fclass.averageAttendance();
-//		System.out.println("average from fprog " + avg);
-//		String avgString = Double.toString(avg);
-//		return avgString;
-		
-		//THIS BIT RETURNS 0 AND 'OPEN'			
-			for (int i = 0; i<MAXIMUM; i++)
+		String avgString = "";		
+		for (int i = 0; i<MAXIMUM; i++)
+		{
+			FitnessClass fclass = this.getFitnessClasses()[i];
+			if(fclass == null)
 			{
-				FitnessClass fclass = this.getFitnessClasses()[i];
-				if(fclass == null)
-				{
-					avgString = "\"OPEN\"";
-				}
-				else if(num + 9 == (fclass.getTimeStart()))
-				{
-					avgString = fclass.getAverageAttendnace();
-					//double avg = fclass.averageAttendance();
-					System.out.println("average from fprog " + avgString);
-				//	avgString = Double.toString(avg);
-					return avgString;
-				}
+				avgString = "\"OPEN\"";
 			}
-			return avgString;		
+			else if(num + 9 == (fclass.getTimeStart()))
+			{
+				avgString = fclass.getAverageAttendnace();
+				//double avg = fclass.averageAttendance();
+				System.out.println("average from fprog " + avgString);
+				//	avgString = Double.toString(avg);
+				return avgString;
+			}
+		}
+		return avgString;		
 	}
 	
 	//TODO sort array based on attendnace
