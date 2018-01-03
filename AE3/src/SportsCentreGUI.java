@@ -280,23 +280,21 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	{
 		String deleteID = idIn.getText();
 		
-		//if ID doesn't exsit show error
+		//if ID doesn't exist show error
 		if(deleteID.isEmpty())
 		{
 			JOptionPane.showMessageDialog(null, "Enter ID");
 		}
-		
-		//if it isn't empty check if it matches an id then delete it
+		//check if it is a valid ID then delete it
 		else if (fprogram.getClassWithID(deleteID) != null)
 		{
+		//	fprogram.deleteClass(deleteID); //re. deletion with string: can find the jy1 (the first class) but not classes further down 
 			fprogram.deleteClass(fprogram.getClassWithID(deleteID));
 		}
-		
 		//Otherwise say cannot delete class because id doesn't exist
 		else
 		{
 			JOptionPane.showMessageDialog(null, "Cannot Delete Class, No Class Found");
-
 		} 
 		clear();
 		updateDisplay();

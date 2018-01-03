@@ -56,7 +56,6 @@ public class FitnessProgram
 			}
 		}
 		return 1;
-		//return open;
 	}
 		
 	//Gets the list of Class Name for display in GUI
@@ -220,6 +219,23 @@ public class FitnessProgram
 			}
 		}
 	}
+	
+	//Cannot delete class further down the list. Only first class
+//	public void deleteClass(String delete)
+//	{
+//		for(int i=0; i<MAXIMUM; i++)
+//		{
+//			FitnessClass fclass = fclassArray[i];
+//			
+//			if(fclass.getID().equals(delete))
+//			{
+//				fclass.setID("\"OPEN\"");
+//				fclass.setClassName("\"OPEN\"");
+//				fclass.setTutorName("\"OPEN\"");
+//				return;
+//			}
+//		}
+//	}
 	
 	public void deleteClass(FitnessClass classToDelete)
 	{

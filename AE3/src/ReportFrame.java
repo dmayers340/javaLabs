@@ -21,8 +21,6 @@ public class ReportFrame extends JFrame
 	FitnessClass fclass = new FitnessClass();
 	String attendanceLine;
 	
-
-	
 	public ReportFrame(FitnessProgram initFProgram) 
 	{
 		fprogram = initFProgram;
@@ -39,7 +37,7 @@ public class ReportFrame extends JFrame
 	//build report for display on JTextArea
 	public void buildReport()
 	{
-		//Should be bolded-
+		//Should be bolded-but cannot bold a String-could use labels--possible to use HTML tags?
 		String[] columnNames = {"ID", "\t\tClass Name","\t\tTutor Name", "\t\tAttendance Totals", "\t\tAverage Class Attendance"};
 	
 		for(int i=0; i<columnNames.length; i++)
