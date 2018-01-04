@@ -12,14 +12,16 @@ public class FitnessProgram
 {	
 	final int MAXIMUM = 7;
 	private int currentNumberOfClasses;
-	private FitnessClass[] fclassArray = new FitnessClass[MAXIMUM]; 
+	private FitnessClass[] fclassArray; 
 	private FitnessClass[] sorted;
 	private String array;
+	
+	FitnessClass fclass;
 
 	//Default constructor to initalize array 
 	public FitnessProgram() 
 	{			
-	//	fclassArray = new FitnessClass[MAXIMUM];
+		fclassArray = new FitnessClass[MAXIMUM];
 		currentNumberOfClasses = 0;
 	}
 
@@ -105,7 +107,7 @@ public class FitnessProgram
 
 		for (int i = 0; i<MAXIMUM; i++)
 		{
-			FitnessClass fclass = this.getFitnessClasses()[i];
+			fclass = this.getFitnessClasses()[i];
 			if(fclass == null)
 			{
 				tutorName = "\"OPEN\"";
@@ -140,55 +142,14 @@ public class FitnessProgram
 		return null;
 	}
 	
-	public void attendance(String line)
-	{
-		String[] split = line.split(" ");
-		FitnessClass fclass = new FitnessClass();
-		String thingID = split[0];
-		
-		getClassWithID(thingID);
-		
-		int weekOne = Integer.parseInt(split[1]);
-		int weekTwo = Integer.parseInt(split[2]);
-		int weekThree = Integer.parseInt(split[3]);
-		int weekFour = Integer.parseInt(split[4]);
-		int weekFive = Integer.parseInt(split[5]);
-		int[] attendanceArray = {weekOne, weekTwo, weekThree, weekFour, weekFive};
-		
-		fclass.setAttendance(attendanceArray);
-		array = Arrays.toString(attendanceArray);
-		System.out.println("this attendnace arry " + Arrays.toString(attendanceArray));
-		System.out.println("string attendnace in fprog " + array);
-
-	}
 	//Method to populate attendnace lists, given String representing single line of AtendancesIn.txt as a parameter 
-//	public String attendnaces(String attendanceLine) 
-//	{
-//		String[] lineSplit = attendanceLine.split(" ");
-//		FitnessClass fclass = new FitnessClass();
-//		
-//		int weekOne = Integer.parseInt(lineSplit[1]);
-//		int weekTwo = Integer.parseInt(lineSplit[2]);
-//		int weekThree = Integer.parseInt(lineSplit[3]);
-//		int weekFour = Integer.parseInt(lineSplit[4]);
-//		int weekFive = Integer.parseInt(lineSplit[5]);
-//		int[] attendanceArray = {weekOne, weekTwo, weekThree, weekFour, weekFive};
-//				
-//		fclass.setAttendance(attendanceArray);
-//		array = Arrays.toString(attendanceArray);
-//		System.out.println("this attendnace arry " + Arrays.toString(attendanceArray));
-//		System.out.println("string attendnace in fprog " + array);
-//
-//		return array; //is returning attendnaces
-//	}
-	
-	//Method to populate attendnace lists, given String representing single line of AtendancesIn.txt as a parameter 
-	public int[] attendnaces(String attendanceLine) //void and int
+	public String attendnaces(String attendanceLine) 
 	{
 		String[] lineSplit = attendanceLine.split(" ");
 		FitnessClass fclass = new FitnessClass();
-		String classID = lineSplit[0];
-		getClassWithID(classID);
+		String id = lineSplit[0];
+		getClassWithID(id);
+		
 		int weekOne = Integer.parseInt(lineSplit[1]);
 		int weekTwo = Integer.parseInt(lineSplit[2]);
 		int weekThree = Integer.parseInt(lineSplit[3]);
@@ -197,42 +158,16 @@ public class FitnessProgram
 		int[] attendanceArray = {weekOne, weekTwo, weekThree, weekFour, weekFive};
 				
 		fclass.setAttendance(attendanceArray);
-		return attendanceArray;
+		array = Arrays.toString(attendanceArray);
+		System.out.println("this attendnace arry " + Arrays.toString(attendanceArray));
+		System.out.println("string attendnace in fprog " + array);
+
+		return array; //is returning attendnaces
 	}
-	
-	public String get()
+	public String getAtt(int num)	
 	{
-		String att = "";
-		for (int i = 0; i<MAXIMUM; i++)
-		{
-			
-			att = array;
-		}
-			return att;
+		return array;
 	}
-	
-		//TODO fix attendnaces
-	public String getAttendnaces(int number) //returns 0
-	{
-		String attendnace = "";
-		for (int i = 0; i<MAXIMUM; i++)
-		{
-			FitnessClass fclass = this.getFitnessClasses()[i];
-			if(fclass == null)
-			{
-				attendnace = "\"OPEN\"";
-			}
-			else if(number + 9 == (fclass.getTimeStart()))
-			{
-				attendnace = get();
-				//attendnace = attendnaces(attendnace);
-				//attendnace = fclass.getAttendnaceString(); //Arrays.toString(fclass.getAttendanceString());
-				return attendnace;
-			}
-		}
-		return attendnace;
-	}
-	
 	//get attendnace averages from fitnessclass, IS 0 because not getting averages
 	public String finalAvAttendance()
 	{
@@ -248,10 +183,8 @@ public class FitnessProgram
 		}
 		average = (double) total/fclassArray.length;
 		return String.format("%.2f", average);
-
 	}
 	
-	//TODO Doesn't work without a Try/Catch--Should be a better way to write this
 	public void addClass(String newClassID, String newClassName, String newClassTutor)
 	{
 		int[] attendnaceInital = {0,0,0,0,0};
@@ -274,23 +207,6 @@ public class FitnessProgram
 		}
 	}
 	
-	//Cannot delete class further down the list. Only first class
-//	public void deleteClass(String delete)
-//	{
-//		for(int i=0; i<MAXIMUM; i++)
-//		{
-//			FitnessClass fclass = fclassArray[i];
-//			
-//			if(fclass.getID().equals(delete))
-//			{
-//				fclass.setID("\"OPEN\"");
-//				fclass.setClassName("\"OPEN\"");
-//				fclass.setTutorName("\"OPEN\"");
-//				return;
-//			}
-//		}
-//	}
-	
 	public void deleteClass(FitnessClass classToDelete)
 	{
 		for(int i=0; i < MAXIMUM; i++)
@@ -311,30 +227,19 @@ public class FitnessProgram
 	//Gets the current number of classes
 	public int getCurrentNumberOfClasses()
 	{
-		this.currentNumberOfClasses = fclassArray.length;
-		return currentNumberOfClasses;
-	}
-	
-	public String getAverage(int num)
-	{
-		String avgString = "";		
-		for (int i = 0; i<MAXIMUM; i++)
+		if(fclass == null)
 		{
-			FitnessClass fclass = this.getFitnessClasses()[i];
-			if(fclass == null)
-			{
-				avgString = "\"OPEN\"";
-			}
-			else if(num + 9 == (fclass.getTimeStart()))
-			{
-				avgString = fclass.getAverageAttendnace();
-				//double avg = fclass.averageAttendance();
-				System.out.println("average from fprog " + avgString);
-				//	avgString = Double.toString(avg);
-				return avgString;
-			}
+			currentNumberOfClasses = currentNumberOfClasses - 1;
 		}
-		return avgString;		
+		else if(getOpenTime()==1)
+		{
+			return 1;
+		}
+		else
+		{
+			this.currentNumberOfClasses = fclassArray.length;
+		}
+		return currentNumberOfClasses;
 	}
 	
 	//TODO sort array based on attendnace
@@ -366,22 +271,5 @@ public class FitnessProgram
 		Arrays.sort(sorted);
 		String sortedString = Arrays.toString(sorted);
 		return sortedString;
-	}
-
-	public FitnessClass[] sortedClasses() 
-	{
-		FitnessClass[] sort = new FitnessClass[MAXIMUM];
-		int x = 0;
-
-		for(int i=0; i<MAXIMUM; i++)
-		{
-			if(fclassArray[i] != null)
-			{
-				sort[x] = fclassArray[i];
-				x++;
-			}
-		}
-		Arrays.sort(sort);
-		return sort;
 	}
 }

@@ -37,7 +37,7 @@ public class ReportFrame extends JFrame
 	//build report for display on JTextArea
 	public void buildReport()
 	{
-		//Should be bolded-but cannot bold a String-could use labels--possible to use HTML tags?
+		//Sets columns. Should be bolded-but cannot bold a String-could use labels--possible to use HTML tags?
 		String[] columnNames = {"ID", "\t\tClass Name","\t\tTutor Name", "\t\tAttendance Totals", "\t\tAverage Class Attendance"};
 	
 		for(int i=0; i<columnNames.length; i++)
@@ -46,18 +46,21 @@ public class ReportFrame extends JFrame
 		}
 		frameArea.append("\n");
 		
+		//sets the rest
 		for(int i = 0; i<7; i++)
 		{			
 			frameArea.append("\n");
-			frameArea.append(String.format("%10s", fprogram.getID(i))); //doesn't show up
+			//frameArea.append(fprogram.sortArray()); //this goes through all classes 7 times because it is in a loop
+			frameArea.append(String.format("%10s", fprogram.getID(i))); 
 			frameArea.append(String.format("\t\t%10s", fprogram.getClassLists(i)));
 			frameArea.append(String.format("\t\t%10s", fprogram.getTutor(i)));
-			frameArea.append(String.format("\t\t%10s", fclass.getAttendnaceString()));//getAttendnaces(i))); //works with string(except wrong attendnace array)			
-			frameArea.append(String.format("\t\t%10s", fprogram.getAverage(i)));	//returns only last class 		
+			frameArea.append(String.format("\t\t%10s", fprogram.getAtt(i)));
+			frameArea.append(String.format("\t\t%.2f", fclass.averageAttendance()));	
 			frameArea.append("\n");
-		}			
+		}		
+		
 		frameArea.append("\n");
-		frameArea.append(String.format("\n%10s %10s", "Overall Attendnace: ", fprogram.finalAvAttendance()));
+		frameArea.append(String.format("\n%10s %10s", "Overall Attendance: ", fprogram.finalAvAttendance()));
 	}
 	
 }

@@ -47,22 +47,14 @@ public class FitnessClass implements Comparable<FitnessClass>
 		System.out.println("from fitnessclass method tutor: " + tutorName);
 		System.out.println("from fitnessclass method time: " + timeStart);
 	}
-	
+
 	//get the average attendance for each class
 	public double averageAttendance()
 	{ 
 		int total = 0;
 		double average = 0;
-			
-//		//for each # in attendance array
-//		for(int i=0; i<attendance.length; i++)
-//		{
-//			total = total +attendance[i];
-//		}
-//		average = total/attendance.length;
-//		return average;
 		
-		for(int i =0; i<CLASSWEEKS; i++) 
+		for(int i =0; i<attendance.length; i++) 
 		{
 			total = total + i;
 		}
@@ -112,13 +104,11 @@ public class FitnessClass implements Comparable<FitnessClass>
 	
 	public void setAttendance(int[] attendanceArray)
 	{ //has attendnace
+		System.out.println("att array " + Arrays.toString(attendanceArray));
 		this.attendance = attendanceArray;
+		System.out.println("Att array set att " + Arrays.toString(attendance));
 	}
 
-	public int[] getAtt()
-	{//This is 0
-		return attendance; 
-	}
 	//Accessors for instance variables 
 	public String getID()
 	{
@@ -143,9 +133,10 @@ public class FitnessClass implements Comparable<FitnessClass>
 	//TODO get AttendnaceString working
 	public String getAttendnaceString()
 	{ 
-		System.out.println("Get attendnace String fclass " + Arrays.toString(attendance));
+		System.out.println("Get attendnace String fclass " + Arrays.toString(attendance)); //prints off 0
+		
 		StringBuilder attendanceString = new StringBuilder();
-		for (int i : attendance) //; i<attendance.length; i++) //returning 0,1,2,3,4
+		for (int i =0; i<attendance.length; i++) 
 		{
 			attendanceString.append(i + " ");
 		}
@@ -161,9 +152,10 @@ public class FitnessClass implements Comparable<FitnessClass>
 	}
 	
 	//To format the report as a string as requested, however I do not use this
-	public String formatReport()
+	public String toString()
 	{				
-		String formattedReport = String.format("%10s %\t\t10s %\t\t10s %\t\t10s %\t\t10.2f %\n", getID(), getClassName(), getTutorName(), getAttendnaceString(), averageAttendance());
+		String formattedReport = "";
+		formattedReport = String.format("%10s %10s %10s %10s %10s \n", getID(), getClassName(), getTutorName(), getAttendnaceString(), averageAttendance());
 		return formattedReport;
 	}
 }

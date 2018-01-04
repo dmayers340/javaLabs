@@ -36,6 +36,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	private String attendanceLine;
 	
 	FitnessClass fclass;
+	FitnessClass[] fclassArray;
 	FitnessProgram fprogram;
 	
 	/**
@@ -56,7 +57,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 		
 		initLadiesDay();
 		initAttendances();
-		updateDisplay();
+		//updateDisplay();
 	}
 
 	/**
@@ -78,7 +79,9 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 				fclass = new FitnessClass(line);
 				fprogram.getFitnessClasses()[fclass.getTimeStart()-9] = fclass;
 			}
+			updateDisplay(fprogram);
 		}
+		
 		catch (IOException e)
 		{
 			e.printStackTrace();
@@ -112,9 +115,9 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 			reader = new BufferedReader(new FileReader(attendancesFile));
 			while((attendanceLine = reader.readLine()) != null)
 			{
-				String[] lineSplit = attendanceLine.split(" ");
 				fprogram.attendnaces(attendanceLine);
-			} 
+				String[] lineSplit = attendanceLine.split(" ");			
+			}
 		}
 		catch (IOException e)
 		{
@@ -141,8 +144,10 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 	/**
 	 * Instantiates timetable display and adds it to GUI
 	 */
-	public void updateDisplay() 
+	public void updateDisplay(FitnessProgram fprog) 
 	{
+		fclassArray = fprogram.getFitnessClasses();
+		
 		display.setText("");
 		String[] columnNames = {"Time", "\t\tCourse Name", "\t\tTutor Name"};
 		
@@ -224,18 +229,15 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 
 	/**
 	 * Processes adding a class
-	 * 
 	 * Display warning message if list is full
-	 * If class w/ ID exists display warning and cancle
+	 * If class w/ ID exists display warning and cancel addition
 	 * 	 */
 	public void processAdding() 
 	{	
+		String gotID = idIn.getText().toLowerCase();
+		String gotName = classIn.getText().toLowerCase();
+		String gotTutor = tutorIn.getText().toLowerCase();
 		
-		String gotID = idIn.getText();
-		String gotName = classIn.getText();
-		String gotTutor = tutorIn.getText();
-		
-		//TODO 1. Check if list is full and display an error message. 2.If class exists display error message 
 		if(gotID.isEmpty())
 		{
 			JOptionPane.showMessageDialog(null, "Cannot Process Request. Please Enter an ID.");
@@ -248,35 +250,31 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 		{
 			JOptionPane.showMessageDialog(null, "Cannot Process Request. Please Enter a Tutor Name");
 		}
-		//TODO 1. ELSE if the list is full display error message
-//		else if(fprogram.getCurrentNumberOfClasses()==7) //displays right away
-//		{
-//
-//			JOptionPane.showMessageDialog(null, "List is full. Cannot Add Class");
-//		}
-		//TODO 2. else if gotID == fitnessclass with same ID 
+		else if(fprogram.getCurrentNumberOfClasses()==1) 
+		{
 
+			JOptionPane.showMessageDialog(null, "List is full. Cannot Add Class");
+		}
+		//TODO 2. else if gotID == fitnessclass with same ID 
+//		else if(fclass.getID().equals(gotID))
 //		{
 //			JOptionPane.showMessageDialog(null, "Error. Class Already Exists");
-//		}
-		
+//		}	
 		else 
 		{
 			fprogram.addClass(gotID, gotName, gotTutor);
-
-			clear();
-			updateDisplay();
 		}
+		clear();
+		updateDisplay(fprogram);
 	}
 
 	/**
 	 * Processes deleting a class
 	 * Delete based on ID number
 	 */
-	//TODO process Deletion
 	public void processDeletion() 
 	{
-		String deleteID = idIn.getText();
+		String deleteID = idIn.getText().toLowerCase();
 		
 		//if ID doesn't exist show error
 		if(deleteID.isEmpty())
@@ -286,7 +284,6 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 		//check if it is a valid ID then delete it
 		else if (fprogram.getClassWithID(deleteID) != null)
 		{
-		//	fprogram.deleteClass(deleteID); //re. deletion with string: can find the jy1 (the first class) but not classes further down 
 			fprogram.deleteClass(fprogram.getClassWithID(deleteID));
 		}
 		//Otherwise say cannot delete class because id doesn't exist
@@ -295,7 +292,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 			JOptionPane.showMessageDialog(null, "Cannot Delete Class, No Class Found");
 		} 
 		clear();
-		updateDisplay();
+		updateDisplay(fprogram);
 	}
 
 	/**
@@ -308,6 +305,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 		report.setVisible(true);
 	}
 	
+	//Clears text fields
 	public void clear()
 	{
 		idIn.setText("");
@@ -352,12 +350,12 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 		else if (ae.getSource() == addButton)
 		{
 			processAdding();
-			updateDisplay();
+			updateDisplay(fprogram);
 		}
 		else if (ae.getSource() == deleteButton)
 		{	
 			processDeletion();
-			updateDisplay();	
+			updateDisplay(fprogram);	
 		}		
 	}
 }	
