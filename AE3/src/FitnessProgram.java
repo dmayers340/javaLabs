@@ -14,7 +14,7 @@ public class FitnessProgram
 	private int currentNumberOfClasses;
 	private FitnessClass[] fclassArray = new FitnessClass[MAXIMUM]; 
 	private FitnessClass[] sorted;
-	
+	private String array;
 
 	//Default constructor to initalize array 
 	public FitnessProgram() 
@@ -140,12 +140,55 @@ public class FitnessProgram
 		return null;
 	}
 	
+	public void attendance(String line)
+	{
+		String[] split = line.split(" ");
+		FitnessClass fclass = new FitnessClass();
+		String thingID = split[0];
+		
+		getClassWithID(thingID);
+		
+		int weekOne = Integer.parseInt(split[1]);
+		int weekTwo = Integer.parseInt(split[2]);
+		int weekThree = Integer.parseInt(split[3]);
+		int weekFour = Integer.parseInt(split[4]);
+		int weekFive = Integer.parseInt(split[5]);
+		int[] attendanceArray = {weekOne, weekTwo, weekThree, weekFour, weekFive};
+		
+		fclass.setAttendance(attendanceArray);
+		array = Arrays.toString(attendanceArray);
+		System.out.println("this attendnace arry " + Arrays.toString(attendanceArray));
+		System.out.println("string attendnace in fprog " + array);
+
+	}
 	//Method to populate attendnace lists, given String representing single line of AtendancesIn.txt as a parameter 
-	public String attendnaces(String attendanceLine) 
+//	public String attendnaces(String attendanceLine) 
+//	{
+//		String[] lineSplit = attendanceLine.split(" ");
+//		FitnessClass fclass = new FitnessClass();
+//		
+//		int weekOne = Integer.parseInt(lineSplit[1]);
+//		int weekTwo = Integer.parseInt(lineSplit[2]);
+//		int weekThree = Integer.parseInt(lineSplit[3]);
+//		int weekFour = Integer.parseInt(lineSplit[4]);
+//		int weekFive = Integer.parseInt(lineSplit[5]);
+//		int[] attendanceArray = {weekOne, weekTwo, weekThree, weekFour, weekFive};
+//				
+//		fclass.setAttendance(attendanceArray);
+//		array = Arrays.toString(attendanceArray);
+//		System.out.println("this attendnace arry " + Arrays.toString(attendanceArray));
+//		System.out.println("string attendnace in fprog " + array);
+//
+//		return array; //is returning attendnaces
+//	}
+	
+	//Method to populate attendnace lists, given String representing single line of AtendancesIn.txt as a parameter 
+	public int[] attendnaces(String attendanceLine) //void and int
 	{
 		String[] lineSplit = attendanceLine.split(" ");
 		FitnessClass fclass = new FitnessClass();
-		
+		String classID = lineSplit[0];
+		getClassWithID(classID);
 		int weekOne = Integer.parseInt(lineSplit[1]);
 		int weekTwo = Integer.parseInt(lineSplit[2]);
 		int weekThree = Integer.parseInt(lineSplit[3]);
@@ -154,12 +197,21 @@ public class FitnessProgram
 		int[] attendanceArray = {weekOne, weekTwo, weekThree, weekFour, weekFive};
 				
 		fclass.setAttendance(attendanceArray);
-		String array = Arrays.toString(attendanceArray);
-		System.out.println("this attendnace arry " + Arrays.toString(attendanceArray));
-		return array; //is returning attendnaces
+		return attendanceArray;
 	}
 	
-	//TODO fix attendnaces
+	public String get()
+	{
+		String att = "";
+		for (int i = 0; i<MAXIMUM; i++)
+		{
+			
+			att = array;
+		}
+			return att;
+	}
+	
+		//TODO fix attendnaces
 	public String getAttendnaces(int number) //returns 0
 	{
 		String attendnace = "";
@@ -172,7 +224,9 @@ public class FitnessProgram
 			}
 			else if(number + 9 == (fclass.getTimeStart()))
 			{
-				attendnace = fclass.getAttendnaceString(); //Arrays.toString(fclass.getAttendanceString());
+				attendnace = get();
+				//attendnace = attendnaces(attendnace);
+				//attendnace = fclass.getAttendnaceString(); //Arrays.toString(fclass.getAttendanceString());
 				return attendnace;
 			}
 		}

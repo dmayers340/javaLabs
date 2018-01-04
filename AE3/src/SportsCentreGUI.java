@@ -113,9 +113,7 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 			while((attendanceLine = reader.readLine()) != null)
 			{
 				String[] lineSplit = attendanceLine.split(" ");
-				
-				fprogram.attendnaces(attendanceLine); 
-
+				fprogram.attendnaces(attendanceLine);
 			} 
 		}
 		catch (IOException e)

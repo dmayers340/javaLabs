@@ -23,7 +23,12 @@ public class FitnessClass implements Comparable<FitnessClass>
 	
 	public FitnessClass()
 	{
-		
+
+		this.id = "";
+		this.className = "";
+		this.tutorName = "";
+		this.timeStart = -1;
+		this.attendance = new int[CLASSWEEKS];
 	}
 	
 	//Non-default constructor to set instance vars from a string containing id, name, tutor name, start time)--need to break apart all info
@@ -107,15 +112,11 @@ public class FitnessClass implements Comparable<FitnessClass>
 	
 	public void setAttendance(int[] attendanceArray)
 	{ //has attendnace
-		System.out.println("Attendnace from Set Attendnace " + Arrays.toString(attendanceArray));
-		System.out.println("Get Att " + Arrays.toString(getAtt()));
 		this.attendance = attendanceArray;
 	}
 
 	public int[] getAtt()
-	{//This is null
-		int[] returnArray = attendance;
-		System.out.println(returnArray);
+	{//This is 0
 		return attendance; 
 	}
 	//Accessors for instance variables 
@@ -141,10 +142,10 @@ public class FitnessClass implements Comparable<FitnessClass>
 	
 	//TODO get AttendnaceString working
 	public String getAttendnaceString()
-	{ //returning 0,1,2,3,4
-		
+	{ 
+		System.out.println("Get attendnace String fclass " + Arrays.toString(attendance));
 		StringBuilder attendanceString = new StringBuilder();
-		for (int i = 0; i<attendance.length; i++)
+		for (int i : attendance) //; i<attendance.length; i++) //returning 0,1,2,3,4
 		{
 			attendanceString.append(i + " ");
 		}
@@ -159,6 +160,7 @@ public class FitnessClass implements Comparable<FitnessClass>
 		return averageString;
 	}
 	
+	//To format the report as a string as requested, however I do not use this
 	public String formatReport()
 	{				
 		String formattedReport = String.format("%10s %\t\t10s %\t\t10s %\t\t10s %\t\t10.2f %\n", getID(), getClassName(), getTutorName(), getAttendnaceString(), averageAttendance());
