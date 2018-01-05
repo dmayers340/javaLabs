@@ -16,6 +16,8 @@ public class FitnessProgram
 	private FitnessClass[] sorted;
 	private String array;
 	
+	private int[] blah; 
+	
 	FitnessClass fclass;
 
 	//Default constructor to initalize array 
@@ -40,7 +42,6 @@ public class FitnessProgram
 	//get the time of a class
 	public FitnessClass getTimeOfClass(int i)
 	{
-		//return fclassArray[i+9];
 		return fclassArray[i-9];
 	}
 
@@ -50,7 +51,7 @@ public class FitnessProgram
 		int open;
 		for(open=0; open<MAXIMUM; open++)
 		{
-			//loop through fclass array, if the time is null, return
+			//loop through fclass array, if the time is null, return. Otherwise return a 1 to check if the list full in the SportsCentreGUI under processAdding()
 			if(fclassArray[open] == null)
 			{
 				open = open+9;
@@ -121,12 +122,78 @@ public class FitnessProgram
 		return tutorName;
 	}
 	
+	//Method to populate attendnace lists, given String representing single line of AtendancesIn.txt as a parameter 
+	public String attendnaces(String attendanceLine) 
+	{
+		String[] lineSplit = attendanceLine.split(" ");
+		FitnessClass fclass = new FitnessClass();
+		String id = lineSplit[0];
+		getClassWithID(id);
+		
+		int weekOne = Integer.parseInt(lineSplit[1]);
+		int weekTwo = Integer.parseInt(lineSplit[2]);
+		int weekThree = Integer.parseInt(lineSplit[3]);
+		int weekFour = Integer.parseInt(lineSplit[4]);
+		int weekFive = Integer.parseInt(lineSplit[5]);
+		int[] attendanceArray = {weekOne, weekTwo, weekThree, weekFour, weekFive};
+		
+		fclass.setAttendance(attendanceArray);
+		array = Arrays.toString(attendanceArray);
+		System.out.println("This is the attendace array from Fitness Program attendnaces(String attLine)" + array + "\n"); 
+		return array; //is returning attendnaces
+	}
+	
+	//get Attendnaces for display in Report Frame
+	
+	public String getAttendance(int number)
+	{
+		String attendnaceString = "";
+
+		for (int i = 0; i<MAXIMUM; i++)
+		{
+			fclass = this.getFitnessClasses()[i];
+			if(fclass == null)
+			{
+				attendnaceString = "\"OPEN\"";
+			}
+			else if(number + 9 == (fclass.getTimeStart()))
+			{
+				//int[] att = fclass.getAtt();	//With the fclass.getAtt() method this returns 0 0 0 0 0
+				//attendnaceString = Arrays.toString(att); 	
+				attendnaceString = fclass.getAttendnaceString(); 
+
+				return attendnaceString;
+			}
+		}
+		return attendnaceString;
+	}
+	
+	public double getAverage(int number)
+	{
+		double avg = 0.00;
+
+		for (int i = 0; i<MAXIMUM; i++)
+		{
+			fclass = this.getFitnessClasses()[i];
+			if(fclass == null)
+			{
+				return 0.00;
+			}
+			else if(number + 9 == (fclass.getTimeStart()))
+			{
+				avg = fclass.averageAttendance();
+				return avg;
+			}
+		}
+		return avg;
+	}
+	
 	//get fitness class obj with ID number in array or null
 	public FitnessClass getClassWithID(String idOfClass)
 	{		
 		for(int i=0; i<MAXIMUM; i++)
 		{
-			if (fclassArray[i]== null)
+			if (fclassArray[i] == null)
 			{
 				i++;
 			}
@@ -142,33 +209,7 @@ public class FitnessProgram
 		return null;
 	}
 	
-	//Method to populate attendnace lists, given String representing single line of AtendancesIn.txt as a parameter 
-	public String attendnaces(String attendanceLine) 
-	{
-		String[] lineSplit = attendanceLine.split(" ");
-		FitnessClass fclass = new FitnessClass();
-		String id = lineSplit[0];
-		getClassWithID(id);
-		
-		int weekOne = Integer.parseInt(lineSplit[1]);
-		int weekTwo = Integer.parseInt(lineSplit[2]);
-		int weekThree = Integer.parseInt(lineSplit[3]);
-		int weekFour = Integer.parseInt(lineSplit[4]);
-		int weekFive = Integer.parseInt(lineSplit[5]);
-		int[] attendanceArray = {weekOne, weekTwo, weekThree, weekFour, weekFive};
-				
-		fclass.setAttendance(attendanceArray);
-		array = Arrays.toString(attendanceArray);
-		System.out.println("this attendnace arry " + Arrays.toString(attendanceArray));
-		System.out.println("string attendnace in fprog " + array);
-
-		return array; //is returning attendnaces
-	}
-	public String getAtt(int num)	
-	{
-		return array;
-	}
-	//get attendnace averages from fitnessclass, IS 0 because not getting averages
+	//Returning final average attendnace for all fitness classes in fclass
 	public String finalAvAttendance()
 	{
 		double total = 0; 
@@ -185,6 +226,7 @@ public class FitnessProgram
 		return String.format("%.2f", average);
 	}
 	
+	//Adds a fitness class based on ID, Name, and Tutor from the GUI
 	public void addClass(String newClassID, String newClassName, String newClassTutor)
 	{
 		int[] attendnaceInital = {0,0,0,0,0};
@@ -207,6 +249,7 @@ public class FitnessProgram
 		}
 	}
 	
+	//Deletes a class when button is pressed in GUI. 
 	public void deleteClass(FitnessClass classToDelete)
 	{
 		for(int i=0; i < MAXIMUM; i++)
@@ -224,7 +267,7 @@ public class FitnessProgram
 		}
 	}
 
-	//Gets the current number of classes
+	//Gets the current number of classes, this is not working properly
 	public int getCurrentNumberOfClasses()
 	{
 		if(fclass == null)
@@ -239,10 +282,12 @@ public class FitnessProgram
 		{
 			this.currentNumberOfClasses = fclassArray.length;
 		}
+		System.out.println(currentNumberOfClasses);
 		return currentNumberOfClasses;
 	}
 	
-	//TODO sort array based on attendnace
+	
+	//TODO sort array based on attendnace. This has not been tested as attendnaces have not been working
 	//method to return list sorted in non-increasing order on av attendance using arrays.sort
 	public String sortArray()
 	{

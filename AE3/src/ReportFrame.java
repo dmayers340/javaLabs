@@ -46,16 +46,17 @@ public class ReportFrame extends JFrame
 		}
 		frameArea.append("\n");
 		
-		//sets the rest
+	//	frameArea.append(fprogram.sortArray()); //returns 0's from the fclass getAttendnaceString()
+
+		//sets the rest of the information
 		for(int i = 0; i<7; i++)
 		{			
 			frameArea.append("\n");
-			//frameArea.append(fprogram.sortArray()); //this goes through all classes 7 times because it is in a loop
 			frameArea.append(String.format("%10s", fprogram.getID(i))); 
 			frameArea.append(String.format("\t\t%10s", fprogram.getClassLists(i)));
 			frameArea.append(String.format("\t\t%10s", fprogram.getTutor(i)));
-			frameArea.append(String.format("\t\t%10s", fprogram.getAtt(i)));
-			frameArea.append(String.format("\t\t%.2f", fclass.averageAttendance()));	
+			frameArea.append(String.format("\t\t%10s", fprogram.getAttendance(i))); //displayed as array
+			frameArea.append(String.format("\t\t%10.2f", fprogram.getAverage(i))); 	
 			frameArea.append("\n");
 		}		
 		

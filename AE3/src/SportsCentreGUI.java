@@ -322,8 +322,21 @@ public class SportsCentreGUI extends JFrame implements ActionListener
 		PrintWriter classOut = null;
 		try 
 		{
+			String classString = "";
 			classOut = new PrintWriter(classesOutFile);
-			classOut.println(display.getText());
+			FitnessClass[] classArray = fprogram.getFitnessClasses();
+			for(int i=0; i<7; i++)
+			{
+				if(classArray[i] !=null)
+				{
+					classString = classString + classArray[i].getID() + " ";
+					classString = classString + classArray[i].getClassName() + " ";
+					classString = classString + classArray[i].getTutorName() + " ";
+					classString = classString + classArray[i].getTimeStart() + " " ;
+					classString = classString + "\n";
+				}
+			}
+			classOut.println(classString);
 		}
 		catch(FileNotFoundException e)
 		{
